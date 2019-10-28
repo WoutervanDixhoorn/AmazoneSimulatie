@@ -3,6 +3,7 @@ package com.nhlstenden.amazonsimulatie.graph;
 import java.util.ArrayList;
 
 public class Node implements Comparable<Node> {
+
     // Geef aan of het stellage of source node is
     private String name;
 

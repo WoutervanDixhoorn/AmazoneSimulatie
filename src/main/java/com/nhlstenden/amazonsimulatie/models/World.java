@@ -40,7 +40,11 @@ public class World implements Model {
      */
     public World() {
         this.worldObjects = new ArrayList<>();
-        this.worldObjects.add(new Robot(this.buildDijkstraGraph()));
+        this.worldObjects.add(new Robot(this.buildDijkstraGraph()));     
+
+        for(NodeModel n : getNodeModels()){
+            this.worldObjects.add(n);
+        }
     }
 
 
@@ -65,6 +69,17 @@ public class World implements Model {
         ArrayList<Node> nodes = graph.returnShortestPathToNode("Source", "Stellage7");
 
         return nodes;
+    }
+
+    private List<NodeModel> getNodeModels(){
+        List<Node> nodes = buildDijkstraGraph();
+        List<NodeModel> nodeModels = new ArrayList<NodeModel>();
+
+        for(Node n : nodes){
+            nodeModels.add(new NodeModel(n.getX(),n.getZ()));
+        }
+
+        return nodeModels;
     }
 
     /*

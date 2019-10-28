@@ -2,6 +2,7 @@ package com.nhlstenden.amazonsimulatie.models;
 
 import com.nhlstenden.amazonsimulatie.graph.Node;
 
+
 import java.util.ArrayList;
 import java.util.UUID;
 
@@ -27,6 +28,10 @@ class Robot implements Object3D, Updatable {
 
     public Robot(ArrayList<Node> nodes) {
         this.nodes = nodes;
+        this.uuid = UUID.randomUUID();
+    }
+
+    public Robot() {
         this.uuid = UUID.randomUUID();
     }
 
