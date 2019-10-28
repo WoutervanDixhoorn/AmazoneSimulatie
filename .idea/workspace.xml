@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="2271cba2-2cf8-4d49-a5e3-1a7f413ff825" name="Default Changelist" comment="" />
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="CodeStyleSettingsInfer">
+    <option name="done" value="true" />
+  </component>
+  <component name="CompilerWorkspaceConfiguration">
+    <option name="MAKE_PROJECT_ON_SAVE" value="true" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="importingSettings">
+      <MavenImportingSettings>
+        <option name="importAutomatically" value="true" />
+      </MavenImportingSettings>
+    </option>
+  </component>
+  <component name="ProjectCodeStyleSettingsMigration">
+    <option name="version" value="1" />
+  </component>
+  <component name="ProjectId" id="1SBg60hSdbhPnceog31vbsYYH4Y" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="PropertiesComponent">
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="aspect.path.notification.shown" value="true" />
+    <property name="last_directory_selection" value="$PROJECT_DIR$/src/test/java" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/main/resources/static" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.detected.package.tslint" value="true" />
+    <property name="node.js.path.for.package.eslint" value="project" />
+    <property name="node.js.path.for.package.tslint" value="project" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="node.js.selected.package.tslint" value="(autodetect)" />
+    <property name="nodejs_package_manager_path" value="npm" />
+    <property name="settings.editor.selected.configurable" value="project.propCompiler" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\AmazonSimulatie\src\main\resources\static" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\AmazonSimulatie\src\main\resources\static" />
+      <recent name="D:\AmazonSimulatie\src\main\resources\static\models" />
+    </key>
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="RunManager" selected="Spring Boot.App">
+    <configuration name="DefaultWebSocketViewTests" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="AmazonSimulatie" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.nhlstenden.amazonsimulatie.tests.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.nhlstenden.amazonsimulatie.tests" />
+      <option name="MAIN_CLASS_NAME" value="com.nhlstenden.amazonsimulatie.tests.DefaultWebSocketViewTests" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="App" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <module name="AmazonSimulatie" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.nhlstenden.amazonsimulatie.base.App" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="JUnit.DefaultWebSocketViewTests" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="2271cba2-2cf8-4d49-a5e3-1a7f413ff825" name="Default Changelist" comment="" />
+      <created>1571042223471</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1571042223471</updated>
+      <workItem from="1571042225018" duration="11861000" />
+      <workItem from="1571137665228" duration="68000" />
+      <workItem from="1571219567863" duration="8867000" />
+      <workItem from="1571299588434" duration="9428000" />
+      <workItem from="1571477931901" duration="605000" />
+      <workItem from="1571558585830" duration="16067000" />
+      <workItem from="1571651519520" duration="152000" />
+      <workItem from="1571651937806" duration="980000" />
+      <workItem from="1571653489730" duration="4472000" />
+      <workItem from="1571732724026" duration="3895000" />
+      <workItem from="1571739408828" duration="607000" />
+      <workItem from="1571818974313" duration="2179000" />
+      <workItem from="1571824020856" duration="550000" />
+      <workItem from="1571904810354" duration="3776000" />
+      <workItem from="1571994078929" duration="1514000" />
+      <workItem from="1572257702527" duration="2020000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+</project>

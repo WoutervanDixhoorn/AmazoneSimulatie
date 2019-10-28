@@ -1,0 +1,15 @@
+com\nhlstenden\amazonsimulatie\base\Command.class
+com\nhlstenden\amazonsimulatie\base\App$DefaultWebSocketHandler.class
+com\nhlstenden\amazonsimulatie\models\Model.class
+com\nhlstenden\amazonsimulatie\base\App.class
+com\nhlstenden\amazonsimulatie\models\Object3D.class
+com\nhlstenden\amazonsimulatie\models\ProxyObject3D.class
+com\nhlstenden\amazonsimulatie\views\View.class
+com\nhlstenden\amazonsimulatie\controllers\SimulationController.class
+com\nhlstenden\amazonsimulatie\controllers\SimulationController$1.class
+com\nhlstenden\amazonsimulatie\models\Robot.class
+com\nhlstenden\amazonsimulatie\models\Updatable.class
+com\nhlstenden\amazonsimulatie\models\World.class
+com\nhlstenden\amazonsimulatie\views\DefaultWebSocketView.class
+com\nhlstenden\amazonsimulatie\controllers\Controller.class
+com\nhlstenden\amazonsimulatie\base\App$1.class
