@@ -107,8 +107,6 @@
                             var group = new THREE.Group();
 
                             gltfLoader.load('model.gltf', (gltf) => {
-                                var stellage = gltf;
-                                stellage.position.x = 14;
                                 scene.add(gltf.scene);
                             });
 

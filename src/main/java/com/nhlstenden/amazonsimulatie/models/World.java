@@ -1,7 +1,6 @@
 package com.nhlstenden.amazonsimulatie.models;
 
 import com.nhlstenden.amazonsimulatie.graph.DijkstraGraph;
-import com.nhlstenden.amazonsimulatie.graph.Graph;
 import com.nhlstenden.amazonsimulatie.graph.Node;
 
 import java.beans.PropertyChangeListener;
