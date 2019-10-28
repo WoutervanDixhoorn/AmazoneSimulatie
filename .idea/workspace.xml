@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="2271cba2-2cf8-4d49-a5e3-1a7f413ff825" name="Default Changelist" comment="" />
+    <list default="true" id="2271cba2-2cf8-4d49-a5e3-1a7f413ff825" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/nhlstenden/amazonsimulatie/base/App.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/nhlstenden/amazonsimulatie/base/App.java" afterDir="false" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -23,6 +25,7 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="ROOT_SYNC" value="DONT_SYNC" />
   </component>
   <component name="MavenImportPreferences">
     <option name="importingSettings">
@@ -40,7 +43,7 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
     <property name="last_directory_selection" value="$PROJECT_DIR$/src/test/java" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/main/resources/static" />
+    <property name="last_opened_file_path" value="C:/Program Files/Git/cmd/git.exe" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -48,7 +51,7 @@
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
     <property name="nodejs_package_manager_path" value="npm" />
-    <property name="settings.editor.selected.configurable" value="project.propCompiler" />
+    <property name="settings.editor.selected.configurable" value="project.propVCSSupport.Mappings" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -125,7 +128,8 @@
       <workItem from="1571824020856" duration="550000" />
       <workItem from="1571904810354" duration="3776000" />
       <workItem from="1571994078929" duration="1514000" />
-      <workItem from="1572257702527" duration="2020000" />
+      <workItem from="1572257702527" duration="2642000" />
+      <workItem from="1572262519002" duration="153000" />
     </task>
     <servers />
   </component>
@@ -137,10 +141,17 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="COLUMN_ORDER" />
+            </State>
           </value>
         </entry>
       </map>
     </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <ignored-roots>
+      <path value="$PROJECT_DIR$/AmazoneSimulatie" />
+    </ignored-roots>
   </component>
 </project>
