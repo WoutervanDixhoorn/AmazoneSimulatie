@@ -1,4 +1,5 @@
 package com.nhlstenden.amazonsimulatie.base;
 
-public interface moveCommand {
+public interface MoveCommand {
+    void execute();
 }
