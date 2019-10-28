@@ -104,9 +104,9 @@
 
                             var group = new THREE.Group();
 
-                            gltfLoader.load('model.gltf', (gltf) => {
-                                scene.add(gltf.scene);
-                            });
+                            //gltfLoader.load('model.gltf', (gltf) => {
+                            //    scene.add(gltf.scene);
+                            //});
 
                             group.add(robot);
 
@@ -115,17 +115,26 @@
                         }
 
                         if(command.parameters.type == "nodemodel"){
-                            var nodeGeo = new THREE.BoxGeometry(0.5, 0.5, 0.5);
-                            var nodeMat = new THREE.MeshBasicMaterial({
-                                color: 0x0000FF
+                            //var nodeGeo = new THREE.BoxGeometry(0.5, 0.5, 0.5);
+                            //var nodeMat = new THREE.MeshBasicMaterial({
+                            //    color: 0x0000FF
+                            //});
+
+                            var group = new THREE.Group();
+
+                            gltfLoader.load('model.gltf', (gltf) => {
+                                gltf.scene.position.x = command.parameters.x;
+                                gltf.scene.position.z = command.parameters.z;
+                                scene.add(gltf.scene);
                             });
 
-                            var node = new THREE.Mesh(nodeGeo, nodeMat);
-                            node.position.y = 0.15;
-                            node.position.x = command.parameters.x;
-                            node.position.z = command.parameters.z;
 
-                            scene.add(node);
+                            //var node = new THREE.Mesh(nodeGeo, nodeMat);
+                            //node.position.y = 0.15;
+                            //node.position.x = command.parameters.x;
+                            //node.position.z = command.parameters.z;
+
+                            //scene.add(node);
                         }
                     }
 
