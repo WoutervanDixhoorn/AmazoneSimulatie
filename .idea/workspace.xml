@@ -2,7 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2271cba2-2cf8-4d49-a5e3-1a7f413ff825" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/nhlstenden/amazonsimulatie/models/World.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/nhlstenden/amazonsimulatie/models/World.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/nhlstenden/amazonsimulatie/base/App.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/nhlstenden/amazonsimulatie/base/App.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/nhlstenden/amazonsimulatie/graph/DijkstraGraph.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/nhlstenden/amazonsimulatie/graph/DijkstraGraph.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/nhlstenden/amazonsimulatie/models/Robot.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/nhlstenden/amazonsimulatie/models/Robot.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -132,7 +135,8 @@
       <workItem from="1572257702527" duration="2642000" />
       <workItem from="1572262519002" duration="202000" />
       <workItem from="1572262826546" duration="9570000" />
-      <workItem from="1572344311302" duration="2863000" />
+      <workItem from="1572344311302" duration="4447000" />
+      <workItem from="1572348795975" duration="2529000" />
     </task>
     <servers />
   </component>
