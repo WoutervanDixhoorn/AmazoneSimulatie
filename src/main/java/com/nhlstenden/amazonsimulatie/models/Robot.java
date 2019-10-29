@@ -62,12 +62,12 @@ class Robot implements Object3D, Updatable {
 
         if(!arrived) {
             graph.reset();
-            this.nodes = graph.returnShortestPathToNode("Source", "Stellage7");
+            this.nodes = graph.returnShortestPathToNode("Source", "Stellage2.2");
         } else  {
             graph.reset();
             switchArrived();
             nodeGetter = 0;
-            this.nodes = graph.returnShortestPathToNode("Source", "Stellage7");
+            this.nodes = graph.returnShortestPathToNode("Stellage2.2", "Source");
         }
 
         if(nodeGetter == (nodes.size())) {

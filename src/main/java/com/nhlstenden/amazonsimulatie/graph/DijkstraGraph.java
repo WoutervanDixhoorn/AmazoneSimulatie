@@ -73,8 +73,8 @@ public class DijkstraGraph {
         for(Edge edge : edgeList) {
             if(edge.getTo().getShortestDistance() < prevDist && !edge.getTo().isVisited()) {
                 shortestNextNode = edge.getTo();
+                prevDist = edge.getTo().getShortestDistance();
             }
-            prevDist = edge.getTo().getShortestDistance();
         }
 
         if(shortestNextNode == null) {
