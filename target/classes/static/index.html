@@ -114,27 +114,27 @@
                             worldObjects[command.parameters.uuid] = group;
                         }
 
-                        if(command.parameters.type == "nodemodel"){
-                            //var nodeGeo = new THREE.BoxGeometry(0.5, 0.5, 0.5);
-                            //var nodeMat = new THREE.MeshBasicMaterial({
-                            //    color: 0x0000FF
-                            //});
+                        if(command.parameters.type == "node"){
+                            var nodeGeo = new THREE.BoxGeometry(0.5, 0.5, 0.5);
+                            var nodeMat = new THREE.MeshBasicMaterial({
+                                color: 0x0000FF
+                            });
 
-                            var group = new THREE.Group();
 
+                            var node = new THREE.Mesh(nodeGeo, nodeMat);
+                            node.position.y = 0.15;
+                            node.position.x = command.parameters.x;
+                            node.position.z = command.parameters.z;
+
+                            scene.add(node);
+                        }
+
+                        if(command.parameters.type == "stellage"){
                             gltfLoader.load('model.gltf', (gltf) => {
                                 gltf.scene.position.x = command.parameters.x;
                                 gltf.scene.position.z = command.parameters.z;
                                 scene.add(gltf.scene);
                             });
-
-
-                            //var node = new THREE.Mesh(nodeGeo, nodeMat);
-                            //node.position.y = 0.15;
-                            //node.position.x = command.parameters.x;
-                            //node.position.z = command.parameters.z;
-
-                            //scene.add(node);
                         }
                     }
 
