@@ -41,7 +41,8 @@ public class World implements Model {
     public World() {
         this.worldObjects = new ArrayList<>();
         this.graph = buildDijkstraGraph();
-        this.worldObjects.add(new Robot(graph));
+        //this.worldObjects.add(new Robot(graph));
+        this.worldObjects.add(new Robot(buildDijkstraGraph()));
 
 
     }    
