@@ -70,33 +70,6 @@ public class App extends SpringBootServletInitializer implements WebSocketConfig
 //        for (String each : path)
 //            System.out.println(each);
 
-//        DijkstraGraph graph = new DijkstraGraph();
-//
-//        Node node1 = new Node("Source", 4334, 0);
-//        Node node2 = new Node("Stellage1", 0, 0);
-//        Node node3 = new Node("Stellage2", 0, 0);
-//        Node node4 = new Node("Stellage3", 0, 0);
-//        Node node5 = new Node("Stellage4", 0, 0);
-//        Node node6 = new Node("Stellage5", 0, 0);
-//        Node node7 = new Node("Stellage6", 0, 0);
-//
-//        graph.addOneWayConnection(node1, node2, 1);
-//        graph.addOneWayConnection(node2, node3, 1);
-//        graph.addOneWayConnection(node3, node4, 1);
-//        graph.addOneWayConnection(node4, node5, 1);
-//        graph.addOneWayConnection(node5, node6, 1);
-//        graph.addOneWayConnection(node6, node7, 1);
-//        graph.addOneWayConnection(node4, node7, 1);
-//        graph.addOneWayConnection(node4, node1, 1);
-//
-//        //graph.shortestPath("Stellage1");
-//
-//        ArrayList<Node> nodes = graph.returnShortestPathToNode("Source", "Stellage6");
-//
-//        System.out.println("Path to node : \n");
-//        for(Node node : nodes) {
-//            System.out.println(node.getName() + "\n");
-//        }
 
         SpringApplication.run(App.class, args);
     }

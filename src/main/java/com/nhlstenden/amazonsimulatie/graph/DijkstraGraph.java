@@ -5,6 +5,7 @@ import java.util.Collections;
 
 public class DijkstraGraph {
     private ArrayList<Edge> edges;
+
     private ArrayList<Node> nodes;
 
     private Node shortestNextNode;
@@ -17,14 +18,23 @@ public class DijkstraGraph {
     public void addOneWayConnection(Node from, Node to, int cost) {
         from.setAdjNodes(to);
 
-        if(findNode(to.getName()) == null)
-        this.nodes.add(to);
+        if(findNode(to.getName()) == null) {
+            this.nodes.add(to);
+        } else {
+            to = findNode(to.getName());
+        }
 
-        if(findNode(from.getName()) == null)
-        this.nodes.add(from);
+
+        if(findNode(from.getName()) == null) {
+            this.nodes.add(from);
+        } else {
+            from = findNode(from.getName());
+        }
 
         Edge edge = new Edge(from, to, cost);
+        Edge edge2 = new Edge(to, from, cost);
         this.edges.add(edge);
+        this.edges.add(edge2);
     }
 
     private boolean Dijkstra(String source) {
@@ -67,7 +77,7 @@ public class DijkstraGraph {
             prevDist = edge.getTo().getShortestDistance();
         }
 
-        if(edgeList.size() == 0) {
+        if(shortestNextNode == null) {
             return Dijkstra("end");
         }
 
@@ -103,7 +113,16 @@ public class DijkstraGraph {
                 return pathNodes;
             }
         }
+
         return null;
+    }
+
+    public void reset() {
+        for(Node node : nodes) {
+            node.setPrevious(null);
+            node.setVisited(false);
+            node.setShortestDistance(Integer.MAX_VALUE);
+        }
     }
 
     private Node findNode(String name) {
@@ -124,5 +143,9 @@ public class DijkstraGraph {
             }
         }
         return edgeList;
+    }
+
+    public ArrayList<Node> getNodes() {
+        return nodes;
     }
 }

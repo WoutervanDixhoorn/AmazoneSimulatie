@@ -25,7 +25,7 @@ public class World implements Model {
     private List<Object3D> worldObjects;
 
 
-    private DijkstraGraph graph = new DijkstraGraph();
+    private DijkstraGraph graph;
 
     /*
      * Dit onderdeel is nodig om veranderingen in het model te kunnen doorgeven aan de controller.
@@ -38,8 +38,9 @@ public class World implements Model {
      * Deze methode moet uitgebreid worden zodat alle objecten van de 3D wereld hier worden gemaakt.
      */
     public World() {
+        this.graph = buildDijkstraGraph();
         this.worldObjects = new ArrayList<>();
-        this.worldObjects.add(new Robot(this.buildDijkstraGraph()));     
+        this.worldObjects.add(new Robot(graph));
 
         for(NodeModel n : getNodeModels()){
             this.worldObjects.add(n);
@@ -47,7 +48,9 @@ public class World implements Model {
     }
 
 
-    public ArrayList<Node> buildDijkstraGraph() {
+    public DijkstraGraph buildDijkstraGraph() {
+        graph = new DijkstraGraph();
+
         Node node1 = new Node("Source", 0, 0);
         Node node2 = new Node("Stellage1", 5, 0);
         Node node3 = new Node("Stellage2", 5, 5);
@@ -55,7 +58,7 @@ public class World implements Model {
         Node node5 = new Node("Stellage4", 5, 15);
         Node node6 = new Node("Stellage5", 0, 15);
         Node node7 = new Node("Stellage6", 10, 15);
-        Node node8 = new Node("Stellage7", 10, 10);
+        Node node8 = new Node("Stellage7", 50, 50);
 
         graph.addOneWayConnection(node1, node2, 1);
         graph.addOneWayConnection(node2, node3, 1);
@@ -65,13 +68,12 @@ public class World implements Model {
         graph.addOneWayConnection(node6, node7, 1);
         graph.addOneWayConnection(node7, node8, 1);
 
-        ArrayList<Node> nodes = graph.returnShortestPathToNode("Source", "Stellage7");
-
-        return nodes;
+        return graph;
     }
 
+
     private List<NodeModel> getNodeModels(){
-        List<Node> nodes = buildDijkstraGraph();
+        List<Node> nodes = graph.getNodes();
         List<NodeModel> nodeModels = new ArrayList<NodeModel>();
 
         for(Node n : nodes){
