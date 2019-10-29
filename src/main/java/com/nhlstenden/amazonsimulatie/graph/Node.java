@@ -16,6 +16,9 @@ public class Node implements Comparable<Node> {
     private int x;
     private int z;
 
+    // HOEVEEL BOXEN STAAN ER IN DE STELLAGE(OM DE LEEGSTE STELLAGE TE PAKKEN)
+    private int boxen;
+
     private ArrayList<Node> adjNodes;
 
     public Node(String name, int x, int z) {

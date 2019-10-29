@@ -1,5 +1,6 @@
 package com.nhlstenden.amazonsimulatie.models;
 
+import com.nhlstenden.amazonsimulatie.graph.DijkstraGraph;
 import com.nhlstenden.amazonsimulatie.graph.Node;
 
 
@@ -26,8 +27,13 @@ class Robot implements Object3D, Updatable {
 
     private int nodeGetter = 0;
 
-    public Robot(ArrayList<Node> nodes) {
-        this.nodes = nodes;
+    DijkstraGraph graph;
+
+    private boolean arrived;
+
+    public Robot(DijkstraGraph graph) {
+        this.arrived = false;
+        this.graph = graph;
         this.uuid = UUID.randomUUID();
     }
 
@@ -54,9 +60,18 @@ class Robot implements Object3D, Updatable {
 //            this.x -= 0.5;
 //        }
 
+        if(!arrived) {
+            this.nodes = graph.returnShortestPathToNode("Source", "Stellage7");
+        } else  {
+            this.nodes = graph.returnShortestPathToNode("Stellage7", "Source");
+        }
+
         if(nodeGetter == (nodes.size())) {
+            switchArrived();
+            nodeGetter = 0;
             return true;
         }
+
         if(x < nodes.get(nodeGetter).getX()) {
             this.x += 0.5;
         }
@@ -75,6 +90,10 @@ class Robot implements Object3D, Updatable {
 
         
         return true;
+    }
+
+    private void switchArrived() {
+        this.arrived = !arrived;
     }
 
     @Override
