@@ -9,6 +9,7 @@ import java.util.UUID;
  */
 class NodeModel implements Object3D{
     private UUID uuid;
+    private String type = "node";
 
     private double x = 0;
     private double y = 0;
@@ -17,6 +18,11 @@ class NodeModel implements Object3D{
     private double rotationX = 0;
     private double rotationY = 0;
     private double rotationZ = 0;
+
+    public NodeModel(String type,double x, double z) {
+        this(x,z);
+        this.type = type;
+    }
 
     public NodeModel(double x, double z) {
         this.x = x;
@@ -37,7 +43,7 @@ class NodeModel implements Object3D{
          * is op de client, en die verstuurd moet kunnen worden naar de browser. In de
          * javascript code wordt dit dan weer verder afgehandeld.
          */
-        return NodeModel.class.getSimpleName().toLowerCase();
+        return type;
     }
 
     @Override

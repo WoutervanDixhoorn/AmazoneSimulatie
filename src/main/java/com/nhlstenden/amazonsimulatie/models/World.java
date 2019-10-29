@@ -39,15 +39,17 @@ public class World implements Model {
      */
     public World() {
         this.worldObjects = new ArrayList<>();
-        this.worldObjects.add(new Robot(this.buildDijkstraGraph()));     
+        this.worldObjects.add(new Robot());     
 
         for(NodeModel n : getNodeModels()){
             this.worldObjects.add(n);
         }
     }
 
+    
+    ArrayList<Node> buildWarehouse(int size){
+        ArrayList<Node> temp = new ArrayList<Node>();
 
-    public ArrayList<Node> buildDijkstraGraph() {
         Node node1 = new Node("Source", 0, 0);
         Node node2 = new Node("Stellage1", 5, 0);
         Node node3 = new Node("Stellage2", 5, 5);
@@ -65,17 +67,57 @@ public class World implements Model {
         graph.addOneWayConnection(node6, node7, 1);
         graph.addOneWayConnection(node7, node8, 1);
 
-        ArrayList<Node> nodes = graph.returnShortestPathToNode("Source", "Stellage7");
+        /*
+        for(int i = 0; i < size-1; i++){
+            for(int j = 0; j < size-1; j++){
+                if(i == 0 && j == 0){temp.add(new Node("Source", 0,0)); continue;}
+                temp.add(new Node("Node" + i + "." + j, i*2,j*2));
+            }
+        }
 
-        return nodes;
+        for(int i = 0; i < size-1; i++){
+            for(int j = 0; j < size-1; j++){
+                //if(i <= 1 && j < size-1){
+                    graph.addOneWayConnection(temp.get(i*size+j), temp.get(i*size+j), 1);
+                //}//else if(j < size-1){
+                //    graph.addOneWayConnection(temp.get(i*size+j), temp.get(i*size+j+1), 1);
+                //}
+            }
+        }
+        */
+
+
+        return temp;
+    }
+
+    public ArrayList<Node> buildDijkstraGraph(String current, String dest) {
+        ArrayList<Node> path = graph.returnShortestPathToNode(current, dest);
+
+        return path;
     }
 
     private List<NodeModel> getNodeModels(){
-        List<Node> nodes = buildDijkstraGraph();
+        //List<Node> nodes = buildWarehouse(5);
         List<NodeModel> nodeModels = new ArrayList<NodeModel>();
 
-        for(Node n : nodes){
-            nodeModels.add(new NodeModel(n.getX(),n.getZ()));
+        //for(Node n : nodes){
+            //nodeModels.add(new NodeModel(n.getX(),n.getZ()));
+        //}
+        int SIZE = 6;
+        int spacing = 5;
+        int offset = 5;
+        for(int i = 0; i < SIZE-1; i++){
+            for(int j = 0; j < SIZE-1; j++){
+                if(i == 0){
+                    nodeModels.add(new NodeModel(i*spacing + offset,j*spacing + offset));
+                    continue;
+                }
+                if(j%2 == 0){
+                    nodeModels.add(new NodeModel("stellage",i*spacing + offset,j*spacing + offset));
+                    continue;
+                }
+                nodeModels.add(new NodeModel(i*spacing + offset,j*spacing + offset));              
+            }
         }
 
         return nodeModels;
