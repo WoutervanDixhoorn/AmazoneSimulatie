@@ -29,18 +29,12 @@ class Robot implements Object3D, Updatable {
 
     DijkstraGraph graph;
 
-    private Node toNode;
-
     private boolean arrived;
 
     public Robot(DijkstraGraph graph) {
         this.arrived = false;
         this.graph = graph;
         this.uuid = UUID.randomUUID();
-    }
-
-    public Robot(Node toNode) {
-        this.toNode = toNode;
     }
 
     public Robot() {
@@ -68,15 +62,13 @@ class Robot implements Object3D, Updatable {
 
         if(!arrived) {
             this.nodes = graph.returnShortestPathToNode("Source", "Stellage7");
-            graph.reset();
         } else  {
             this.nodes = graph.returnShortestPathToNode("Stellage7", "Source");
-            switchArrived();
-            nodeGetter = 0;
-            graph.reset();
         }
 
         if(nodeGetter == (nodes.size())) {
+            switchArrived();
+            nodeGetter = 0;
             return true;
         }
 
