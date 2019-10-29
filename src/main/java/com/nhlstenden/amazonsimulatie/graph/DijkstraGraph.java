@@ -17,6 +17,7 @@ public class DijkstraGraph {
 
     public void addOneWayConnection(Node from, Node to, int cost) {
         from.setAdjNodes(to);
+        to.setAdjNodes(from);
 
         if(findNode(to.getName()) == null) {
             this.nodes.add(to);
@@ -37,7 +38,7 @@ public class DijkstraGraph {
         this.edges.add(edge2);
     }
 
-    private boolean Dijkstra(String source) {
+    private boolean Dijkstra(String source, String to) {
         if(source.equals("end")) {
             return false;
         }
@@ -57,35 +58,41 @@ public class DijkstraGraph {
 
         //ArrayList<Node> adjNodes = sourceNode.getAdjNodes();
 
-        ArrayList<Edge> edgeList = new ArrayList<>();
+        ArrayList<Edge> edgeList;
 
         //for (Node node : adjNodes) {
         edgeList = findEdge(sourceNode.getName());
         //}
 
         for (Edge edge : edgeList) {
-            if (sourceNode.getShortestDistance() + edge.getCost() < edge.getTo().getShortestDistance())
+            if (sourceNode.getShortestDistance() + edge.getCost() < edge.getTo().getShortestDistance()) {
                 edge.getTo().setShortestDistance(sourceNode.getShortestDistance() + edge.getCost());
-
-            edge.getTo().setPrevious(sourceNode);
+                edge.getTo().setPrevious(sourceNode);
+            }
         }
+
+        if(sourceNode.getName().equals("Stellage6")) {
+            System.out.println("AAAAAA  " + "\n");
+        }
+
         int prevDist = Integer.MAX_VALUE;
         for(Edge edge : edgeList) {
             if(edge.getTo().getShortestDistance() < prevDist && !edge.getTo().isVisited()) {
                 shortestNextNode = edge.getTo();
                 prevDist = edge.getTo().getShortestDistance();
+
             }
         }
 
-        if(shortestNextNode == null) {
-            return Dijkstra("end");
+        if(sourceNode.getName().equals(to)) {
+            return Dijkstra("end", to);
         }
 
-        return Dijkstra(shortestNextNode.getName());
+        return Dijkstra(shortestNextNode.getName(), to);
     }
 
-    public void shortestPath(String source) {
-        Dijkstra(source);
+    public void shortestPath(String source, String to) {
+        Dijkstra(source, to);
 
         Collections.sort(nodes);
 
@@ -96,7 +103,7 @@ public class DijkstraGraph {
     }
 
     public ArrayList<Node> returnShortestPathToNode(String source, String to) {
-        shortestPath(source);
+        shortestPath(source, to);
 
         Node toNode = findNode(to);
 

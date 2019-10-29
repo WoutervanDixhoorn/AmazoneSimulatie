@@ -70,8 +70,35 @@ public class App extends SpringBootServletInitializer implements WebSocketConfig
 //        for (String each : path)
 //            System.out.println(each);
 
+        DijkstraGraph graph = new DijkstraGraph();
 
-        SpringApplication.run(App.class, args);
+
+        Node node1 = new Node("Source", 0, 0);
+        Node node2 = new Node("Stellage1", 5, 0);
+        Node node3 = new Node("Stellage2", 5, 5);
+        Node node4 = new Node("Stellage3", 5, 10);
+         Node node5 = new Node("Stellage4", 5, 15);
+        Node node6 = new Node("Stellage5", 0, 15);
+        Node node7 = new Node("Stellage6", 10, 15);
+        Node node8 = new Node("Stellage7", 50, 50);
+
+        graph.addOneWayConnection(node1, node2, 1);
+         graph.addOneWayConnection(node2, node3, 1);
+         graph.addOneWayConnection(node3, node4, 1);
+         graph.addOneWayConnection(node4, node5, 1);
+         graph.addOneWayConnection(node5, node6, 1);
+         graph.addOneWayConnection(node6, node8, 1);
+          graph.addOneWayConnection(node7, node8, 1);
+
+          ArrayList<Node> nodes = graph.returnShortestPathToNode("Stellage7", "Source");
+
+
+          for(Node node : nodes) {
+              System.out.println(node.getName() + "\n");
+          }
+
+
+        //SpringApplication.run(App.class, args);
     }
     
     //De App is de applicatie en heeft de controller voor de simulatie in zich
