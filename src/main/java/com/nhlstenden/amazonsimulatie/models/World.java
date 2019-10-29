@@ -153,9 +153,12 @@ public class World implements Model {
                     if(i*SIZE+j >= 24){
                         break;
                     }
+                    if(j < SIZE -1){
+                        graph.addOneWayConnection(nodes.get(i*SIZE+j-1), nodes.get(i*SIZE+j-2), 1);
+                        graph.addOneWayConnection(nodes.get(i*SIZE+j-1), nodes.get(i*SIZE+j), 1);
+                    }
                     //Connecting all nodes with stellage next to it with a stellage
-                    graph.addOneWayConnection(nodes.get(i*SIZE+j-1), nodes.get(i*SIZE+j-2), 1);
-                    graph.addOneWayConnection(nodes.get(i*SIZE+j-1), nodes.get(i*SIZE+j), 1);
+
 
                     continue;
                 }           
