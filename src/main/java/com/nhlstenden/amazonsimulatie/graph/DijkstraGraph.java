@@ -60,7 +60,7 @@ public class DijkstraGraph {
         ArrayList<Edge> edgeList = new ArrayList<>();
 
         //for (Node node : adjNodes) {
-            edgeList = findEdge(sourceNode.getName());
+        edgeList = findEdge(sourceNode.getName());
         //}
 
         for (Edge edge : edgeList) {
