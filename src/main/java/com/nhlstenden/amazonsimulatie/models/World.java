@@ -70,7 +70,6 @@ public class World implements Model {
        // graph.addOneWayConnection(node6, node7, 1);
       //  graph.addOneWayConnection(node7, node8, 1);
 
-<<<<<<< Updated upstream
 
 //                DijkstraGraph graph = new DijkstraGraph();
 
@@ -93,8 +92,6 @@ public class World implements Model {
         }
         */
 
-=======
->>>>>>> Stashed changes
         return graph;
     }
 
@@ -136,6 +133,41 @@ public class World implements Model {
         for(NodeModel n : nodeModels){
             this.worldObjects.add(n);
         }
+    }
+
+    public Graaf buildRoad(){
+        Knoop nodeA = new Knoop("A");
+        Knoop nodeB = new Knoop("B");
+        Knoop nodeC = new Knoop("C");
+        Knoop nodeD = new Knoop("D"); 
+        Knoop nodeE = new Knoop("E");
+        Knoop nodeF = new Knoop("F");
+        
+        nodeA.addBestemming(nodeB, 10);
+        nodeA.addBestemming(nodeC, 15);
+        
+        nodeB.addBestemming(nodeD, 12);
+        nodeB.addBestemming(nodeF, 15);
+        
+        nodeC.addBestemming(nodeE, 10);
+        
+        nodeD.addBestemming(nodeE, 2);
+        nodeD.addBestemming(nodeF, 1);
+        
+        nodeF.addBestemming(nodeE, 5);
+        
+        Graaf graph = new Graph();
+        
+        graph.addNode(nodeA);
+        graph.addNode(nodeB);
+        graph.addNode(nodeC);
+        graph.addNode(nodeD);
+        graph.addNode(nodeE);
+        graph.addNode(nodeF);
+        
+        graph = Dijkstra.berekenPadVanafBegin(graph, nodeA);
+
+        return graph;
     }
 
     /*
