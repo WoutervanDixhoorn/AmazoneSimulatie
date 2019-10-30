@@ -1,10 +1,8 @@
 package com.nhlstenden.amazonsimulatie.models;
 
 import com.nhlstenden.amazonsimulatie.graph.Dijkstra;
-import com.nhlstenden.amazonsimulatie.graph.DijkstraGraph;
 import com.nhlstenden.amazonsimulatie.graph.Graaf;
 import com.nhlstenden.amazonsimulatie.graph.Knoop;
-import com.nhlstenden.amazonsimulatie.graph.Node;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
@@ -28,7 +26,7 @@ public class World implements Model {
     private List<Object3D> worldObjects;
 
 
-    private DijkstraGraph graph;
+    private Graaf graaf;
 
 
     /*
@@ -47,88 +45,85 @@ public class World implements Model {
         buildWarehouse();
 
         //this.graph = buildDijkstraGraph();
-        this.worldObjects.add(new Robot(buildRoad()));
+        this.worldObjects.add(new Robot(graaf));
     }    
-
-    public DijkstraGraph buildDijkstraGraph() {
-        graph = new DijkstraGraph();
-
-        //Node node1 = new Node("Source", 0, 0);
-        //Node node2 = new Node("Stellage1", 5, 0);
-        //Node node3 = new Node("Stellage2", 5, 5);
-        //Node node4 = new Node("Stellage3", 5, 10);
-       // Node node5 = new Node("Stellage4", 5, 15);
-        //Node node6 = new Node("Stellage5", 0, 15);
-        //Node node7 = new Node("Stellage6", 10, 15);
-        //Node node8 = new Node("Stellage7", 50, 50);
-
-        //graph.addOneWayConnection(node1, node2, 1);
-       // graph.addOneWayConnection(node2, node3, 1);
-       // graph.addOneWayConnection(node3, node4, 1);
-       // graph.addOneWayConnection(node4, node5, 1);
-       // graph.addOneWayConnection(node5, node6, 1);
-       // graph.addOneWayConnection(node6, node7, 1);
-      //  graph.addOneWayConnection(node7, node8, 1);
-
-
-//                DijkstraGraph graph = new DijkstraGraph();
-
-        /*
-        for(int i = 0; i < size-1; i++){
-            for(int j = 0; j < size-1; j++){
-                if(i == 0 && j == 0){temp.add(new Node("Source", 0,0)); continue;}
-                temp.add(new Node("Node" + i + "." + j, i*2,j*2));
-            }
-        }
-
-        for(int i = 0; i < size-1; i++){
-            for(int j = 0; j < size-1; j++){
-                //if(i <= 1 && j < size-1){
-                    graph.addOneWayConnection(temp.get(i*size+j), temp.get(i*size+j), 1);
-                //}//else if(j < size-1){
-                //    graph.addOneWayConnection(temp.get(i*size+j), temp.get(i*size+j+1), 1);
-                //}
-            }
-        }
-        */
-
-        return graph;
-    }
-
-    public ArrayList<Node> getPath(String current, String dest) {
-        ArrayList<Node> path = graph.returnShortestPathToNode(current, dest);
-
-        return path;
-    }
-
 
     private void buildWarehouse(){
         List<NodeModel> nodeModels = new ArrayList<NodeModel>();
+        List<Knoop> knopen = new ArrayList<>();
 
-        int SIZE = 6;
+        //SIZE needs to my uneven
+        int SIZE = 5;
         int spacing = 5;
         int offset = 5;
+        //Generating locations and nodes
         for(int i = 0; i < SIZE; i++){
             for(int j = 0; j < SIZE; j++){
                 if(i == 0){
-                    if(j == 0){
+                    if(j == 0 || j == SIZE-1){
+                        //Empty node toevoegen zodat de dimensie van de lijst klopt
+                        knopen.add(new Knoop("Empty", i*spacing + offset,j*spacing + offset));
+                        continue;
+                    }
+                    if(j == SIZE/2){
                         nodeModels.add(new NodeModel("source",i*spacing + offset,j*spacing + offset));
+                        knopen.add(new Knoop("Source", i*spacing + offset,j*spacing + offset));
                         continue;
                     }
                     nodeModels.add(new NodeModel(i*spacing + offset,j*spacing + offset));
+                    knopen.add(new Knoop("Knoop" + i + "-" + j, i*spacing + offset,j*spacing + offset));
                     continue;
                 }
                 if(j%2 == 0){
                     nodeModels.add(new NodeModel("stellage",i*spacing + offset,j*spacing + offset));
+                    knopen.add(new Knoop("Stellage" + i + "-" + j, i*spacing + offset,j*spacing + offset));
                     continue;
                 }
-                nodeModels.add(new NodeModel(i*spacing + offset,j*spacing + offset));            
+                nodeModels.add(new NodeModel(i*spacing + offset,j*spacing + offset));
+                knopen.add(new Knoop("Knoop" + i + "-" + j, i*spacing + offset,j*spacing + offset));            
             }
         }
-
+ 
         for(NodeModel n : nodeModels){
             this.worldObjects.add(n);
         }
+
+        //USAGE: nodeA.addBestemming(nodeB, 10);
+        //Linking nodes
+        for(int i = 0; i < SIZE; i++){
+            for(int j = 0; j < SIZE; j++){
+                if(i == 0){
+                //Skip first and last node
+                    if(j == 0 || j == SIZE-1){
+                        continue;
+                    }
+                    if(knopen.get(i*(SIZE)+j).getNaam().equals("Source")){
+                        knopen.get(i*(SIZE)+j).addBestemming(knopen.get(i*(SIZE)+j-1), 1);
+                        knopen.get(i*(SIZE)+j).addBestemming(knopen.get(i*(SIZE)+j+1), 1);
+                        knopen.get(i*(SIZE)+j-1).addBestemming(knopen.get((i+1)*(SIZE)+j-1), 1);
+                        knopen.get(i*(SIZE)+j+1).addBestemming(knopen.get((i+1)*(SIZE)+j+1), 1);
+                    }     
+                }else if(i > 0 && i < SIZE){
+                    if(j%2 != 0 && j != 0){
+                        knopen.get(i*(SIZE)+j).addBestemming(knopen.get(i*(SIZE)+j-1), 1);
+                        knopen.get(i*(SIZE)+j).addBestemming(knopen.get(i*(SIZE)+j+1), 1);
+                        if(i < SIZE-1){
+                            knopen.get(i*(SIZE)+j).addBestemming(knopen.get((i+1)*(SIZE)+j), 1);
+                        } 
+                    }
+
+                }
+            }
+        }
+        //Graaf van warehouse
+        this.graaf = new Graaf();
+
+        for(Knoop k : knopen){
+            this.graaf.addNode(k);
+        }
+        System.out.println("Huh");
+        //Init alle paden
+        this.graaf = Dijkstra.berekenPadVanafBegin(graaf, graaf.getKnoopByName("Source"));
     }
 
     public Graaf buildRoad(){

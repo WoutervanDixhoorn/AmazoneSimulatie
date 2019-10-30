@@ -1,6 +1,5 @@
 package com.nhlstenden.amazonsimulatie.models;
 
-import com.nhlstenden.amazonsimulatie.graph.Dijkstra;
 import com.nhlstenden.amazonsimulatie.graph.DijkstraGraph;
 import com.nhlstenden.amazonsimulatie.graph.Graaf;
 import com.nhlstenden.amazonsimulatie.graph.Knoop;
@@ -27,27 +26,20 @@ class Robot implements Object3D, Updatable {
     private double rotationY = 0;
     private double rotationZ = 0;
 
-    private ArrayList<Node> nodes;
     private List<Knoop> knopen;
 
     private int nodeGetter = 0;
 
-    DijkstraGraph graph;
     Graaf graaf;
     Graaf pad;
-
-    private boolean arrived;
-
-    public Robot(DijkstraGraph graph) {
-        this.arrived = false;
-        this.graph = graph;
-        this.uuid = UUID.randomUUID();
-    }
+    String bestemming = "Stellage4-2";
 
     public Robot(Graaf graph) {
-        this.arrived = false;
         this.graaf = graph;
         this.uuid = UUID.randomUUID();
+
+        x = graaf.getKnoopByName("Source").getX();
+        z = graaf.getKnoopByName("Source").getZ();
     }
 
     public Robot() {
@@ -69,60 +61,17 @@ class Robot implements Object3D, Updatable {
      */
     @Override
     public boolean update() {
-//        if(x < 15) {
-//            this.x -= 0.5;
-//        }
 
-        //if(x==0&&z==0) {
-            //graph.reset();
-            //this.nodes = graph.returnShortestPathToNode("Source", "Stellage2.2");
-        //} else  {
-            //graph.reset();
-            //switchArrived();
-        //}
-
-        
-        //if(!arrived) {
-           // graph.reset();
-          //  this.nodes = graph.returnShortestPathToNode("Source", "Stellage2.2");
-        //} else  {
-        //    graph.reset();
-        //    switchArrived();
-        //    nodeGetter = 0;
-        //    this.nodes = graph.returnShortestPathToNode("Stellage2.2", "Source");
-        //}
-            /*
-        if(nodeGetter == (nodes.size())) {
-
-            Collections.reverse(nodes);
-            nodeGetter = 0;
-            return false;
+        if(x==graaf.getKnoopByName("Source").getX()&&z==graaf.getKnoopByName("Source").getZ()) {
+            this.knopen = new ArrayList<>();
+            this.knopen = graaf.getKnoopByName(bestemming).getKorstePad();
+            if(!this.knopen.contains(graaf.getKnoopByName(bestemming))){
+                this.knopen.add(graaf.getKnoopByName(bestemming));
+            }
         }
 
-        if(x < nodes.get(nodeGetter).getX()) {
-            this.x += 0.5;
-        }
-        if(x > nodes.get(nodeGetter).getX()) {
-            this.x -= 0.5;
-        }
-        if(z < nodes.get(nodeGetter).getZ()) {
-            this.z += 0.5;
-        }
-        if(z > nodes.get(nodeGetter).getZ()) {
-            this.z -= 0.5;
-        }
-        if(x == nodes.get(nodeGetter).getX() && z == nodes.get(nodeGetter).getZ()) {
-            nodeGetter++;
-        }
-            
-*/
-        if(x==0&&z==0) {
-            this.knopen = graaf.getKnoopByName("F").getKorstePad();
-            this.knopen.add(graaf.getKnoopByName("F"));
-        }
-
-        if(nodeGetter == (knopen.size())) {
-
+        if(nodeGetter == (knopen.size()-1)) {
+            System.out.println("Arrived");
             Collections.reverse(knopen);
             nodeGetter = 0;
             return false;
@@ -145,10 +94,6 @@ class Robot implements Object3D, Updatable {
         }
 
         return true;
-    }
-
-    private void switchArrived() {
-        this.arrived = !arrived;
     }
 
     @Override

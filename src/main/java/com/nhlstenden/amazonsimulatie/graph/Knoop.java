@@ -53,4 +53,8 @@ public class Knoop{
     public int getZ() {
         return z;
     }
+
+    public String getNaam(){
+        return naam;
+    }
 }

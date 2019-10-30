@@ -17,7 +17,18 @@ public class Graaf {
     public Knoop getKnoopByName(String naam){
         Knoop temp = null;
         for(Knoop k : knopen){
-            if(k.naam == naam){
+            if(k.naam.equals(naam)){
+                temp = k;
+                break;
+            }
+        }
+        return temp;
+    }
+
+    public Knoop getKnoopByLocation(int x, int z){
+        Knoop temp = null;
+        for(Knoop k : knopen){
+            if(k.getX() == x && k.getZ() == z){
                 temp = k;
                 break;
             }
