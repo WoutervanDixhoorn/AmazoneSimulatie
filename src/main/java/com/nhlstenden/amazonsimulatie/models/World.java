@@ -40,18 +40,15 @@ public class World implements Model {
      */
     public World() {
         this.worldObjects = new ArrayList<>();
-        this.graph = buildDijkstraGraph();
-        this.worldObjects.add(new Robot(graph));
+        //Init above
+        buildWarehouse(5);
 
-
+        //this.graph = buildDijkstraGraph();
+        this.worldObjects.add(new Robot());
     }    
 
     public DijkstraGraph buildDijkstraGraph() {
         graph = new DijkstraGraph();
-
-        for(NodeModel n : buildWarehouse()){
-            this.worldObjects.add(n);
-        }
 
         //Node node1 = new Node("Source", 0, 0);
         //Node node2 = new Node("Stellage1", 5, 0);
@@ -70,6 +67,7 @@ public class World implements Model {
        // graph.addOneWayConnection(node6, node7, 1);
       //  graph.addOneWayConnection(node7, node8, 1);
 
+<<<<<<< Updated upstream
 
 //                DijkstraGraph graph = new DijkstraGraph();
 //
@@ -113,84 +111,38 @@ public class World implements Model {
         }
         */
 
+=======
+>>>>>>> Stashed changes
         return graph;
     }
 
-    public ArrayList<Node> getPath(String current, String dest) {
-        ArrayList<Node> path = graph.returnShortestPathToNode(current, dest);
+    private void buildWarehouse(int Size){
+        ArrayList<NodeModel> nodeModels = new ArrayList<>();
 
-        return path;
-    }
-
-
-    private List<NodeModel> buildWarehouse(){
-        List<NodeModel> nodeModels = new ArrayList<NodeModel>();
-        List<Node> nodes = new ArrayList<Node>();
-
-        //for(Node n : nodes){
-            //nodeModels.add(new NodeModel(n.getX(),n.getZ()));
-        //}
-        int SIZE = 6;
+        int SIZE = Size;
         int spacing = 5;
         int offset = 5;
-        for(int i = 0; i < SIZE-1; i++){
-            for(int j = 0; j < SIZE-1; j++){
+        for(int i = 0; i < SIZE; i++){
+            for(int j = 0; j < SIZE; j++){
                 if(i == 0){
                     if(j == 0){
                         nodeModels.add(new NodeModel("source",i*spacing + offset,j*spacing + offset));
-                        nodes.add(new Node("Source", 0, 0));
                         continue;
                     }
                     nodeModels.add(new NodeModel(i*spacing + offset,j*spacing + offset));
-                    nodes.add(new Node("Node" + i + "." + j, i*spacing + offset,j*spacing + offset));
                     continue;
                 }
                 if(j%2 == 0){
                     nodeModels.add(new NodeModel("stellage",i*spacing + offset,j*spacing + offset));
-                    nodes.add(new Node("Stellage" + i + "." + j, i*spacing + offset,j*spacing + offset));
                     continue;
                 }
-                nodeModels.add(new NodeModel(i*spacing + offset,j*spacing + offset)); 
-                nodes.add(new Node("Node" + i + "." + j, i*spacing + offset,j*spacing + offset));             
+                nodeModels.add(new NodeModel(i*spacing + offset,j*spacing + offset));            
             }
         }
 
-        for(int i = 0; i < SIZE-1; i++){
-            for(int j = 0; j < SIZE-1; j++){
-                //Only on the first
-                if(i == 0 && j < SIZE-1){
-                    if(j == 0){
-                        //Connecting source node with surroudning
-                        graph.addOneWayConnection(nodes.get(0), nodes.get(1), 1);
-                        graph.addOneWayConnection(nodes.get(0), nodes.get(SIZE-1), 1);
-                        continue;
-                    }
-                    //Connecting all nodes on first row sideways
-                    if(j < SIZE - 2){
-                        graph.addOneWayConnection(nodes.get(i*SIZE+j), nodes.get(i*SIZE+j+1), 1);
-                    }
-                    //Connecting all nodes on first row under it
-                    graph.addOneWayConnection(nodes.get(i*SIZE+j), nodes.get((i+1)*SIZE+j-1), 1);
-                    continue;
-                }
-                if(j%2 != 0){
-                    if(i*SIZE+j >= 24){
-                        break;
-                    }
-                    if(j < SIZE -1){
-                        graph.addOneWayConnection(nodes.get(i*SIZE+j-1), nodes.get(i*SIZE+j-2), 1);
-                        graph.addOneWayConnection(nodes.get(i*SIZE+j-1), nodes.get(i*SIZE+j), 1);
-                    }
-                    //Connecting all nodes with stellage next to it with a stellage
-
-
-                    continue;
-                }           
-            }
+        for(NodeModel n : nodeModels){
+            this.worldObjects.add(n);
         }
-
-
-        return nodeModels;
     }
 
     /*
