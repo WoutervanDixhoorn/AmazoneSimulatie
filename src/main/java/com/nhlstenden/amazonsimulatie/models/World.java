@@ -44,7 +44,7 @@ public class World implements Model {
     public World() {
         this.worldObjects = new ArrayList<>();
         //Init above
-        buildWarehouse(5);
+        buildWarehouse();
 
         //this.graph = buildDijkstraGraph();
         this.worldObjects.add(new Robot(buildRoad()));
@@ -152,7 +152,7 @@ public class World implements Model {
         
         nodeF.addBestemming(nodeE, 5);
         
-        Graaf graph = new Graph();
+        Graaf graph = new Graaf();
         
         graph.addNode(nodeA);
         graph.addNode(nodeB);

@@ -118,6 +118,7 @@ class Robot implements Object3D, Updatable {
 */
         if(x==0&&z==0) {
             this.knopen = graaf.getKnoopByName("F").getKorstePad();
+            this.knopen.add(graaf.getKnoopByName("F"));
         }
 
         if(nodeGetter == (knopen.size())) {
