@@ -17,6 +17,7 @@ public class DijkstraGraph {
 
     public void addOneWayConnection(Node from, Node to, int cost) {
         from.setAdjNodes(to);
+        to.setAdjNodes(from);
 
         if(findNode(to.getName()) == null) {
             this.nodes.add(to);
@@ -57,31 +58,37 @@ public class DijkstraGraph {
 
         //ArrayList<Node> adjNodes = sourceNode.getAdjNodes();
 
-        ArrayList<Edge> edgeList = new ArrayList<>();
+        ArrayList<Edge> edgeList;
 
         //for (Node node : adjNodes) {
         edgeList = findEdge(sourceNode.getName());
         //}
 
         for (Edge edge : edgeList) {
-            if (sourceNode.getShortestDistance() + edge.getCost() < edge.getTo().getShortestDistance())
+            if (sourceNode.getShortestDistance() + edge.getCost() < edge.getTo().getShortestDistance()) {
                 edge.getTo().setShortestDistance(sourceNode.getShortestDistance() + edge.getCost());
 
+            }
             edge.getTo().setPrevious(sourceNode);
         }
+
         int prevDist = Integer.MAX_VALUE;
         for(Edge edge : edgeList) {
             if(edge.getTo().getShortestDistance() < prevDist && !edge.getTo().isVisited()) {
                 shortestNextNode = edge.getTo();
-                prevDist = edge.getTo().getShortestDistance();
             }
+            prevDist = edge.getTo().getShortestDistance();
         }
 
+<<<<<<< HEAD
 //        if(shortestNextNode == null && sourceNode.getPrevious() != null) {
 //            return Dijkstra(sourceNode.getPrevious().getName(), to);
 //        }
 
         if(sourceNode.getName().equals(to)) {
+=======
+        if(shortestNextNode == null) {
+>>>>>>> Dijkstrabranch
             return Dijkstra("end", to);
         }
 

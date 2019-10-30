@@ -12,6 +12,8 @@ public class Node implements Comparable<Node> {
 
     private boolean visited;
 
+    private boolean deadend;
+
     // Waar bevindt de Node zich
     private int x;
     private int z;
@@ -72,6 +74,14 @@ public class Node implements Comparable<Node> {
 
     public int getZ() {
         return z;
+    }
+
+    public boolean isDeadend() {
+        return deadend;
+    }
+
+    public void setDeadend(boolean deadend) {
+        this.deadend = deadend;
     }
 
     @Override

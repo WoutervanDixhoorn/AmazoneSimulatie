@@ -2,6 +2,7 @@ package com.nhlstenden.amazonsimulatie.base;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import com.nhlstenden.amazonsimulatie.controllers.Controller;
@@ -70,7 +71,40 @@ public class App extends SpringBootServletInitializer implements WebSocketConfig
 //        for (String each : path)
 //            System.out.println(each);
 
+<<<<<<< HEAD
         DijkstraGraph graph = new DijkstraGraph();
+=======
+//        DijkstraGraph graph = new DijkstraGraph();
+//
+//
+//        Node node1 = new Node("Source", 0, 0);
+//        Node node2 = new Node("Stellage1", 5, 0);
+//        Node node3 = new Node("Stellage2", 5, 5);
+//        Node node4 = new Node("Stellage3", 5, 10);
+//         Node node5 = new Node("Stellage4", 5, 15);
+//        Node node6 = new Node("Stellage5", 0, 15);
+//        Node node7 = new Node("Stellage6", 10, 15);
+//        Node node8 = new Node("Stellage7", 50, 50);
+//        Node node9 = new Node("Stellage8", 50, 50);
+//
+//        graph.addOneWayConnection(node1, node2, 1);
+//         graph.addOneWayConnection(node2, node3, 1);
+//         graph.addOneWayConnection(node3, node4, 1);
+//         graph.addOneWayConnection(node4, node5, 1);
+//         graph.addOneWayConnection(node5, node6, 1);
+//         graph.addOneWayConnection(node6, node8, 1);
+//          graph.addOneWayConnection(node7, node8, 1);
+//          graph.addOneWayConnection(node2, node7,1);
+//          graph.addOneWayConnection(node7, node9,1);
+//
+//          ArrayList<Node> nodes = graph.returnShortestPathToNode("Source", "Stellage7");
+//
+//          Collections.reverse(nodes);
+//          for(Node node : nodes) {
+//              System.out.println(node.getName() + "\n");
+//          }
+
+>>>>>>> Dijkstrabranch
 
         Node Source = new Node("Source", 0, 0);
         Node Stellage1 = new Node("Stellage1", 5, 0);
