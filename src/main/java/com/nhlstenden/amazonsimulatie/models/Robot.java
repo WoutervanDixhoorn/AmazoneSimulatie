@@ -63,20 +63,17 @@ class Robot implements Object3D, Updatable {
 
         if(x==0&&z==0) {
             graph.reset();
-            this.nodes = graph.returnShortestPathToNode("Source", "Stellage7");
+            this.nodes = graph.returnShortestPathToNode("Source", "Stellage2.2");
         } else  {
             graph.reset();
             switchArrived();
         }
 
         if(nodeGetter == (nodes.size())) {
-<<<<<<< HEAD
-            return true;
-=======
+
             Collections.reverse(nodes);
             nodeGetter = 0;
             return false;
->>>>>>> Dijkstrabranch
         }
 
         if(x < nodes.get(nodeGetter).getX()) {

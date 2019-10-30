@@ -80,15 +80,8 @@ public class DijkstraGraph {
             prevDist = edge.getTo().getShortestDistance();
         }
 
-<<<<<<< HEAD
-//        if(shortestNextNode == null && sourceNode.getPrevious() != null) {
-//            return Dijkstra(sourceNode.getPrevious().getName(), to);
-//        }
 
-        if(sourceNode.getName().equals(to)) {
-=======
         if(shortestNextNode == null) {
->>>>>>> Dijkstrabranch
             return Dijkstra("end", to);
         }
 
