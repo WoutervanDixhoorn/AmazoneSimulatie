@@ -71,8 +71,6 @@ class Robot implements Object3D, Updatable {
         }
 
         if(nodeGetter == (nodes.size())) {
-            switchArrived();
-            nodeGetter = 0;
             return true;
         }
 

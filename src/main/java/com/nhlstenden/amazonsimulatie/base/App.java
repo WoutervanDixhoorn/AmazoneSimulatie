@@ -70,8 +70,33 @@ public class App extends SpringBootServletInitializer implements WebSocketConfig
 //        for (String each : path)
 //            System.out.println(each);
 
+        DijkstraGraph graph = new DijkstraGraph();
 
-        SpringApplication.run(App.class, args);
+        Node Source = new Node("Source", 0, 0);
+        Node Stellage1 = new Node("Stellage1", 5, 0);
+        Node Stellage2 = new Node("Stellage2", 5, 5);
+        Node Stellage3 = new Node("Stellage3", 5, 10);
+         Node Stellage4 = new Node("Stellage4", 5, 15);
+        Node Stellage5 = new Node("Stellage5", 0, 15);
+        Node Stellage6 = new Node("Stellage6", 10, 15);
+        Node Stellage7 = new Node("Stellage7", 50, 50);
+
+        graph.addOneWayConnection(Source, Stellage1, 1);
+         graph.addOneWayConnection(Stellage1, Stellage2, 1);
+         graph.addOneWayConnection(Stellage2, Stellage3, 1);
+         graph.addOneWayConnection(Stellage3, Stellage4, 1);
+         graph.addOneWayConnection(Stellage4, Stellage5, 1);
+         graph.addOneWayConnection(Stellage5, Stellage7, 1);
+          graph.addOneWayConnection(Stellage6, Stellage7, 1);
+
+//          ArrayList<Node> nodes1 = graph.returnShortestPathToNode("Source", "Stellage7");
+//          graph.reset();
+        ArrayList<Node> nodes = graph.returnShortestPathToNode("Stellage7", "Source");
+          for(Node node : nodes) {
+              System.out.println(node.getName() + "\n");
+          }
+
+        //SpringApplication.run(App.class, args);
     }
     
     //De App is de applicatie en heeft de controller voor de simulatie in zich

@@ -37,7 +37,7 @@ public class DijkstraGraph {
         this.edges.add(edge2);
     }
 
-    private boolean Dijkstra(String source) {
+    private boolean Dijkstra(String source, String to) {
         if(source.equals("end")) {
             return false;
         }
@@ -77,15 +77,19 @@ public class DijkstraGraph {
             }
         }
 
-        if(shortestNextNode == null) {
-            return Dijkstra("end");
+//        if(shortestNextNode == null && sourceNode.getPrevious() != null) {
+//            return Dijkstra(sourceNode.getPrevious().getName(), to);
+//        }
+
+        if(sourceNode.getName().equals(to)) {
+            return Dijkstra("end", to);
         }
 
-        return Dijkstra(shortestNextNode.getName());
+        return Dijkstra(shortestNextNode.getName(), to);
     }
 
-    public void shortestPath(String source) {
-        Dijkstra(source);
+    public void shortestPath(String source, String to) {
+        Dijkstra(source, to);
 
         Collections.sort(nodes);
 
@@ -96,7 +100,7 @@ public class DijkstraGraph {
     }
 
     public ArrayList<Node> returnShortestPathToNode(String source, String to) {
-        shortestPath(source);
+        shortestPath(source, to);
 
         Node toNode = findNode(to);
 
