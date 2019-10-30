@@ -84,7 +84,6 @@ public class Node implements Comparable<Node> {
         this.deadend = deadend;
     }
 
-
     @Override
     public int compareTo(Node o) {
         if(this.getShortestDistance() > o.getShortestDistance())

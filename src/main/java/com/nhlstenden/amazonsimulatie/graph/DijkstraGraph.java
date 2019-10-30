@@ -67,24 +67,20 @@ public class DijkstraGraph {
         for (Edge edge : edgeList) {
             if (sourceNode.getShortestDistance() + edge.getCost() < edge.getTo().getShortestDistance()) {
                 edge.getTo().setShortestDistance(sourceNode.getShortestDistance() + edge.getCost());
-                edge.getTo().setPrevious(sourceNode);
-            }
-        }
 
-        if(sourceNode.getName().equals("Stellage6")) {
-            System.out.println("AAAAAA  " + "\n");
+            }
+            edge.getTo().setPrevious(sourceNode);
         }
 
         int prevDist = Integer.MAX_VALUE;
         for(Edge edge : edgeList) {
             if(edge.getTo().getShortestDistance() < prevDist && !edge.getTo().isVisited()) {
                 shortestNextNode = edge.getTo();
-                prevDist = edge.getTo().getShortestDistance();
-
             }
+            prevDist = edge.getTo().getShortestDistance();
         }
 
-        if(sourceNode.getName().equals(to)) {
+        if(shortestNextNode == null) {
             return Dijkstra("end", to);
         }
 

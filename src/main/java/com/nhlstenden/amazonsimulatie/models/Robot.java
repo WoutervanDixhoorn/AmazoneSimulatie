@@ -5,6 +5,7 @@ import com.nhlstenden.amazonsimulatie.graph.Node;
 
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.UUID;
 
 /*
@@ -60,20 +61,18 @@ class Robot implements Object3D, Updatable {
 //            this.x -= 0.5;
 //        }
 
-        if(!arrived) {
+        if(x==0&&z==0) {
             graph.reset();
-            this.nodes = graph.returnShortestPathToNode("Source", "Stellage2.2");
+            this.nodes = graph.returnShortestPathToNode("Source", "Stellage7");
         } else  {
             graph.reset();
             switchArrived();
-            nodeGetter = 0;
-            this.nodes = graph.returnShortestPathToNode("Stellage2.2", "Source");
         }
 
         if(nodeGetter == (nodes.size())) {
-            switchArrived();
+            Collections.reverse(nodes);
             nodeGetter = 0;
-            return true;
+            return false;
         }
 
         if(x < nodes.get(nodeGetter).getX()) {
