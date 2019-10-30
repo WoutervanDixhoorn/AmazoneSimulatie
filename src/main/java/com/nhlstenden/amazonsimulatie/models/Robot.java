@@ -1,11 +1,14 @@
 package com.nhlstenden.amazonsimulatie.models;
 
+import com.nhlstenden.amazonsimulatie.graph.Dijkstra;
 import com.nhlstenden.amazonsimulatie.graph.DijkstraGraph;
+import com.nhlstenden.amazonsimulatie.graph.Graaf;
+import com.nhlstenden.amazonsimulatie.graph.Knoop;
 import com.nhlstenden.amazonsimulatie.graph.Node;
-
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 import java.util.UUID;
 
 /*
@@ -25,16 +28,25 @@ class Robot implements Object3D, Updatable {
     private double rotationZ = 0;
 
     private ArrayList<Node> nodes;
+    private List<Knoop> knopen;
 
     private int nodeGetter = 0;
 
     DijkstraGraph graph;
+    Graaf graaf;
+    Graaf pad;
 
     private boolean arrived;
 
     public Robot(DijkstraGraph graph) {
         this.arrived = false;
         this.graph = graph;
+        this.uuid = UUID.randomUUID();
+    }
+
+    public Robot(Graaf graph) {
+        this.arrived = false;
+        this.graaf = graph;
         this.uuid = UUID.randomUUID();
     }
 
@@ -61,15 +73,15 @@ class Robot implements Object3D, Updatable {
 //            this.x -= 0.5;
 //        }
 
-<<<<<<< Updated upstream
-        if(x==0&&z==0) {
-            graph.reset();
-            this.nodes = graph.returnShortestPathToNode("Source", "Stellage2.2");
-        } else  {
-            graph.reset();
-            switchArrived();
-        }
-=======
+        //if(x==0&&z==0) {
+            //graph.reset();
+            //this.nodes = graph.returnShortestPathToNode("Source", "Stellage2.2");
+        //} else  {
+            //graph.reset();
+            //switchArrived();
+        //}
+
+        
         //if(!arrived) {
            // graph.reset();
           //  this.nodes = graph.returnShortestPathToNode("Source", "Stellage2.2");
@@ -79,8 +91,7 @@ class Robot implements Object3D, Updatable {
         //    nodeGetter = 0;
         //    this.nodes = graph.returnShortestPathToNode("Stellage2.2", "Source");
         //}
->>>>>>> Stashed changes
-
+            /*
         if(nodeGetter == (nodes.size())) {
 
             Collections.reverse(nodes);
@@ -103,7 +114,34 @@ class Robot implements Object3D, Updatable {
         if(x == nodes.get(nodeGetter).getX() && z == nodes.get(nodeGetter).getZ()) {
             nodeGetter++;
         }
+            
+*/
+        if(x==0&&z==0) {
+            this.knopen = graaf.getKnoopByName("F").getKorstePad();
+        }
 
+        if(nodeGetter == (knopen.size())) {
+
+            Collections.reverse(knopen);
+            nodeGetter = 0;
+            return false;
+        }
+
+        if(x < knopen.get(nodeGetter).getX()) {
+            this.x += 0.5;
+        }
+        if(x > knopen.get(nodeGetter).getX()) {
+            this.x -= 0.5;
+        }
+        if(z < knopen.get(nodeGetter).getZ()) {
+            this.z += 0.5;
+        }
+        if(z > knopen.get(nodeGetter).getZ()) {
+            this.z -= 0.5;
+        }
+        if(x == knopen.get(nodeGetter).getX() && z == knopen.get(nodeGetter).getZ()) {
+            nodeGetter++;
+        }
 
         return true;
     }

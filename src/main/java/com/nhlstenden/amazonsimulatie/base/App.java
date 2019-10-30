@@ -7,7 +7,10 @@ import java.util.List;
 
 import com.nhlstenden.amazonsimulatie.controllers.Controller;
 import com.nhlstenden.amazonsimulatie.controllers.SimulationController;
+import com.nhlstenden.amazonsimulatie.graph.Dijkstra;
 import com.nhlstenden.amazonsimulatie.graph.DijkstraGraph;
+import com.nhlstenden.amazonsimulatie.graph.Graaf;
+import com.nhlstenden.amazonsimulatie.graph.Knoop;
 import com.nhlstenden.amazonsimulatie.graph.Node;
 import com.nhlstenden.amazonsimulatie.models.World;
 import com.nhlstenden.amazonsimulatie.views.DefaultWebSocketView;

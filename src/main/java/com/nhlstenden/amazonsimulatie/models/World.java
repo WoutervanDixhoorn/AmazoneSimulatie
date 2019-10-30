@@ -1,6 +1,9 @@
 package com.nhlstenden.amazonsimulatie.models;
 
+import com.nhlstenden.amazonsimulatie.graph.Dijkstra;
 import com.nhlstenden.amazonsimulatie.graph.DijkstraGraph;
+import com.nhlstenden.amazonsimulatie.graph.Graaf;
+import com.nhlstenden.amazonsimulatie.graph.Knoop;
 import com.nhlstenden.amazonsimulatie.graph.Node;
 
 import java.beans.PropertyChangeListener;
@@ -44,7 +47,7 @@ public class World implements Model {
         buildWarehouse(5);
 
         //this.graph = buildDijkstraGraph();
-        this.worldObjects.add(new Robot());
+        this.worldObjects.add(new Robot(buildRoad()));
     }    
 
     public DijkstraGraph buildDijkstraGraph() {
@@ -67,30 +70,8 @@ public class World implements Model {
        // graph.addOneWayConnection(node6, node7, 1);
       //  graph.addOneWayConnection(node7, node8, 1);
 
-<<<<<<< Updated upstream
 
 //                DijkstraGraph graph = new DijkstraGraph();
-//
-//
-//        Node node1 = new Node("Source", 0, 0);
-//        Node node2 = new Node("Stellage1", 5, 0);
-//        Node node3 = new Node("Stellage2", 5, 5);
-//        Node node4 = new Node("Stellage3", 5, 10);
-//         Node node5 = new Node("Stellage4", 5, 15);
-//        Node node6 = new Node("Stellage5", 0, 15);
-//        Node node7 = new Node("Stellage6", 10, 15);
-//        Node node8 = new Node("Stellage7", 10, 25);
-//        Node node9 = new Node("Stellage8", 50, 50);
-//
-//        graph.addOneWayConnection(node1, node2, 1);
-//         graph.addOneWayConnection(node2, node3, 1);
-//         graph.addOneWayConnection(node3, node4, 1);
-//         graph.addOneWayConnection(node4, node5, 1);
-//         graph.addOneWayConnection(node5, node6, 1);
-//         graph.addOneWayConnection(node6, node8, 1);
-//          graph.addOneWayConnection(node7, node8, 1);
-//          graph.addOneWayConnection(node2, node7,1);
-//          graph.addOneWayConnection(node7, node9,1);
 
         /*
         for(int i = 0; i < size-1; i++){
@@ -111,8 +92,41 @@ public class World implements Model {
         }
         */
 
-=======
->>>>>>> Stashed changes
+        return graph;
+    }
+
+    private Graaf buildRoad(){
+        Knoop nodeA = new Knoop("A",0,5);
+        Knoop nodeB = new Knoop("B",5,5);
+        Knoop nodeC = new Knoop("C",5,10);
+        Knoop nodeD = new Knoop("D",10,10); 
+        Knoop nodeE = new Knoop("E",10,15);
+        Knoop nodeF = new Knoop("F",15,20);
+
+        nodeA.addBestemming(nodeB, 10);
+        nodeA.addBestemming(nodeC, 15);
+ 
+        nodeB.addBestemming(nodeD, 12);
+        nodeB.addBestemming(nodeF, 15);
+ 
+        nodeC.addBestemming(nodeE, 10);
+ 
+        nodeD.addBestemming(nodeE, 2);
+        nodeD.addBestemming(nodeF, 1);
+ 
+        nodeF.addBestemming(nodeE, 5);
+
+        Graaf graph = new Graaf();
+ 
+        graph.addNode(nodeA);
+        graph.addNode(nodeB);
+        graph.addNode(nodeC);
+        graph.addNode(nodeD);
+        graph.addNode(nodeE);
+        graph.addNode(nodeF);
+
+        graph = Dijkstra.berekenPadVanafBegin(graph, nodeA);
+
         return graph;
     }
 

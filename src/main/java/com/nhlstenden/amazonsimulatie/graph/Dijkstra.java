@@ -1,3 +1,5 @@
+package com.nhlstenden.amazonsimulatie.graph;
+
 import java.util.Map.Entry;
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -8,25 +10,25 @@ public class Dijkstra {
     public static Graaf berekenPadVanafBegin(Graaf graaf, Knoop begin) {
         begin.setAfstand(0);
      
-        Set<Knoop> bezochteKnopen = new HashSet<>();
-        Set<Knoop> onbezochteKnopen = new HashSet<>();
+        Set<Knoop> settledNodes = new HashSet<>();
+        Set<Knoop> unsettledNodes = new HashSet<>();
      
-        onbezochteKnopen.add(begin);
-     
-        while (onbezochteKnopen.size() != 0) {
-            Knoop huidigeKnoop = getLowestDistanceNode(onbezochteKnopen);
-            onbezochteKnopen.remove(huidigeKnoop);
-            for (Entry<Knoop, Integer> adjacencyPair : 
-            huidigeKnoop.getAangrezendeKnopen().entrySet()) {
-                Knoop adjacentNode = adjacencyPair.getKey();
-                Integer edgeWeight = adjacencyPair.getValue();
-                if (!bezochteKnopen.contains(adjacentNode)) {
-                    CalculateMinimumDistance(adjacentNode, edgeWeight, huidigeKnoop);
-                    onbezochteKnopen.add(adjacentNode);
-                }
+        unsettledNodes.add(begin);
+ 
+    while (unsettledNodes.size() != 0) {
+        Knoop currentNode = getLowestDistanceNode(unsettledNodes);
+        unsettledNodes.remove(currentNode);
+        for (Entry < Knoop, Integer> adjacencyPair: 
+          currentNode.getAangrezendeKnopen().entrySet()) {
+            Knoop adjacentNode = adjacencyPair.getKey();
+            Integer edgeWeight = adjacencyPair.getValue();
+            if (!settledNodes.contains(adjacentNode)) {
+                calculateMinimumDistance(adjacentNode, edgeWeight, currentNode);
+                unsettledNodes.add(adjacentNode);
             }
-            bezochteKnopen.add(huidigeKnoop);
         }
+        settledNodes.add(currentNode);
+    }
         return graaf;
     }
 
@@ -43,7 +45,7 @@ public class Dijkstra {
         return lowestDistanceNode;
     }
 
-    private static void CalculateMinimumDistance(Knoop evaluationNode, Integer edgeWeigh, Knoop sourceNode) {
+    private static void calculateMinimumDistance(Knoop evaluationNode, Integer edgeWeigh, Knoop sourceNode) {
         Integer sourceDistance = sourceNode.getAfstand();
         if (sourceDistance + edgeWeigh < evaluationNode.getAfstand()) {
             evaluationNode.setAfstand(sourceDistance + edgeWeigh);
