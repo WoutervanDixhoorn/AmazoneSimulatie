@@ -102,13 +102,9 @@ public class World implements Model {
     }
 
 
-    private List<NodeModel> buildWarehouse(){
+    private void buildWarehouse(){
         List<NodeModel> nodeModels = new ArrayList<NodeModel>();
-        List<Node> nodes = new ArrayList<Node>();
 
-        //for(Node n : nodes){
-            //nodeModels.add(new NodeModel(n.getX(),n.getZ()));
-        //}
         int SIZE = 6;
         int spacing = 5;
         int offset = 5;
@@ -136,12 +132,12 @@ public class World implements Model {
     }
 
     public Graaf buildRoad(){
-        Knoop nodeA = new Knoop("A");
-        Knoop nodeB = new Knoop("B");
-        Knoop nodeC = new Knoop("C");
-        Knoop nodeD = new Knoop("D"); 
-        Knoop nodeE = new Knoop("E");
-        Knoop nodeF = new Knoop("F");
+        Knoop nodeA = new Knoop("A",5,0);
+        Knoop nodeB = new Knoop("B",5,5);
+        Knoop nodeC = new Knoop("C",10,5);
+        Knoop nodeD = new Knoop("D",10,10); 
+        Knoop nodeE = new Knoop("E",20,15);
+        Knoop nodeF = new Knoop("F",30,30);
         
         nodeA.addBestemming(nodeB, 10);
         nodeA.addBestemming(nodeC, 15);
