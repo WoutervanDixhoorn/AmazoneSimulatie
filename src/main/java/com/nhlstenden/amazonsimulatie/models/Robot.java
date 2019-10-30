@@ -61,6 +61,7 @@ class Robot implements Object3D, Updatable {
 //            this.x -= 0.5;
 //        }
 
+<<<<<<< Updated upstream
         if(x==0&&z==0) {
             graph.reset();
             this.nodes = graph.returnShortestPathToNode("Source", "Stellage2.2");
@@ -68,6 +69,17 @@ class Robot implements Object3D, Updatable {
             graph.reset();
             switchArrived();
         }
+=======
+        //if(!arrived) {
+           // graph.reset();
+          //  this.nodes = graph.returnShortestPathToNode("Source", "Stellage2.2");
+        //} else  {
+        //    graph.reset();
+        //    switchArrived();
+        //    nodeGetter = 0;
+        //    this.nodes = graph.returnShortestPathToNode("Stellage2.2", "Source");
+        //}
+>>>>>>> Stashed changes
 
         if(nodeGetter == (nodes.size())) {
 
