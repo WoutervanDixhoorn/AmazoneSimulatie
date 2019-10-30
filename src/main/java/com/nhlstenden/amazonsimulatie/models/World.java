@@ -70,6 +70,7 @@ public class World implements Model {
        // graph.addOneWayConnection(node6, node7, 1);
       //  graph.addOneWayConnection(node7, node8, 1);
 
+<<<<<<< Updated upstream
 
 //                DijkstraGraph graph = new DijkstraGraph();
 
@@ -92,48 +93,26 @@ public class World implements Model {
         }
         */
 
+=======
+>>>>>>> Stashed changes
         return graph;
     }
 
-    private Graaf buildRoad(){
-        Knoop nodeA = new Knoop("A",0,5);
-        Knoop nodeB = new Knoop("B",5,5);
-        Knoop nodeC = new Knoop("C",5,10);
-        Knoop nodeD = new Knoop("D",10,10); 
-        Knoop nodeE = new Knoop("E",10,15);
-        Knoop nodeF = new Knoop("F",15,20);
+    public ArrayList<Node> getPath(String current, String dest) {
+        ArrayList<Node> path = graph.returnShortestPathToNode(current, dest);
 
-        nodeA.addBestemming(nodeB, 10);
-        nodeA.addBestemming(nodeC, 15);
- 
-        nodeB.addBestemming(nodeD, 12);
-        nodeB.addBestemming(nodeF, 15);
- 
-        nodeC.addBestemming(nodeE, 10);
- 
-        nodeD.addBestemming(nodeE, 2);
-        nodeD.addBestemming(nodeF, 1);
- 
-        nodeF.addBestemming(nodeE, 5);
-
-        Graaf graph = new Graaf();
- 
-        graph.addNode(nodeA);
-        graph.addNode(nodeB);
-        graph.addNode(nodeC);
-        graph.addNode(nodeD);
-        graph.addNode(nodeE);
-        graph.addNode(nodeF);
-
-        graph = Dijkstra.berekenPadVanafBegin(graph, nodeA);
-
-        return graph;
+        return path;
     }
 
-    private void buildWarehouse(int Size){
-        ArrayList<NodeModel> nodeModels = new ArrayList<>();
 
-        int SIZE = Size;
+    private List<NodeModel> buildWarehouse(){
+        List<NodeModel> nodeModels = new ArrayList<NodeModel>();
+        List<Node> nodes = new ArrayList<Node>();
+
+        //for(Node n : nodes){
+            //nodeModels.add(new NodeModel(n.getX(),n.getZ()));
+        //}
+        int SIZE = 6;
         int spacing = 5;
         int offset = 5;
         for(int i = 0; i < SIZE; i++){
