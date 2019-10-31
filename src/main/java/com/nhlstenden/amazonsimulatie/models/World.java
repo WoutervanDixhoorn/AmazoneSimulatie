@@ -25,8 +25,9 @@ public class World implements Model {
      */
     private List<Object3D> worldObjects;
 
-
-    private Graaf graaf;
+    //Global word variables
+    public static Graaf graaf;
+    public static List<StorageRack> storageRacks = new ArrayList<>();
 
 
     /*
@@ -49,7 +50,7 @@ public class World implements Model {
     }    
 
     private void buildWarehouse(){
-        List<StorageRack> storageRacks = new ArrayList<>();
+        //Graaf graaf = new Graaf();
         List<Knoop> knopen = new ArrayList<>();
 
         //SIZE needs to my uneven
@@ -117,49 +118,14 @@ public class World implements Model {
             }
         }
         //Graaf van warehouse
-        this.graaf = new Graaf();
+        graaf = new Graaf();
 
         for(Knoop k : knopen){
-            this.graaf.addNode(k);
+            graaf.addNode(k);
         }
 
         //Init alle paden
-        this.graaf = Dijkstra.berekenPadVanafBegin(graaf, graaf.getKnoopByName("Source"));
-    }
-
-    public Graaf buildRoad(){
-        Knoop nodeA = new Knoop("A",5,0);
-        Knoop nodeB = new Knoop("B",5,5);
-        Knoop nodeC = new Knoop("C",10,5);
-        Knoop nodeD = new Knoop("D",10,10); 
-        Knoop nodeE = new Knoop("E",20,15);
-        Knoop nodeF = new Knoop("F",30,30);
-        
-        nodeA.addBestemming(nodeB, 10);
-        nodeA.addBestemming(nodeC, 15);
-        
-        nodeB.addBestemming(nodeD, 12);
-        nodeB.addBestemming(nodeF, 15);
-        
-        nodeC.addBestemming(nodeE, 10);
-        
-        nodeD.addBestemming(nodeE, 2);
-        nodeD.addBestemming(nodeF, 1);
-        
-        nodeF.addBestemming(nodeE, 5);
-        
-        Graaf graph = new Graaf();
-        
-        graph.addNode(nodeA);
-        graph.addNode(nodeB);
-        graph.addNode(nodeC);
-        graph.addNode(nodeD);
-        graph.addNode(nodeE);
-        graph.addNode(nodeF);
-        
-        graph = Dijkstra.berekenPadVanafBegin(graph, nodeA);
-
-        return graph;
+        graaf = Dijkstra.berekenPadVanafBegin(graaf, graaf.getKnoopByName("Source"));
     }
 
     /*
