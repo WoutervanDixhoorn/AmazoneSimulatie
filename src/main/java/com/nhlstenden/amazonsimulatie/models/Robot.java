@@ -23,6 +23,10 @@ class Robot implements Object3D, Updatable {
     private double rotationX = 0;
     private double rotationY = 0;
     private double rotationZ = 0;
+    private double angle = Math.toDegrees(0);
+
+    private double rotationSpeed = 15;
+    private double movementSpeed = 0.5;
 
     private List<Knoop> knopen;
 
@@ -75,19 +79,44 @@ class Robot implements Object3D, Updatable {
             nodeGetter = 0;
             return false;
         }
-        //System.out.println("X: "+x +"\n" + "Z: " + z);
+        //System.out.println(angle);
 
         if(x < knopen.get(nodeGetter).getX()) {
-            this.x += 0.5;
+            if(Math.toRadians(angle) == Math.PI/2){
+                this.rotationY = Math.toRadians(angle);
+                this.x += movementSpeed;
+            }else{
+                angle -= rotationSpeed;
+                this.rotationY = Math.toRadians(angle);
+            }
         }
         if(x > knopen.get(nodeGetter).getX()) {
-            this.x -= 0.5;
+            if(Math.toRadians(angle) == Math.PI/2){
+                this.rotationY = Math.toRadians(angle);;
+                this.x -= movementSpeed;
+            }else{
+                angle -= rotationSpeed;
+                this.rotationY = Math.toRadians(angle);
+            }      
         }
         if(z < knopen.get(nodeGetter).getZ()) {
-            this.z += 0.5;
+            if(Math.toRadians(angle) == Math.PI){
+                this.rotationY = Math.toRadians(angle);;
+                this.z += movementSpeed;
+            }else{
+                angle += rotationSpeed;
+                this.rotationY = Math.toRadians(angle);
+            }
         }
         if(z > knopen.get(nodeGetter).getZ()) {
-            this.z -= 0.5;
+            if(Math.toRadians(angle) == Math.PI){
+            this.rotationY = Math.toRadians(angle);
+            this.z -= movementSpeed;
+            }else{
+                angle += rotationSpeed;
+                this.rotationY = Math.toRadians(angle);
+            }
+
         }
         if(x == knopen.get(nodeGetter).getX() && z == knopen.get(nodeGetter).getZ()) {
             nodeGetter++;
