@@ -1,9 +1,7 @@
 package com.nhlstenden.amazonsimulatie.models;
 
-import com.nhlstenden.amazonsimulatie.graph.DijkstraGraph;
 import com.nhlstenden.amazonsimulatie.graph.Graaf;
 import com.nhlstenden.amazonsimulatie.graph.Knoop;
-import com.nhlstenden.amazonsimulatie.graph.Node;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -33,10 +31,11 @@ class Robot implements Object3D, Updatable {
     Graaf graaf;
     Graaf pad;
     String bestemming = "Stellage4-2";
+    StorageRack currentStorage = null;
 
     public Robot(Graaf graph) {
+        this();
         this.graaf = graph;
-        this.uuid = UUID.randomUUID();
 
         x = graaf.getKnoopByName("Source").getX();
         z = graaf.getKnoopByName("Source").getZ();
@@ -93,6 +92,8 @@ class Robot implements Object3D, Updatable {
             nodeGetter++;
         }
 
+        //TEMP
+        //TODO: Optimise updates
         return true;
     }
 

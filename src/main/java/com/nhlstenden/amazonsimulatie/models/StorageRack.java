@@ -13,9 +13,10 @@ public class StorageRack implements Object3D, Updatable{
     private double rotationX = 0;
     private double rotationY = 0;
     private double rotationZ = 0;
-    private List<String> producten;
 
+    private List<String> producten;
     private String naam;
+    private boolean isAttached = false;
 
     
     public StorageRack(int x, int z, String naam, String producten[]){
@@ -33,11 +34,11 @@ public class StorageRack implements Object3D, Updatable{
 
     @Override
     public boolean update() {
+        if(isAttached){
+            return true;
+        }
 
-
-        //TEMP
-        //TODO: Optimise updates
-        return true;
+        return false;
     }
 
     @Override

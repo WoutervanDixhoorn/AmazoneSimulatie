@@ -49,7 +49,7 @@ public class World implements Model {
     }    
 
     private void buildWarehouse(){
-        List<NodeModel> nodeModels = new ArrayList<NodeModel>();
+        List<StorageRack> storageRacks = new ArrayList<>();
         List<Knoop> knopen = new ArrayList<>();
 
         //SIZE needs to my uneven
@@ -66,26 +66,27 @@ public class World implements Model {
                         continue;
                     }
                     if(j == SIZE/2){
-                        nodeModels.add(new NodeModel("source",i*spacing + offset,j*spacing + offset));
+                        //nodeModels.add(new NodeModel("source",i*spacing + offset,j*spacing + offset));
                         knopen.add(new Knoop("Source", i*spacing + offset,j*spacing + offset));
                         continue;
                     }
-                    nodeModels.add(new NodeModel(i*spacing + offset,j*spacing + offset));
+                    //nodeModels.add(new NodeModel(i*spacing + offset,j*spacing + offset));
                     knopen.add(new Knoop("Knoop" + i + "-" + j, i*spacing + offset,j*spacing + offset));
                     continue;
                 }
                 if(j%2 == 0){
-                    nodeModels.add(new NodeModel("stellage",i*spacing + offset,j*spacing + offset));
+                    //nodeModels.add(new NodeModel("stellage",i*spacing + offset,j*spacing + offset));
+                    storageRacks.add(new StorageRack(i*spacing + offset,j*spacing + offset, "Stellage" + i + "-" + j));
                     knopen.add(new Knoop("Stellage" + i + "-" + j, i*spacing + offset,j*spacing + offset));
                     continue;
                 }
-                nodeModels.add(new NodeModel(i*spacing + offset,j*spacing + offset));
+               //nodeModels.add(new NodeModel(i*spacing + offset,j*spacing + offset));
                 knopen.add(new Knoop("Knoop" + i + "-" + j, i*spacing + offset,j*spacing + offset));            
             }
         }
  
-        for(NodeModel n : nodeModels){
-            this.worldObjects.add(n);
+        for(StorageRack s : storageRacks){
+            this.worldObjects.add(s);
         }
 
         //USAGE: nodeA.addBestemming(nodeB, 10);
@@ -121,7 +122,7 @@ public class World implements Model {
         for(Knoop k : knopen){
             this.graaf.addNode(k);
         }
-        System.out.println("Huh");
+
         //Init alle paden
         this.graaf = Dijkstra.berekenPadVanafBegin(graaf, graaf.getKnoopByName("Source"));
     }
