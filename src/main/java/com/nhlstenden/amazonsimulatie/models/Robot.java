@@ -28,8 +28,6 @@ class Robot implements Object3D, Updatable {
 
     private int nodeGetter = 0;
 
-    private String destination;
-
     Graaf graaf;
     Graaf pad;
     String bestemming = "";
@@ -57,17 +55,17 @@ class Robot implements Object3D, Updatable {
      */
     @Override
     public boolean update() {
-        decideDestination();
+        //decideDestination(currentStorage);
 
         if(x==graaf.getKnoopByName("Source").getX()&&z==graaf.getKnoopByName("Source").getZ()) {
-            if(bestemming.isBlank()){
-                bestemming = World.storageRacks.get(3).getNaam();
+            if(bestemming.equals("")){
+                bestemming = World.storageRacks.get(2).getNaam();
             }
 
             this.knopen = new ArrayList<>();
-            this.knopen = graaf.getKnoopByName(destination).getKorstePad();
-            if(!this.knopen.contains(graaf.getKnoopByName(destination))){
-                this.knopen.add(graaf.getKnoopByName(destination));
+            this.knopen = graaf.getKnoopByName(bestemming).getKorstePad();
+            if(!this.knopen.contains(graaf.getKnoopByName(bestemming))){
+                this.knopen.add(graaf.getKnoopByName(bestemming));
             }
         }
 
@@ -77,6 +75,7 @@ class Robot implements Object3D, Updatable {
             nodeGetter = 0;
             return false;
         }
+        System.out.println("X: "+x +"\n" + "Z: " + z);
 
         if(x < knopen.get(nodeGetter).getX()) {
             this.x += 0.5;
@@ -100,7 +99,7 @@ class Robot implements Object3D, Updatable {
     }
 
     private void decideDestination(StorageRack storageRack) {
-        destination = storageRack.getNaam();
+        bestemming = storageRack.getNaam();
     }
 
     @Override
@@ -149,8 +148,8 @@ class Robot implements Object3D, Updatable {
         return this.rotationZ;
     }
 
-    public void setDestination(String destination) {
-        this.destination = destination;
+    public void setBestemming(String bestemming) {
+        this.bestemming = bestemming;
     }
 
 }

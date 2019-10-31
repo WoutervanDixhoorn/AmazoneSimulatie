@@ -47,8 +47,8 @@ public class World implements Model {
         //Init above
         buildWarehouse();
 
-        robot1 = new Robot(graaf);
-        robot2 = new Robot(graaf);
+        robot1 = new Robot();
+        robot2 = new Robot();
 
         //robot1.setDestination("Stellage1-0");
         //robot2.setDestination("Stellage4-0");

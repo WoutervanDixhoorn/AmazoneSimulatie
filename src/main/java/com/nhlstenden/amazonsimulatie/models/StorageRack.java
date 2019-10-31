@@ -98,8 +98,4 @@ public class StorageRack implements Object3D, Updatable{
         return this.rotationZ;
     }
 
-    public String getNaam() {
-        return naam;
-    }
-
 }
