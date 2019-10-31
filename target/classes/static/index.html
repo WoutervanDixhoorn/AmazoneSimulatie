@@ -34,9 +34,9 @@
                 camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 1, 1000);
                 cameraControls = new THREE.OrbitControls(camera);
                 gltfLoader = new THREE.GLTFLoader();
-                camera.position.z = 15;
-                camera.position.y = 5;
-                camera.position.x = 15;
+                camera.position.z = 50;
+                camera.position.y = 25;
+                camera.position.x = 50;
                 cameraControls.update();
 
                 scene = new THREE.Scene();
@@ -55,7 +55,7 @@
 
                 window.addEventListener('resize', onWindowResize, false);
 
-                // warehouse plane
+                // warehouse floor
                 var geometry = new THREE.PlaneGeometry(30, 30);
                 var material = new THREE.MeshLambertMaterial({ map: new THREE.TextureLoader().load("textures/floor.jpg"), side: THREE.DoubleSide });
                 var plane = new THREE.Mesh(geometry, material);
@@ -64,18 +64,27 @@
                 plane.position.z = 15;
                 plane.receiveShadow = true;
                 scene.add(plane);
+
+
+
+
                 
                 //plane outside
-                var geometry = new THREE.PlaneGeometry(120, 120);
-                var material = new THREE.MeshLambertMaterial({color: 0x006600, side: THREE.DoubleSide});
-                var planeOutside = new THREE.Mesh(geometry, material);
-                planeOutside.rotation.x = Math.PI / 2.0;
-                planeOutside.position.x = 0;
-                planeOutside.position.y = -0.001;
-                planeOutside.position.z = 0;
-                planeOutside.receiveShadow = true;
-                scene.add(planeOutside);
+                var geometry = new THREE.PlaneGeometry(5, 5);
+                var material = new THREE.MeshLambertMaterial({ map: new THREE.TextureLoader().load("textures/grass.jpg"), side: THREE.DoubleSide });
+                
+                for ( var j = 0; j < 25; j ++ ) {
 
+                    for( var i = 0; i < 25; i ++ ){
+                        var planeOutside = new THREE.Mesh(geometry, material);    
+                        planeOutside.rotation.x = Math.PI / 2.0;
+                        planeOutside.position.x = -45 + (i*5);
+                        planeOutside.position.y = -0.001;
+                        planeOutside.position.z = -45 + (j*5); 
+                        planeOutside.receiveShadow = true;
+                        scene.add(planeOutside);
+                    }
+                }
                 //lights
                 var light = new THREE.SpotLight( 0xffffff);
                 light.position.set(10 , 10 , 10);
@@ -110,37 +119,161 @@
                 light4.target.position.z = 20;
                 light4.castShadow = true;
 
+
+
+                //making the shadows lighter.
                 var ambLight = new THREE.AmbientLight( 0xffffff, 0.3);
                 scene.add(ambLight);
-
-                //for ambient light shadows!{
-                // light.shadowBias = 0.0001;
-                // light.shadow.mapSize.width = 2048;
-                // light.shadow.mapSize.height = 2048;
-
-                // var d = 50;
-
-                // light.shadowCameraLeft = -d;
-                // light.shadowCameraRight = d;
-                // light.shadowCameraTop = d;
-                // light.shadowCameraBottom = -d;}
 
                 scene.add (light, light2, light3, light4);
                 scene.add (light.target, light2.target, light3.target, light4.target);
                 
 
-                //helpers
+                // //testing wall shadows
+                // var dLight = new THREE.DirectionalLight( 0xffffff, 1);
+                // dLight.position.set(0,10,0);
+                // dLight.target = plane;
+                // dLight.castShadow = true;
 
+				// var d = 50;
+				// dLight.shadow.camera.left = - d;
+				// dLight.shadow.camera.right = d;
+				// dLight.shadow.camera.top = d;
+				// dLight.shadow.camera.bottom = - d;
+
+                // var shadowHelper = new THREE.CameraHelper ( dLight.shadow.camera);
+                // scene.add(shadowHelper);
+                // scene.add(dLight);
+
+
+
+                // helpers
                 var shadowHelper = new THREE.CameraHelper ( light.shadow.camera);
                 scene.add(shadowHelper);
                 var shadowHelper2 = new THREE.CameraHelper ( light2.shadow.camera);
-                scene.add(shadowHelper2)
+                scene.add(shadowHelper2);
 
                 var shadowHelper3 = new THREE.CameraHelper ( light3.shadow.camera);
-                scene.add(shadowHelper3)
+                scene.add(shadowHelper3);
 
                 var shadowHelper4 = new THREE.CameraHelper ( light4.shadow.camera);
-                scene.add(shadowHelper4)
+                scene.add(shadowHelper4);
+
+
+
+
+                //warehouse
+                var geometry = new THREE.BoxGeometry(31, 5, 1);
+                var material = new THREE.MeshLambertMaterial({ map: new THREE.TextureLoader().load("textures/material_wood.jpeg"), side: THREE.DoubleSide });
+                
+                //wall left
+                var wall1 = new THREE.Mesh(geometry, material);
+                wall1.position.x = 15;
+                wall1.position.y = 2.5;
+                wall1.position.z = 0;
+                wall1.castShadow = true;
+                wall1.receiveShadow = true;
+
+                //wall right
+                var wall2 = new THREE.Mesh(geometry, material);
+                wall2.position.x = 15;
+                wall2.position.y = 2.5;
+                wall2.position.z = 30;
+                wall2.castShadow = true;
+                wall2.receiveShadow = true;
+
+                //wall back
+                var wall3 = new THREE.Mesh(geometry, material);
+                wall3.rotation.y = Math.PI / 2.0;
+                wall3.position.x = 30;
+                wall3.position.y = 2.5;
+                wall3.position.z = 15;
+                wall3.castShadow = true;
+                wall3.receiveShadow = true;
+
+                //front left
+                var geometry2 = new THREE.BoxGeometry(10, 5, 1);
+                var wall4 = new THREE.Mesh(geometry2, material);
+                wall4.rotation.y = Math.PI / 2.0;
+                wall4.position.x = 0;
+                wall4.position.y = 2.5;
+                wall4.position.z = 5;
+                wall4.castShadow = true;
+                wall4.receiveShadow = true;
+
+                var geometry2 = new THREE.BoxGeometry(10, 5, 1);
+                var wall5 = new THREE.Mesh(geometry2, material);
+                wall5.rotation.y = Math.PI / 2.0;
+                wall5.position.x = 0;
+                wall5.position.y = 2.5;
+                wall5.position.z = 25;
+                wall5.castShadow = true;
+                wall5.receiveShadow = true;
+
+                //add walls
+                var warehouseWall = new THREE.Group();
+                warehouseWall.add(wall1);
+                warehouseWall.add(wall2);
+                warehouseWall.add(wall3);
+                warehouseWall.add(wall4);
+                warehouseWall.add(wall5);
+                scene.add(warehouseWall);
+
+                //roof left
+                var geometryL = new THREE.BoxGeometry(32, 20,1);
+                var material = new THREE.MeshLambertMaterial({  map: new THREE.TextureLoader().load("textures/material_roof.jpg"), side: THREE.DoubleSide });
+                var roofLeft = new THREE.Mesh(geometryL, material);
+                roofLeft.rotation.x = Math.PI / 3;
+                roofLeft.position.x = 15;
+                roofLeft.position.y = 8;
+                roofLeft.position.z = 5;
+                roofLeft.receiveShadow = true;
+
+                //roof right
+                var geometryR = new THREE.BoxGeometry(32, 1,20);
+                var roofRight = new THREE.Mesh(geometryR, material);
+                roofRight.rotation.x = Math.PI / 6;
+                roofRight.position.x = 15;
+                roofRight.position.y = 8;
+                roofRight.position.z = 25;
+                roofRight.receiveShadow = true;
+
+                //roof center top
+                var geometryRoofT = new THREE.BoxGeometry(32.5, 1,5);
+                var roofTop = new THREE.Mesh(geometryRoofT, material);
+                roofTop.position.x = 15;
+                roofTop.position.y = 13;
+                roofTop.position.z = 15;
+
+                //wall roof area front and back
+                var material = new THREE.MeshLambertMaterial({  map: new THREE.TextureLoader().load("textures/material_wood.jpeg"), side: THREE.DoubleSide });
+
+                for( var i = 0; i < 9; i ++ ){
+                    //front wall roof area
+                    var geoRoofFront = new THREE.BoxGeometry(0.9, 0.9, 5 + (3*i));
+                    var roofF = new THREE.Mesh(geoRoofFront, material);
+                    roofF.position.x = 0 ;
+                    roofF.position.y = 12 - (i*0.9);
+                    roofF.position.z = 15 ;
+                    scene.add(roofF);
+
+                    // //back wall roof area
+                    var geoRoofBack = new THREE.BoxGeometry(0.9, 0.9, 5 + (3*i));
+                    var roofB = new THREE.Mesh(geoRoofBack, material);
+                    roofB.position.x = 30;
+                    roofB.position.y = 12 - (i*0.9);
+                    roofB.position.z = 15 ;
+                    scene.add(roofB);
+                }
+      
+                var warehouseRoof = new THREE.Group();
+                warehouseRoof.add(roofLeft);
+                warehouseRoof.add(roofRight);
+                warehouseRoof.add(roofTop);
+                scene.add(warehouseRoof);
+
+
+
 
             }
 
@@ -175,12 +308,12 @@
                         if (command.parameters.type == "robot") {
                             var geometry = new THREE.BoxGeometry(0.9, 0.3, 0.9);
                             var cubeMaterials = [
-                                new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("textures/robot_side.png"), side: THREE.DoubleSide }), //LEFT
-                                new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("textures/robot_side.png"), side: THREE.DoubleSide }), //RIGHT
-                                new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("textures/robot_top.png"), side: THREE.DoubleSide }), //TOP
-                                new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("textures/robot_bottom.png"), side: THREE.DoubleSide }), //BOTTOM
-                                new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("textures/robot_front.png"), side: THREE.DoubleSide }), //FRONT
-                                new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("textures/robot_front.png"), side: THREE.DoubleSide }), //BACK
+                                new THREE.MeshStandardMaterial({ map: new THREE.TextureLoader().load("textures/robot_side.png"), side: THREE.DoubleSide }), //LEFT
+                                new THREE.MeshStandardMaterial({ map: new THREE.TextureLoader().load("textures/robot_side.png"), side: THREE.DoubleSide }), //RIGHT
+                                new THREE.MeshStandardMaterial({ map: new THREE.TextureLoader().load("textures/robot_top.png"), side: THREE.DoubleSide }), //TOP
+                                new THREE.MeshStandardMaterial({ map: new THREE.TextureLoader().load("textures/robot_bottom.png"), side: THREE.DoubleSide }), //BOTTOM
+                                new THREE.MeshStandardMaterial({ map: new THREE.TextureLoader().load("textures/robot_front.png"), side: THREE.DoubleSide }), //FRONT
+                                new THREE.MeshStandardMaterial({ map: new THREE.TextureLoader().load("textures/robot_front.png"), side: THREE.DoubleSide }), //BACK
                             ];
                             var material = new THREE.MeshFaceMaterial(cubeMaterials);
                             var robot = new THREE.Mesh(geometry, material);
@@ -230,25 +363,6 @@
                             });
                         }
 
-                        if(command.parameters.type == "warehouse"){
-                            gltfLoader.load('warehouse.gltf', (gltf) => {
-                                const root1 = gltf.scene;
-
-
-                                scene.add(root1);
-                                
-                                root.traverse((obj) => {
-                                    obj.transparent = false;
-                                    if (obj.castShadow !== undefined){
-                                        obj.castShadow = true;
-                                        obj.receiveShadow = true;
-                                    }
-                                })
-                            
-                            });
-
-                            
-                        }
 
                         if(command.parameters.type == "source"){
                             var nodeGeo = new THREE.BoxGeometry(0.5, 0.5, 0.5);
