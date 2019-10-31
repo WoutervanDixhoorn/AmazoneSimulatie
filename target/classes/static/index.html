@@ -40,71 +40,107 @@
                 cameraControls.update();
 
                 scene = new THREE.Scene();
+                scene.background = new THREE.Color(0x87CEEB);
 
                 //renderer
                 renderer = new THREE.WebGLRenderer({ antialias: true });
                 renderer.setPixelRatio(window.devicePixelRatio);
                 renderer.setSize(window.innerWidth, window.innerHeight + 5);
-                renderer.shadowMap.type = THREE.PCFSoftShadowMap;
                 document.body.appendChild(renderer.domElement);
-
                 renderer.shadowMapEnabled = true;
+                renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+
                 renderer.gammaInput = true;
-                renderer.gammaOutput = true;
-                renderer.shadowMapEnabled = true;
-
-                renderer.shadowMapBias = 0.0039;
-                renderer.shadowMapDarkness = 0.5;
-                renderer.shadowMapWidth = 512;
-                renderer.shadowMapHeight = 512;
-
+				renderer.gammaOutput = true;
 
                 window.addEventListener('resize', onWindowResize, false);
 
-                //plane
+                // warehouse plane
                 var geometry = new THREE.PlaneGeometry(30, 30);
-                var material = new THREE.MeshStandardMaterial({ color: 0x006600, side: THREE.DoubleSide });
+                var material = new THREE.MeshLambertMaterial({ map: new THREE.TextureLoader().load("textures/floor.jpg"), side: THREE.DoubleSide });
                 var plane = new THREE.Mesh(geometry, material);
                 plane.rotation.x = Math.PI / 2.0;
                 plane.position.x = 15;
                 plane.position.z = 15;
                 plane.receiveShadow = true;
                 scene.add(plane);
+                
+                //plane outside
+                var geometry = new THREE.PlaneGeometry(120, 120);
+                var material = new THREE.MeshLambertMaterial({color: 0x006600, side: THREE.DoubleSide});
+                var planeOutside = new THREE.Mesh(geometry, material);
+                planeOutside.rotation.x = Math.PI / 2.0;
+                planeOutside.position.x = 0;
+                planeOutside.position.y = -0.001;
+                planeOutside.position.z = 0;
+                planeOutside.receiveShadow = true;
+                scene.add(planeOutside);
 
-                // var light = new THREE.AmbientLight(0x404040);
-                // light.intensity = 4;
-                // scene.add(light);
-
-                var light = new THREE.DirectionalLight( 0xffffff , 1 , 1000);
-                //light.position.set(50 , 100 , 50);
-                light.position.setX(0);
-                light.position.setY(100);
-                light.position.setZ(100);
-                light.target = plane;
-
-                //shadows
+                //lights
+                var light = new THREE.SpotLight( 0xffffff);
+                light.position.set(10 , 10 , 10);
+                light.target.position.x = 10;
+                light.target.position.y = 0;
+                light.target.position.z = 10;
                 light.castShadow = true;
-                light.shadowBias = 0.0001;
-                light.shadow.mapSize.width = 2048;
-                light.shadow.mapSize.height = 2048;
-                light.shadow.camera.near = 0.5;   
-                light.shadow.camera.far = 500; 
 
-                var d = 50;
 
-                light.shadowCameraLeft = -d;
-                light.shadowCameraRight = d;
-                light.shadowCameraTop = d;
-                light.shadowCameraBottom = -d;
 
-                scene.add (light);
+                var light2 = new THREE.SpotLight( 0xffffff);
+                light2.position.set(20 , 10 , 10);
+                light2.target.position.x = 20;
+                light2.target.position.y = 0;
+                light2.target.position.z = 10;
+                light2.castShadow = true;
+
+
+
+                var light3 = new THREE.SpotLight( 0xffffff);
+                light3.position.set(10 , 10 , 20);
+                light3.target.position.x = 10;
+                light3.target.position.y = 0;
+                light3.target.position.z = 20;
+                light3.castShadow = true;
+
+
+                var light4 = new THREE.SpotLight( 0xffffff);
+                light4.position.set(20 , 10 , 20);
+                light4.target.position.x = 20;
+                light4.target.position.y = 0;
+                light4.target.position.z = 20;
+                light4.castShadow = true;
+
+                var ambLight = new THREE.AmbientLight( 0xffffff, 0.3);
+                scene.add(ambLight);
+
+                //for ambient light shadows!{
+                // light.shadowBias = 0.0001;
+                // light.shadow.mapSize.width = 2048;
+                // light.shadow.mapSize.height = 2048;
+
+                // var d = 50;
+
+                // light.shadowCameraLeft = -d;
+                // light.shadowCameraRight = d;
+                // light.shadowCameraTop = d;
+                // light.shadowCameraBottom = -d;}
+
+                scene.add (light, light2, light3, light4);
+                scene.add (light.target, light2.target, light3.target, light4.target);
+                
 
                 //helpers
-                var lightHelper = new THREE.DirectionalLightHelper( light);
-                scene.add(lightHelper);
 
                 var shadowHelper = new THREE.CameraHelper ( light.shadow.camera);
                 scene.add(shadowHelper);
+                var shadowHelper2 = new THREE.CameraHelper ( light2.shadow.camera);
+                scene.add(shadowHelper2)
+
+                var shadowHelper3 = new THREE.CameraHelper ( light3.shadow.camera);
+                scene.add(shadowHelper3)
+
+                var shadowHelper4 = new THREE.CameraHelper ( light4.shadow.camera);
+                scene.add(shadowHelper4)
 
             }
 
@@ -153,9 +189,6 @@
 
                             var group = new THREE.Group();
 
-                            //gltfLoader.load('model.gltf', (gltf) => {
-                            //    scene.add(gltf.scene);
-                            //});
 
                             group.add(robot);
 
@@ -195,6 +228,26 @@
                                 })
                                 
                             });
+                        }
+
+                        if(command.parameters.type == "warehouse"){
+                            gltfLoader.load('warehouse.gltf', (gltf) => {
+                                const root1 = gltf.scene;
+
+
+                                scene.add(root1);
+                                
+                                root.traverse((obj) => {
+                                    obj.transparent = false;
+                                    if (obj.castShadow !== undefined){
+                                        obj.castShadow = true;
+                                        obj.receiveShadow = true;
+                                    }
+                                })
+                            
+                            });
+
+                            
                         }
 
                         if(command.parameters.type == "source"){
