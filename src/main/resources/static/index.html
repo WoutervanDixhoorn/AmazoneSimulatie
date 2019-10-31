@@ -211,7 +211,7 @@
                             scene.add(node);
                         }
 
-                        if(command.parameters.type == "stellage"){
+                        if(command.parameters.type == "storagerack"){
                             gltfLoader.load('model.gltf', (gltf) => {
                                 const root = gltf.scene;
                                 root.position.x = command.parameters.x;

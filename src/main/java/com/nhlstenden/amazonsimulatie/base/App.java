@@ -40,62 +40,6 @@ public class App extends SpringBootServletInitializer implements WebSocketConfig
      * De App class is daardoor dus een server.
      */
     public static void main(String[] args) {
-//        Graph graph = new Graph();
-//
-//
-//        graph.add("SOURCE", "STELLAGE1", 1, 5, 0);
-//        graph.add("STELLAGE1", "STELLAGE2", 1, 5, 5);
-//        graph.add("STELLAGE2", "STELLAGE3", 1, 0,5);
-//        graph.add("STELLAGE3", "STELLAGE4", 1, -5, 5);
-//        graph.add("STELLAGE4", "STELLAGE5", 1, -5, 0);
-//        graph.add("STELLAGE3", "SOURCE", 1, 0, 0);
-//        graph.add("STELLAGE3", "STELLAGE6", 1, 0, 20);
-//        graph.add("STELLAGE6", "SOURCE", 1, 0, 0);
-//
-//
-//        System.out.println("Graph is connected: " + graph.DepthFirstSearch());
-//        System.out.println("Connected from LAX:" + graph.BreadthFirstSearch("SOURCE"));
-//        System.out.println();
-//
-//        System.out.println(graph);
-//        System.out.println(graph.edgesToString());
-//
-//
-//        System.out.println("Source to Stellage");
-//        List<String> path = graph.getPath("SOURCE", "STELLAGE6");
-//        for (String each : path)
-//            System.out.println(each);
-
-//        DijkstraGraph graph = new DijkstraGraph();
-//
-//
-//        Node node1 = new Node("Source", 0, 0);
-//        Node node2 = new Node("Stellage1", 5, 0);
-//        Node node3 = new Node("Stellage2", 5, 5);
-//        Node node4 = new Node("Stellage3", 5, 10);
-//         Node node5 = new Node("Stellage4", 5, 15);
-//        Node node6 = new Node("Stellage5", 0, 15);
-//        Node node7 = new Node("Stellage6", 10, 15);
-//        Node node8 = new Node("Stellage7", 50, 50);
-//        Node node9 = new Node("Stellage8", 50, 50);
-//
-//        graph.addOneWayConnection(node1, node2, 1);
-//         graph.addOneWayConnection(node2, node3, 1);
-//         graph.addOneWayConnection(node3, node4, 1);
-//         graph.addOneWayConnection(node4, node5, 1);
-//         graph.addOneWayConnection(node5, node6, 1);
-//         graph.addOneWayConnection(node6, node8, 1);
-//          graph.addOneWayConnection(node7, node8, 1);
-//          graph.addOneWayConnection(node2, node7,1);
-//          graph.addOneWayConnection(node7, node9,1);
-//
-//          ArrayList<Node> nodes = graph.returnShortestPathToNode("Source", "Stellage7");
-//
-//          Collections.reverse(nodes);
-//          for(Node node : nodes) {
-//              System.out.println(node.getName() + "\n");
-//          }
-
 
         SpringApplication.run(App.class, args);
     }
