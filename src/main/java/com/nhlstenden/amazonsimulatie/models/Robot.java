@@ -28,6 +28,8 @@ class Robot implements Object3D, Updatable {
 
     private int nodeGetter = 0;
 
+    private String destination;
+
     Graaf graaf;
     Graaf pad;
     String bestemming = "Stellage4-2";
@@ -60,12 +62,13 @@ class Robot implements Object3D, Updatable {
      */
     @Override
     public boolean update() {
+        decideDestination();
 
         if(x==graaf.getKnoopByName("Source").getX()&&z==graaf.getKnoopByName("Source").getZ()) {
             this.knopen = new ArrayList<>();
-            this.knopen = graaf.getKnoopByName(bestemming).getKorstePad();
-            if(!this.knopen.contains(graaf.getKnoopByName(bestemming))){
-                this.knopen.add(graaf.getKnoopByName(bestemming));
+            this.knopen = graaf.getKnoopByName(destination).getKorstePad();
+            if(!this.knopen.contains(graaf.getKnoopByName(destination))){
+                this.knopen.add(graaf.getKnoopByName(destination));
             }
         }
 
@@ -95,6 +98,10 @@ class Robot implements Object3D, Updatable {
         //TEMP
         //TODO: Optimise updates
         return true;
+    }
+
+    private void decideDestination(StorageRack storageRack) {
+        destination = storageRack.getNaam();
     }
 
     @Override
@@ -142,4 +149,9 @@ class Robot implements Object3D, Updatable {
     public double getRotationZ() {
         return this.rotationZ;
     }
+
+    public void setDestination(String destination) {
+        this.destination = destination;
+    }
+
 }
