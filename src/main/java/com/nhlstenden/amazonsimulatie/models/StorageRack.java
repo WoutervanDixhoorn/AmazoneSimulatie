@@ -28,6 +28,7 @@ public class StorageRack implements Object3D, Updatable{
 
     public StorageRack(int x, int z, String naam){
         this.uuid = UUID.randomUUID();
+        this.naam = naam;
         this.x = x;
         this.z = z;      
     }
@@ -39,6 +40,10 @@ public class StorageRack implements Object3D, Updatable{
         }
 
         return false;
+    }
+
+    public String getNaam(){
+        return naam;
     }
 
     @Override
