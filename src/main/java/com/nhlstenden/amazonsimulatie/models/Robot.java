@@ -23,6 +23,10 @@ class Robot implements Object3D, Updatable {
     private double rotationX = 0;
     private double rotationY = 0;
     private double rotationZ = 0;
+    private double angle = Math.toDegrees(0);
+
+    private double rotationSpeed = 15;
+    private double movementSpeed = 0.5;
 
     private List<Knoop> knopen;
 
@@ -30,19 +34,14 @@ class Robot implements Object3D, Updatable {
 
     Graaf graaf;
     Graaf pad;
-    String bestemming = "Stellage4-2";
+    String bestemming = "";
     StorageRack currentStorage = null;
-
-    public Robot(Graaf graph) {
-        this();
-        this.graaf = graph;
-
-        x = graaf.getKnoopByName("Source").getX();
-        z = graaf.getKnoopByName("Source").getZ();
-    }
 
     public Robot() {
         this.uuid = UUID.randomUUID();
+        graaf = World.graaf;
+        x = graaf.getKnoopByName("Source").getX();
+        z = graaf.getKnoopByName("Source").getZ();
     }
 
     /*
@@ -60,8 +59,13 @@ class Robot implements Object3D, Updatable {
      */
     @Override
     public boolean update() {
+        //decideDestination(currentStorage);
 
         if(x==graaf.getKnoopByName("Source").getX()&&z==graaf.getKnoopByName("Source").getZ()) {
+            if(bestemming.equals("")){
+                return false;
+            }
+
             this.knopen = new ArrayList<>();
             this.knopen = graaf.getKnoopByName(bestemming).getKorstePad();
             if(!this.knopen.contains(graaf.getKnoopByName(bestemming))){
@@ -75,18 +79,44 @@ class Robot implements Object3D, Updatable {
             nodeGetter = 0;
             return false;
         }
+        //System.out.println(angle);
 
         if(x < knopen.get(nodeGetter).getX()) {
-            this.x += 0.5;
+            if(Math.toRadians(angle) == Math.PI/2){
+                this.rotationY = Math.toRadians(angle);
+                this.x += movementSpeed;
+            }else{
+                angle -= rotationSpeed;
+                this.rotationY = Math.toRadians(angle);
+            }
         }
         if(x > knopen.get(nodeGetter).getX()) {
-            this.x -= 0.5;
+            if(Math.toRadians(angle) == Math.PI/2){
+                this.rotationY = Math.toRadians(angle);;
+                this.x -= movementSpeed;
+            }else{
+                angle -= rotationSpeed;
+                this.rotationY = Math.toRadians(angle);
+            }      
         }
         if(z < knopen.get(nodeGetter).getZ()) {
-            this.z += 0.5;
+            if(Math.toRadians(angle) == Math.PI){
+                this.rotationY = Math.toRadians(angle);;
+                this.z += movementSpeed;
+            }else{
+                angle += rotationSpeed;
+                this.rotationY = Math.toRadians(angle);
+            }
         }
         if(z > knopen.get(nodeGetter).getZ()) {
-            this.z -= 0.5;
+            if(Math.toRadians(angle) == Math.PI){
+            this.rotationY = Math.toRadians(angle);
+            this.z -= movementSpeed;
+            }else{
+                angle += rotationSpeed;
+                this.rotationY = Math.toRadians(angle);
+            }
+
         }
         if(x == knopen.get(nodeGetter).getX() && z == knopen.get(nodeGetter).getZ()) {
             nodeGetter++;
@@ -95,6 +125,10 @@ class Robot implements Object3D, Updatable {
         //TEMP
         //TODO: Optimise updates
         return true;
+    }
+
+    private void decideDestination(StorageRack storageRack) {
+        bestemming = storageRack.getNaam();
     }
 
     @Override
@@ -142,4 +176,9 @@ class Robot implements Object3D, Updatable {
     public double getRotationZ() {
         return this.rotationZ;
     }
+
+    public void setBestemming(String bestemming) {
+        this.bestemming = bestemming;
+    }
+
 }

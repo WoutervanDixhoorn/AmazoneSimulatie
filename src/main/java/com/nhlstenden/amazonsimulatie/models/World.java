@@ -29,6 +29,8 @@ public class World implements Model {
     public static Graaf graaf;
     public static List<StorageRack> storageRacks = new ArrayList<>();
 
+    private Robot robot1;
+    private Robot robot2;
 
     /*
      * Dit onderdeel is nodig om veranderingen in het model te kunnen doorgeven aan de controller.
@@ -45,9 +47,20 @@ public class World implements Model {
         //Init above
         buildWarehouse();
 
+        robot1 = new Robot();
+        robot2 = new Robot();
+
+        robot1.setBestemming("Stellage1-0");
+        robot2.setBestemming("Stellage4-0");
+
+
+
         //this.graph = buildDijkstraGraph();
-        this.worldObjects.add(new Robot(graaf));
-    }    
+        this.worldObjects.add(robot1);
+        this.worldObjects.add(robot2);
+    }
+
+
 
     private void buildWarehouse(){
         //Graaf graaf = new Graaf();
