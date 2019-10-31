@@ -30,19 +30,14 @@ class Robot implements Object3D, Updatable {
 
     Graaf graaf;
     Graaf pad;
-    String bestemming = "Stellage4-2";
+    String bestemming = "";
     StorageRack currentStorage = null;
-
-    public Robot(Graaf graph) {
-        this();
-        this.graaf = graph;
-
-        x = graaf.getKnoopByName("Source").getX();
-        z = graaf.getKnoopByName("Source").getZ();
-    }
 
     public Robot() {
         this.uuid = UUID.randomUUID();
+        graaf = World.graaf;
+        x = graaf.getKnoopByName("Source").getX();
+        z = graaf.getKnoopByName("Source").getZ();
     }
 
     /*
@@ -62,6 +57,10 @@ class Robot implements Object3D, Updatable {
     public boolean update() {
 
         if(x==graaf.getKnoopByName("Source").getX()&&z==graaf.getKnoopByName("Source").getZ()) {
+            if(bestemming.isBlank()){
+                bestemming = World.storageRacks.get(3).getNaam();
+            }
+
             this.knopen = new ArrayList<>();
             this.knopen = graaf.getKnoopByName(bestemming).getKorstePad();
             if(!this.knopen.contains(graaf.getKnoopByName(bestemming))){

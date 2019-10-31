@@ -46,7 +46,7 @@ public class World implements Model {
         buildWarehouse();
 
         //this.graph = buildDijkstraGraph();
-        this.worldObjects.add(new Robot(graaf));
+        this.worldObjects.add(new Robot());
     }    
 
     private void buildWarehouse(){
