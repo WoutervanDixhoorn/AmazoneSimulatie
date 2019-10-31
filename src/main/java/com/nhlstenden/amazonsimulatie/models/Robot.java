@@ -59,7 +59,7 @@ class Robot implements Object3D, Updatable {
 
         if(x==graaf.getKnoopByName("Source").getX()&&z==graaf.getKnoopByName("Source").getZ()) {
             if(bestemming.equals("")){
-                bestemming = World.storageRacks.get(2).getNaam();
+                return false;
             }
 
             this.knopen = new ArrayList<>();
@@ -75,7 +75,7 @@ class Robot implements Object3D, Updatable {
             nodeGetter = 0;
             return false;
         }
-        System.out.println("X: "+x +"\n" + "Z: " + z);
+        //System.out.println("X: "+x +"\n" + "Z: " + z);
 
         if(x < knopen.get(nodeGetter).getX()) {
             this.x += 0.5;

@@ -50,8 +50,8 @@ public class World implements Model {
         robot1 = new Robot();
         robot2 = new Robot();
 
-        //robot1.setDestination("Stellage1-0");
-        //robot2.setDestination("Stellage4-0");
+        robot1.setBestemming("Stellage1-0");
+        robot2.setBestemming("Stellage4-0");
 
 
 
