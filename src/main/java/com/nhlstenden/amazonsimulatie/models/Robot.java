@@ -37,6 +37,8 @@ class Robot implements Object3D, Updatable {
     String bestemming = "";
     StorageRack currentStorage = null;
 
+    private int tripCounter = 0;
+
     public Robot(Graaf graaf) {
         this.uuid = UUID.randomUUID();
         this.graaf = graaf;
@@ -64,8 +66,9 @@ class Robot implements Object3D, Updatable {
             if(bestemming.equals("")){
                 return false;
             }
+            tripCounter++;
 
-            if(currentStorage.isAttached()) {
+            if(tripCounter > 2) {
                 knopen = null;
                 return false;
             }else {
@@ -82,6 +85,9 @@ class Robot implements Object3D, Updatable {
             Collections.reverse(knopen);
             currentStorage.setAttached(true);
             nodeGetter = 0;
+            if(tripCounter == 1) {
+                currentStorage.setAttached(false);
+            }
             return false;
         }
         //System.out.println(angle);
