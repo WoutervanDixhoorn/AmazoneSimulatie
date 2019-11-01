@@ -32,6 +32,8 @@ public class World implements Model {
     private Robot robot1;
     private Robot robot2;
 
+    private Truck truck;
+
     /*
      * Dit onderdeel is nodig om veranderingen in het model te kunnen doorgeven aan de controller.
      * Het systeem werkt al as-is, dus dit hoeft niet aangepast te worden.
@@ -50,7 +52,7 @@ public class World implements Model {
         robot1 = new Robot();
         robot2 = new Robot();
 
-        robot1.setBestemming("Stellage1-0");
+        robot1.setBestemming("Stellage2-2");
         robot2.setBestemming("Stellage4-0");
 
 
@@ -58,6 +60,9 @@ public class World implements Model {
         //this.graph = buildDijkstraGraph();
         this.worldObjects.add(robot1);
         this.worldObjects.add(robot2);
+
+        this.truck = new Truck(-50,15,5,15);
+        this.worldObjects.add(truck);
     }
 
 
