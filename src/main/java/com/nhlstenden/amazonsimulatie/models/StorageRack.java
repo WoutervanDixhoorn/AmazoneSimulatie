@@ -55,6 +55,18 @@ public class StorageRack implements Object3D, Updatable{
         return naam;
     }
 
+    public void setNaam(String naam){
+        this.naam = naam;
+    }
+
+    public void addProduct(String product){
+        this.producten.add(product);
+    }
+
+    public List<String> getProducts(){
+        return producten;
+    }
+
     @Override
     public String getUUID() {
         return this.uuid.toString();
@@ -105,6 +117,11 @@ public class StorageRack implements Object3D, Updatable{
     @Override
     public double getRotationZ() {
         return this.rotationZ;
+    }
+
+    public void setRack(String product){
+        addProduct(product);
+        setNaam(product);
     }
 
 }
