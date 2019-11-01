@@ -1,14 +1,20 @@
 package com.nhlstenden.amazonsimulatie.models;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.UUID;
 
 public class Truck implements Object3D, Updatable{
     private UUID uuid;
 
+    //Position variables
     private double x = 0;
     private double y = 0;
     private double z = 0;
+
+    private double restPosX = 0;
+    private double restPosZ = 0;
 
     private double laadDockX = 0;
     private double laadDockZ = 0;
@@ -19,38 +25,102 @@ public class Truck implements Object3D, Updatable{
 
     private double movementSpeed = 0.5;
 
+    //Order variables
+    private List<String> allProducts;
     private List<String> neededProducts;
     private List<String> products;
+
+    private boolean hasOrder = false;
    
 
-    public Truck(int x, int z, int laadDockX, int laadDockZ){
+    public Truck(int x, int z, int laadDockX, int laadDockZ, List<String> producten){
         this.uuid = UUID.randomUUID();
         this.x = x;
         this.z = z;
+        this.restPosX = x;
+        this.restPosZ = z;
         this.laadDockX = laadDockX;
         this.laadDockZ = laadDockZ;
+        this.allProducts = producten;
     }
 
     @Override
     public boolean update() {
-        
-        if(x < laadDockX){
-            this.x += movementSpeed;
+        //Move
+        move();
+
+        //If back in position generate and get order
+        if(!hasOrder && x == restPosX && z == restPosZ){
+            generateOrder(3);
+            hasOrder = true;
         }
-        if(x > laadDockX){
-            this.x -= movementSpeed;
-        }
-        if(z < laadDockZ){
-            this.z += movementSpeed;
-        }
-        if(z > laadDockZ){
-            this.z -= movementSpeed;
+
+        //Get product
+        if(hasOrder && products != neededProducts){
+            //Load product in truck if in position
+            if(x == laadDockX && z == laadDockZ){
+                System.out.println("Arrived at loading dock");
+                //Make order to robot and load it
+                 
+                products = neededProducts; //DEBUG
+
+                return false;
+            }
+        }else if(hasOrder && products == neededProducts){
+            hasOrder = false;
+            neededProducts = new ArrayList<>();
         }
 
         return true;
     }
 
+    //Moves truck to wanted location at specific state
+    private void move(){
+        if(hasOrder){
+            if(x < laadDockX){
+                this.x += movementSpeed;
+            }
+            if(x > laadDockX){
+                this.x -= movementSpeed;
+            }
+            if(z < laadDockZ){
+                this.z += movementSpeed;
+            }
+            if(z > laadDockZ){
+                this.z -= movementSpeed;
+            }
+        }else if(!hasOrder){
+            if(x < restPosX){
+                this.x += movementSpeed;
+            }
+            if(x > restPosX){
+                this.x -= movementSpeed;
+            }
+            if(z < restPosZ){
+                this.z += movementSpeed;
+            }
+            if(z > restPosZ){
+                this.z -= movementSpeed;
+            }
+        }
+    }
 
+    private void generateOrder(int sizeOfOrder){
+        Random rand = new Random(); 
+  
+        List<String> clone = allProducts;
+        List<String> temp = new ArrayList<>(); 
+        for (int i = 0; i < sizeOfOrder; i++) { 
+  
+            int randomIndex = rand.nextInt(clone.size()); 
+            // add element in temporary list 
+            temp.add(clone.get(randomIndex)); 
+            clone.remove(randomIndex);
+        } 
+        
+        neededProducts = temp;
+    }
+    
     @Override
     public String getUUID() {
         return this.uuid.toString();

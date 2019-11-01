@@ -29,14 +29,14 @@ public class StorageRack implements Object3D, Updatable{
     private boolean isAttached = false;
 
     
-    public StorageRack(int x, int z, String naam, String producten[]){
+    public StorageRack(double x, double z, String naam, String producten[]){
         this(x,z, naam);
         for(String s : producten){
             this.producten.add(s);
         }
     }
 
-    public StorageRack(int x, int z, String naam){
+    public StorageRack(double x, double z, String naam){
         this.uuid = UUID.randomUUID();
         this.naam = naam;
         this.x = x;
@@ -54,6 +54,18 @@ public class StorageRack implements Object3D, Updatable{
 
     public String getNaam(){
         return naam;
+    }
+
+    public void setNaam(String naam){
+        this.naam = naam;
+    }
+
+    public void addProduct(String product){
+        this.producten.add(product);
+    }
+
+    public List<String> getProducts(){
+        return producten;
     }
 
     @Override
@@ -108,6 +120,7 @@ public class StorageRack implements Object3D, Updatable{
         return this.rotationZ;
     }
 
+<<<<<<< HEAD
     public void setRotationX(double rotationX) {
         this.rotationX = rotationX;
     }
@@ -118,6 +131,11 @@ public class StorageRack implements Object3D, Updatable{
 
     public void setRotationZ(double rotationZ) {
         this.rotationZ = rotationZ;
+=======
+    public void setRack(String product){
+        addProduct(product);
+        setNaam(product);
+>>>>>>> master
     }
 
 }

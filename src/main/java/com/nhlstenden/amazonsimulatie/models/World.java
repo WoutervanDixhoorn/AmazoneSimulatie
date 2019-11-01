@@ -25,10 +25,14 @@ public class World implements Model {
      */
     private List<Object3D> worldObjects;
 
-    //Global word variables
-    public static Graaf graaf;
+    //Intrieur
+    public Graaf graaf;
     public static List<StorageRack> storageRacks = new ArrayList<>();
 
+    //Automatische bestellingen
+    public List<String> producten = new ArrayList<>();
+
+    //Robot etc.
     private Robot robot1;
     private Robot robot2;
 
@@ -48,6 +52,8 @@ public class World implements Model {
         this.worldObjects = new ArrayList<>();
         //Init above
         buildWarehouse();
+        verzadigProducten("Sokken", "Lego", "Gitaar", "Water", "Tas", "Eenhoorn in blik", "Stoel", 
+                            "Laptop", "Schoenen", "TV", "Kamer plant");
 
         robot1 = new Robot(graaf);
         robot2 = new Robot(graaf);
@@ -61,14 +67,18 @@ public class World implements Model {
         decideStorageRack(robot1, "Stellage1-0");
         decideStorageRack(robot2, "Stellage4-0");
 
-        //this.graph = buildDijkstraGraph();
+        //Adding robots to world
         this.worldObjects.add(robot1);
         this.worldObjects.add(robot2);
 
-        this.truck = new Truck(-50,15,5,15);
+        //Adding/Starting truck
+        this.truck = new Truck(-50,15,3,15, producten);
         this.worldObjects.add(truck);
     }
 
+    /* 
+     * Vind storage rack dat bij bepaald product hoort
+     */
     private void decideStorageRack(Robot robot, String product) {
         for(StorageRack storageRack : storageRacks) {
             if(storageRack.getNaam().equals(product)) {
@@ -168,6 +178,18 @@ public class World implements Model {
 
         //Init alle paden
         graaf = Dijkstra.berekenPadVanafBegin(graaf, graaf.getKnoopByName("Source"));
+    }
+
+    private void setRacks(List<String> producten, List<StorageRack> racks){
+        for(int i = 0; i < racks.size(); i++){
+            racks.get(i).setRack(producten.get(i));
+        }
+    }
+
+    private void verzadigProducten(String... producten){
+        for(String p : producten){
+            this.producten.add(p);
+        }
     }
 
     /*
