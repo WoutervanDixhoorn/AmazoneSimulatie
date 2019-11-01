@@ -75,7 +75,7 @@ class Robot implements Object3D, Updatable {
                 knopen = null;
                 currentStorage = null;
                 bestemming = "";
-                tripCounter = 0;
+                tripCounter = 1;
                 return false;
             }else {
                 this.knopen = new ArrayList<>();
@@ -88,9 +88,9 @@ class Robot implements Object3D, Updatable {
         }
 
         if(nodeGetter == (knopen.size()-1)) {
-            System.out.println("Arrived");
+            System.out.println("Arrived" + "Trip: " + tripCounter);
             Collections.reverse(knopen);
-            if(tripCounter < 3) {
+            if(tripCounter == 2) {
                 currentStorage.setAttached(true);
             }
             nodeGetter = 0;
