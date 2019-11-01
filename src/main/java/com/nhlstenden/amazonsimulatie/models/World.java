@@ -47,17 +47,41 @@ public class World implements Model {
         //Init above
         buildWarehouse();
 
-        robot1 = new Robot();
-        robot2 = new Robot();
+        robot1 = new Robot(graaf);
+        robot2 = new Robot(graaf);
 
-        robot1.setBestemming("Stellage1-0");
-        robot2.setBestemming("Stellage4-0");
+        //robot1.setBestemming("Stellage1-0");
+        //robot2.setBestemming("Stellage4-0");
 
+        robot1.setCurrentStorage(findStorageRack("Stellage1-0"));
+        robot2.setCurrentStorage(findStorageRack("Stellage4-0"));
 
+        decideStorageRack(robot1, "Stellage1-0");
+        decideStorageRack(robot2, "Stellage4-0");
 
         //this.graph = buildDijkstraGraph();
         this.worldObjects.add(robot1);
         this.worldObjects.add(robot2);
+    }
+
+    private void decideStorageRack(Robot robot, String product) {
+        for(StorageRack storageRack : storageRacks) {
+            if(storageRack.getNaam().equals(product)) {
+                robot.setBestemming(storageRack.getNaam());
+                //storageRacks.remove(storageRack);
+            }
+        }
+    }
+
+    private StorageRack findStorageRack(String name) {
+        for(StorageRack storageRack : storageRacks) {
+            if (storageRack.getNaam().equals(name)) {
+                storageRack.setAttached(false);
+                return storageRack;
+            }
+        }
+        System.out.println("Couldnt find this storage rack");
+        return null;
     }
 
 
