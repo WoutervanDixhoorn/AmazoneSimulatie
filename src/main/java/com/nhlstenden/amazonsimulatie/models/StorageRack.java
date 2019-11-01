@@ -10,6 +10,7 @@ public class StorageRack implements Object3D, Updatable{
     private double y = 0.15;
     private double z = 0;
 
+
     private double rotationX = 0;
     private double rotationY = 0;
     private double rotationZ = 0;
@@ -105,6 +106,18 @@ public class StorageRack implements Object3D, Updatable{
     @Override
     public double getRotationZ() {
         return this.rotationZ;
+    }
+
+    public void setRotationX(double rotationX) {
+        this.rotationX = rotationX;
+    }
+
+    public void setRotationY(double rotationY) {
+        this.rotationY = rotationY;
+    }
+
+    public void setRotationZ(double rotationZ) {
+        this.rotationZ = rotationZ;
     }
 
 }

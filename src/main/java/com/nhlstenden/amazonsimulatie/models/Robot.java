@@ -62,13 +62,16 @@ class Robot implements Object3D, Updatable {
     @Override
     public boolean update() {
 
+        if(tripCounter == 3 && x == graaf.getKnoopByName(bestemming).getX() && z == graaf.getKnoopByName(bestemming).getZ()) {
+            currentStorage.setAttached(false);
+        }
+
         if(x==graaf.getKnoopByName("Source").getX()&&z==graaf.getKnoopByName("Source").getZ()) {
             if(bestemming.equals("")){
                 return false;
             }
-            tripCounter++;
 
-            if(tripCounter > 2) {
+            if(tripCounter == 3) {
                 knopen = null;
                 return false;
             }else {
@@ -78,25 +81,24 @@ class Robot implements Object3D, Updatable {
                     this.knopen.add(graaf.getKnoopByName(bestemming));
                 }
             }
+            tripCounter++;
         }
 
-        if(knopen != null && nodeGetter == (knopen.size()-1)) {
+        if(nodeGetter == (knopen.size()-1)) {
             System.out.println("Arrived");
             Collections.reverse(knopen);
-            currentStorage.setAttached(true);
-            nodeGetter = 0;
-            if(tripCounter == 1) {
-                currentStorage.setAttached(false);
+            if(tripCounter < 3) {
+                currentStorage.setAttached(true);
             }
+            nodeGetter = 0;
             return false;
         }
         //System.out.println(angle);
 
+
+
         if(x < knopen.get(nodeGetter).getX()) {
-            this.x += 0.5;
-            if(currentStorage.isAttached()) {
-                currentStorage.setX(x);
-            }
+
             if(Math.toRadians(angle) == Math.PI/2){
                 this.rotationY = Math.toRadians(angle);
                 this.x += movementSpeed;
@@ -104,25 +106,35 @@ class Robot implements Object3D, Updatable {
                 angle -= rotationSpeed;
                 this.rotationY = Math.toRadians(angle);
             }
-        }
-        if(x > knopen.get(nodeGetter).getX()) {
-            this.x -= 0.5;
+            this.x += movementSpeed;
             if(currentStorage.isAttached()) {
                 currentStorage.setX(x);
             }
+//            if(currentStorage.isAttached()) {
+//                currentStorage.setX(x);
+//                currentStorage.setRotationY(rotationY);
+//            }
+        }
+        if(x > knopen.get(nodeGetter).getX()) {
+
             if(Math.toRadians(angle) == Math.PI/2){
                 this.rotationY = Math.toRadians(angle);;
                 this.x -= movementSpeed;
             }else{
                 angle -= rotationSpeed;
                 this.rotationY = Math.toRadians(angle);
-            }      
+            }
+            this.x -= movementSpeed;
+            if(currentStorage.isAttached()) {
+                currentStorage.setX(x);
+            }
+//            if(currentStorage.isAttached()) {
+//                currentStorage.setX(x);
+//                currentStorage.setRotationY(rotationY);
+//            }
         }
         if(z < knopen.get(nodeGetter).getZ()) {
-            this.z += 0.5;
-            if(currentStorage.isAttached()) {
-                currentStorage.setZ(z);
-            }
+
             if(Math.toRadians(angle) == Math.PI){
                 this.rotationY = Math.toRadians(angle);;
                 this.z += movementSpeed;
@@ -130,12 +142,17 @@ class Robot implements Object3D, Updatable {
                 angle += rotationSpeed;
                 this.rotationY = Math.toRadians(angle);
             }
-        }
-        if(z > knopen.get(nodeGetter).getZ()) {
-            this.z -= 0.5;
+            this.z += movementSpeed;
             if(currentStorage.isAttached()) {
                 currentStorage.setZ(z);
             }
+//            if(currentStorage.isAttached()) {
+//                currentStorage.setZ(z);
+//                currentStorage.setRotationY(rotationY);
+//            }
+        }
+        if(z > knopen.get(nodeGetter).getZ()) {
+
             if(Math.toRadians(angle) == Math.PI){
             this.rotationY = Math.toRadians(angle);
             this.z -= movementSpeed;
@@ -143,11 +160,20 @@ class Robot implements Object3D, Updatable {
                 angle += rotationSpeed;
                 this.rotationY = Math.toRadians(angle);
             }
-
+            this.z -= movementSpeed;
+            if(currentStorage.isAttached()) {
+                currentStorage.setZ(z);
+            }
+//            if(currentStorage.isAttached()) {
+//                currentStorage.setZ(z);
+//                currentStorage.setRotationY(rotationY);
+//            }
         }
         if(x == knopen.get(nodeGetter).getX() && z == knopen.get(nodeGetter).getZ()) {
             nodeGetter++;
         }
+
+
 
         //TEMP
         //TODO: Optimise updates
