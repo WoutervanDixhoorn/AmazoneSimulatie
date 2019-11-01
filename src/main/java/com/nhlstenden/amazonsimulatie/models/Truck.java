@@ -71,7 +71,7 @@ public class Truck implements Object3D, Updatable{
         else if(hasOrder && products != placedOrders){
             //Load product in truck if in position
             if(x == laadDockX && z == laadDockZ){
-                System.out.println("Arrived at loading dock");
+                //System.out.println("Arrived at loading dock");
                 //Make order to robot and load it
                 if(world.getIsRobotAvailable() && neededProducts.size() > 0 ){
                     String productToGet = neededProducts.pop(); 

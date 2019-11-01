@@ -63,11 +63,7 @@ class Robot implements Object3D, Updatable {
     public boolean update() {
 
         if(tripCounter == 3 && x == graaf.getKnoopByName(bestemming).getX() && z == graaf.getKnoopByName(bestemming).getZ()) {
-            //NOTE: Run when done!!
             currentStorage.setAttached(false);
-            currentStorage = null;
-            bestemming = "";
-            tripCounter = 0;
         }
 
         if(x==graaf.getKnoopByName("Source").getX()&&z==graaf.getKnoopByName("Source").getZ()) {
@@ -77,6 +73,9 @@ class Robot implements Object3D, Updatable {
 
             if(tripCounter == 3) {
                 knopen = null;
+                currentStorage = null;
+                bestemming = "";
+                tripCounter = 0;
                 return false;
             }else {
                 this.knopen = new ArrayList<>();
