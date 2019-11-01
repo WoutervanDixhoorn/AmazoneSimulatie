@@ -19,14 +19,14 @@ public class StorageRack implements Object3D, Updatable{
     private boolean isAttached = false;
 
     
-    public StorageRack(int x, int z, String naam, String producten[]){
+    public StorageRack(double x, double z, String naam, String producten[]){
         this(x,z, naam);
         for(String s : producten){
             this.producten.add(s);
         }
     }
 
-    public StorageRack(int x, int z, String naam){
+    public StorageRack(double x, double z, String naam){
         this.uuid = UUID.randomUUID();
         this.naam = naam;
         this.x = x;
