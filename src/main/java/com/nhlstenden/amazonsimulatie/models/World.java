@@ -31,6 +31,8 @@ public class World implements Model {
 
     //Automatische bestellingen
     public List<String> producten = new ArrayList<>();
+    private List<String> productsAtDock = new ArrayList<>();
+    private boolean isRobotAvailable = true;
 
     //Robot etc.
     private Robot robot1;
@@ -51,9 +53,11 @@ public class World implements Model {
     public World() {
         this.worldObjects = new ArrayList<>();
         //Init above
-        buildWarehouse();
         verzadigProducten("Sokken", "Lego", "Gitaar", "Water", "Tas", "Eenhoorn in blik", "Stoel", 
-                            "Laptop", "Schoenen", "TV", "Kamer plant");
+        "Laptop", "Schoenen", "TV", "Kamer plant", "Waterfles");
+        buildWarehouse();
+        //
+       
 
         robot1 = new Robot(graaf);
         robot2 = new Robot(graaf);
@@ -61,18 +65,17 @@ public class World implements Model {
         //robot1.setBestemming("Stellage1-0");
         //robot2.setBestemming("Stellage4-0");
 
-        robot1.setCurrentStorage(findStorageRack("Stellage1-0"));
-        robot2.setCurrentStorage(findStorageRack("Stellage4-0"));
-
-        decideStorageRack(robot1, "Stellage1-0");
-        decideStorageRack(robot2, "Stellage4-0");
+        //robot1.setCurrentStorage(findStorageRack("Stellage1-0"));
+        //robot2.setCurrentStorage(findStorageRack("Stellage4-0"));
+        //decideStorageRack(robot1, "Stellage1-0");
+        //decideStorageRack(robot2, "Stellage4-0");
 
         //Adding robots to world
         this.worldObjects.add(robot1);
         this.worldObjects.add(robot2);
 
         //Adding/Starting truck
-        this.truck = new Truck(-50,15,3,15, producten);
+        this.truck = new Truck(-50,15,3,15, producten, this);
         this.worldObjects.add(truck);
     }
 
@@ -81,7 +84,8 @@ public class World implements Model {
      */
     private void decideStorageRack(Robot robot, String product) {
         for(StorageRack storageRack : storageRacks) {
-            if(storageRack.getNaam().equals(product)) {
+            if(storageRack.getProducts().get(0).equals(product)) {
+                robot.setCurrentStorage(storageRack);
                 robot.setBestemming(storageRack.getNaam());
                 //storageRacks.remove(storageRack);
             }
@@ -105,6 +109,9 @@ public class World implements Model {
         //Graaf graaf = new Graaf();
         List<Knoop> knopen = new ArrayList<>();
 
+
+        //Solution?
+        int productCounter = 0;
         //SIZE needs to my uneven
         int SIZE = 5;
         int spacing = 5;
@@ -129,15 +136,17 @@ public class World implements Model {
                 }
                 if(j%2 == 0){
                     //nodeModels.add(new NodeModel("stellage",i*spacing + offset,j*spacing + offset));
-                    storageRacks.add(new StorageRack(i*spacing + offset,j*spacing + offset, "Stellage" + i + "-" + j));
+                    storageRacks.add(new StorageRack(i*spacing + offset,j*spacing + offset, "Stellage" + i + "-" + j, producten.get(productCounter)));
                     knopen.add(new Knoop("Stellage" + i + "-" + j, i*spacing + offset,j*spacing + offset));
+                    productCounter++;
+                    System.out.println(productCounter);
                     continue;
                 }
                //nodeModels.add(new NodeModel(i*spacing + offset,j*spacing + offset));
                 knopen.add(new Knoop("Knoop" + i + "-" + j, i*spacing + offset,j*spacing + offset));            
             }
         }
- 
+
         for(StorageRack s : storageRacks){
             this.worldObjects.add(s);
         }
@@ -203,6 +212,7 @@ public class World implements Model {
      */
     @Override
     public void update() {
+        checkIfRobotAvailable();
         for (Object3D object : this.worldObjects) {
             if(object instanceof Updatable) {
                 if (((Updatable)object).update()) {
@@ -234,5 +244,51 @@ public class World implements Model {
         }
 
         return returnList;
+    }
+
+    private void checkIfRobotAvailable(){
+        if(robot1.getBestemming().isEmpty() || robot2.getBestemming().isEmpty()){
+            isRobotAvailable = true;
+        }
+    }
+
+    //Laat de robot de producten halen
+    public void makeOrderAtRobot(String product){
+        if(robot1.getBestemming().isEmpty()){
+            decideStorageRack(robot1, product);
+        }else if(robot2.getBestemming().isEmpty()){
+            decideStorageRack(robot2, product);
+        }
+    }
+
+    public boolean isaRobotBuzy(){
+        //return if a robot is buzy
+        if(robot1.getBestemming().isEmpty() && robot2.getBestemming().isEmpty()){
+            return false;
+        }else if(!robot1.getBestemming().isEmpty() || !robot2.getBestemming().isEmpty()){
+            return true;
+        }
+        return false;
+    }
+    
+    public boolean getIsRobotAvailable(){
+        if(robot1.getBestemming().isEmpty() || robot2.getBestemming().isEmpty()){
+            return true;
+        }else if(!robot1.getBestemming().isEmpty() || !robot2.getBestemming().isEmpty()){
+            return false;
+        }
+        return false;
+    }
+
+    public void addProductsAtDock(String product){
+        productsAtDock.add(product);
+    }
+
+    public List<String> getProductsAtDock(){
+        return productsAtDock;
+    }
+    
+    public void removeProductAtDock(String product){
+        productsAtDock.remove(product);
     }
 }

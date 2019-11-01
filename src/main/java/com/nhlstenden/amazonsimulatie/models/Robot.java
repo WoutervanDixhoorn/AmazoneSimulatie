@@ -34,7 +34,7 @@ class Robot implements Object3D, Updatable {
 
     Graaf graaf;
     Graaf pad;
-    String bestemming = "";
+    private String bestemming = "";
     StorageRack currentStorage = null;
 
     private int tripCounter = 0;
@@ -63,7 +63,11 @@ class Robot implements Object3D, Updatable {
     public boolean update() {
 
         if(tripCounter == 3 && x == graaf.getKnoopByName(bestemming).getX() && z == graaf.getKnoopByName(bestemming).getZ()) {
+            //NOTE: Run when done!!
             currentStorage.setAttached(false);
+            currentStorage = null;
+            bestemming = "";
+            tripCounter = 0;
         }
 
         if(x==graaf.getKnoopByName("Source").getX()&&z==graaf.getKnoopByName("Source").getZ()) {
@@ -106,7 +110,7 @@ class Robot implements Object3D, Updatable {
                 angle -= rotationSpeed;
                 this.rotationY = Math.toRadians(angle);
             }
-            this.x += movementSpeed;
+            //this.x += movementSpeed;
             if(currentStorage.isAttached()) {
                 currentStorage.setX(x);
             }
@@ -124,7 +128,7 @@ class Robot implements Object3D, Updatable {
                 angle -= rotationSpeed;
                 this.rotationY = Math.toRadians(angle);
             }
-            this.x -= movementSpeed;
+            //this.x -= movementSpeed;
             if(currentStorage.isAttached()) {
                 currentStorage.setX(x);
             }
@@ -236,6 +240,10 @@ class Robot implements Object3D, Updatable {
 
     public void setBestemming(String bestemming) {
         this.bestemming = bestemming;
+    }
+
+    public String getBestemming(){
+        return bestemming;
     }
 
 }

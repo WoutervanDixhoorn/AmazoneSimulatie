@@ -1,5 +1,6 @@
 package com.nhlstenden.amazonsimulatie.models;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -15,7 +16,7 @@ public class StorageRack implements Object3D, Updatable{
     private double rotationY = 0;
     private double rotationZ = 0;
 
-    private List<String> producten;
+    private List<String> producten = new ArrayList<>();
     private String naam;
 
     public void setAttached(boolean attached) {
@@ -29,7 +30,7 @@ public class StorageRack implements Object3D, Updatable{
     private boolean isAttached = false;
 
     
-    public StorageRack(double x, double z, String naam, String producten[]){
+    public StorageRack(double x, double z, String naam, String... producten){
         this(x,z, naam);
         for(String s : producten){
             this.producten.add(s);
@@ -120,7 +121,6 @@ public class StorageRack implements Object3D, Updatable{
         return this.rotationZ;
     }
 
-<<<<<<< HEAD
     public void setRotationX(double rotationX) {
         this.rotationX = rotationX;
     }
@@ -131,11 +131,11 @@ public class StorageRack implements Object3D, Updatable{
 
     public void setRotationZ(double rotationZ) {
         this.rotationZ = rotationZ;
-=======
+    }
+    
     public void setRack(String product){
         addProduct(product);
         setNaam(product);
->>>>>>> master
     }
 
 }

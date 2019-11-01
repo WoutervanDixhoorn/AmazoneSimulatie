@@ -1,8 +1,11 @@
 package com.nhlstenden.amazonsimulatie.models;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.Random;
+import java.util.Stack;
 import java.util.UUID;
 
 public class Truck implements Object3D, Updatable{
@@ -26,15 +29,18 @@ public class Truck implements Object3D, Updatable{
     private double movementSpeed = 0.5;
 
     //Order variables
-    private List<String> allProducts;
-    private List<String> neededProducts;
-    private List<String> products;
+    private List<String> allProducts = new ArrayList<>();
+    private Stack<String> neededProducts = new Stack<>();
+    private List<String> products = new ArrayList<>();
+    private List<String> placedOrders = new ArrayList<String>();
 
     private boolean hasOrder = false;
    
+    World world;
 
-    public Truck(int x, int z, int laadDockX, int laadDockZ, List<String> producten){
+    public Truck(int x, int z, int laadDockX, int laadDockZ, List<String> producten, World world){
         this.uuid = UUID.randomUUID();
+        this.world = world;
         this.x = x;
         this.z = z;
         this.restPosX = x;
@@ -56,19 +62,26 @@ public class Truck implements Object3D, Updatable{
         }
 
         //Get product
-        if(hasOrder && products != neededProducts){
+       if(hasOrder && placedOrders.equals(products) && !world.isaRobotBuzy()){ //Reset the truck
+            hasOrder = false;
+            neededProducts = new Stack<>();
+            placedOrders = new ArrayList<>();
+            products = new ArrayList<>();
+        }
+        else if(hasOrder && products != placedOrders){
             //Load product in truck if in position
             if(x == laadDockX && z == laadDockZ){
                 System.out.println("Arrived at loading dock");
                 //Make order to robot and load it
-                 
-                products = neededProducts; //DEBUG
+                if(world.getIsRobotAvailable() && neededProducts.size() > 0 ){
+                    String productToGet = neededProducts.pop(); 
+                    world.makeOrderAtRobot(productToGet);
+                    products.add(productToGet);
+                }
+                //products = neededProducts; //DEBUG
 
                 return false;
             }
-        }else if(hasOrder && products == neededProducts){
-            hasOrder = false;
-            neededProducts = new ArrayList<>();
         }
 
         return true;
@@ -118,7 +131,11 @@ public class Truck implements Object3D, Updatable{
             clone.remove(randomIndex);
         } 
         
-        neededProducts = temp;
+        for(String s : temp){
+            placedOrders.add(s);
+            neededProducts.push(s);
+        }
+        Collections.reverse(placedOrders);
     }
     
     @Override
