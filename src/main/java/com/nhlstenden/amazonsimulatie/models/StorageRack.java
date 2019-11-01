@@ -16,6 +16,15 @@ public class StorageRack implements Object3D, Updatable{
 
     private List<String> producten;
     private String naam;
+
+    public void setAttached(boolean attached) {
+        isAttached = attached;
+    }
+
+    public boolean isAttached() {
+        return isAttached;
+    }
+
     private boolean isAttached = false;
 
     

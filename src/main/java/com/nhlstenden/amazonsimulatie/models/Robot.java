@@ -37,9 +37,11 @@ class Robot implements Object3D, Updatable {
     String bestemming = "";
     StorageRack currentStorage = null;
 
-    public Robot() {
+    private int tripCounter = 0;
+
+    public Robot(Graaf graaf) {
         this.uuid = UUID.randomUUID();
-        graaf = World.graaf;
+        this.graaf = graaf;
         x = graaf.getKnoopByName("Source").getX();
         z = graaf.getKnoopByName("Source").getZ();
     }
@@ -59,29 +61,42 @@ class Robot implements Object3D, Updatable {
      */
     @Override
     public boolean update() {
-        //decideDestination(currentStorage);
 
         if(x==graaf.getKnoopByName("Source").getX()&&z==graaf.getKnoopByName("Source").getZ()) {
             if(bestemming.equals("")){
                 return false;
             }
+            tripCounter++;
 
-            this.knopen = new ArrayList<>();
-            this.knopen = graaf.getKnoopByName(bestemming).getKorstePad();
-            if(!this.knopen.contains(graaf.getKnoopByName(bestemming))){
-                this.knopen.add(graaf.getKnoopByName(bestemming));
+            if(tripCounter > 2) {
+                knopen = null;
+                return false;
+            }else {
+                this.knopen = new ArrayList<>();
+                this.knopen = graaf.getKnoopByName(bestemming).getKorstePad();
+                if (!this.knopen.contains(graaf.getKnoopByName(bestemming))) {
+                    this.knopen.add(graaf.getKnoopByName(bestemming));
+                }
             }
         }
 
-        if(nodeGetter == (knopen.size()-1)) {
+        if(knopen != null && nodeGetter == (knopen.size()-1)) {
             System.out.println("Arrived");
             Collections.reverse(knopen);
+            currentStorage.setAttached(true);
             nodeGetter = 0;
+            if(tripCounter == 1) {
+                currentStorage.setAttached(false);
+            }
             return false;
         }
         //System.out.println(angle);
 
         if(x < knopen.get(nodeGetter).getX()) {
+            this.x += 0.5;
+            if(currentStorage.isAttached()) {
+                currentStorage.setX(x);
+            }
             if(Math.toRadians(angle) == Math.PI/2){
                 this.rotationY = Math.toRadians(angle);
                 this.x += movementSpeed;
@@ -91,6 +106,10 @@ class Robot implements Object3D, Updatable {
             }
         }
         if(x > knopen.get(nodeGetter).getX()) {
+            this.x -= 0.5;
+            if(currentStorage.isAttached()) {
+                currentStorage.setX(x);
+            }
             if(Math.toRadians(angle) == Math.PI/2){
                 this.rotationY = Math.toRadians(angle);;
                 this.x -= movementSpeed;
@@ -100,6 +119,10 @@ class Robot implements Object3D, Updatable {
             }      
         }
         if(z < knopen.get(nodeGetter).getZ()) {
+            this.z += 0.5;
+            if(currentStorage.isAttached()) {
+                currentStorage.setZ(z);
+            }
             if(Math.toRadians(angle) == Math.PI){
                 this.rotationY = Math.toRadians(angle);;
                 this.z += movementSpeed;
@@ -109,6 +132,10 @@ class Robot implements Object3D, Updatable {
             }
         }
         if(z > knopen.get(nodeGetter).getZ()) {
+            this.z -= 0.5;
+            if(currentStorage.isAttached()) {
+                currentStorage.setZ(z);
+            }
             if(Math.toRadians(angle) == Math.PI){
             this.rotationY = Math.toRadians(angle);
             this.z -= movementSpeed;
@@ -125,6 +152,10 @@ class Robot implements Object3D, Updatable {
         //TEMP
         //TODO: Optimise updates
         return true;
+    }
+
+    public void setCurrentStorage(StorageRack storage) {
+        this.currentStorage = storage;
     }
 
     private void decideDestination(StorageRack storageRack) {
