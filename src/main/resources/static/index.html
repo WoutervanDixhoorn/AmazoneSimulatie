@@ -337,30 +337,53 @@
                             scene.add(group);
                             worldObjects[command.parameters.uuid] = group;
                         }
+                        /*
+                        if (command.parameters.type == "storagerack") {
+                            var geometry = new THREE.BoxGeometry(1, 2, 1);
+                            var material = new THREE.MeshBasicMaterial({
+                                color: 0xFFFFFF
+                            });
+                            var rack = new THREE.Mesh(geometry, material);
+                            rack.position.y = 1.35;
+                            rack.castShadow = true;
 
-                        if(command.parameters.type == "node"){
-                            var nodeGeo = new THREE.BoxGeometry(0.5, 0.5, 0.5);
-                            var nodeMat = new THREE.MeshBasicMaterial({
-                                color: 0x0000FF
+                            var group = new THREE.Group();
+
+
+                            group.add(rack);
+
+                            scene.add(group);
+                            worldObjects[command.parameters.uuid] = group;
+                        }
+                            */
+
+                        if(command.parameters.type == "truck"){
+                            var truckGeo = new THREE.BoxGeometry(2, 2, 2);
+                            var truckMat = new THREE.MeshBasicMaterial({
+                                color: 0x3d3d3d
                             });
 
 
-                            var node = new THREE.Mesh(nodeGeo, nodeMat);
-                            node.position.y = 0.15;
-                            node.position.x = command.parameters.x;
-                            node.position.z = command.parameters.z;
+                            var truck = new THREE.Mesh(truckGeo, truckMat);
+                            truck.position.y = 2.15;
+                            truck.castShadow = true;
 
-                            scene.add(node);
+                            var group = new THREE.Group();
+
+
+                            group.add(truck);
+
+                            scene.add(group);
+                            worldObjects[command.parameters.uuid] = group;
                         }
-
+                            
                         if(command.parameters.type == "storagerack"){
+                            var group = new THREE.Group();
                             gltfLoader.load('model.gltf', (gltf) => {
                                 const root = gltf.scene;
-                                root.position.x = command.parameters.x;
-                                root.position.z = command.parameters.z;
                                 root.position.y = -0.9;
 
-                                scene.add(root);
+                                group.add(root);
                                 
                                 root.traverse((obj) => {
                                     if (obj.castShadow !== undefined){
@@ -370,8 +393,10 @@
                                 })
                                 
                             });
+                            scene.add(group);
+                            worldObjects[command.parameters.uuid] = group;
                         }
-
+                                /*
 
                         if(command.parameters.type == "source"){
                             var nodeGeo = new THREE.BoxGeometry(0.5, 0.5, 0.5);
@@ -387,6 +412,7 @@
 
                             scene.add(node);
                         }
+                        */
                     }
 
                     /*

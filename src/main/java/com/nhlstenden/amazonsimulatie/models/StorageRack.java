@@ -1,5 +1,6 @@
 package com.nhlstenden.amazonsimulatie.models;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -10,23 +11,33 @@ public class StorageRack implements Object3D, Updatable{
     private double y = 0.15;
     private double z = 0;
 
+
     private double rotationX = 0;
     private double rotationY = 0;
     private double rotationZ = 0;
 
-    private List<String> producten;
+    private List<String> producten = new ArrayList<>();
     private String naam;
+
+    public void setAttached(boolean attached) {
+        isAttached = attached;
+    }
+
+    public boolean isAttached() {
+        return isAttached;
+    }
+
     private boolean isAttached = false;
 
     
-    public StorageRack(int x, int z, String naam, String producten[]){
+    public StorageRack(double x, double z, String naam, String... producten){
         this(x,z, naam);
         for(String s : producten){
             this.producten.add(s);
         }
     }
 
-    public StorageRack(int x, int z, String naam){
+    public StorageRack(double x, double z, String naam){
         this.uuid = UUID.randomUUID();
         this.naam = naam;
         this.x = x;
@@ -44,6 +55,18 @@ public class StorageRack implements Object3D, Updatable{
 
     public String getNaam(){
         return naam;
+    }
+
+    public void setNaam(String naam){
+        this.naam = naam;
+    }
+
+    public void addProduct(String product){
+        this.producten.add(product);
+    }
+
+    public List<String> getProducts(){
+        return producten;
     }
 
     @Override
@@ -96,6 +119,23 @@ public class StorageRack implements Object3D, Updatable{
     @Override
     public double getRotationZ() {
         return this.rotationZ;
+    }
+
+    public void setRotationX(double rotationX) {
+        this.rotationX = rotationX;
+    }
+
+    public void setRotationY(double rotationY) {
+        this.rotationY = rotationY;
+    }
+
+    public void setRotationZ(double rotationZ) {
+        this.rotationZ = rotationZ;
+    }
+    
+    public void setRack(String product){
+        addProduct(product);
+        setNaam(product);
     }
 
 }
