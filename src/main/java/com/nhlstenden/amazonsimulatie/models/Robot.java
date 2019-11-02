@@ -65,8 +65,11 @@ class Robot implements Object3D, Updatable {
         if(tripCounter == 3 && x == graaf.getKnoopByName(bestemming).getX() && z == graaf.getKnoopByName(bestemming).getZ()) {
             currentStorage.setAttached(false);
         }
+        if(tripCounter == 2 && x == graaf.getKnoopByName(bestemming).getX() && z == graaf.getKnoopByName(bestemming).getZ()) {
+            currentStorage.setAttached(true);
+        }
 
-        if(x==graaf.getKnoopByName("Source").getX()&&z==graaf.getKnoopByName("Source").getZ()) {
+        if(x==graaf.getKnoopByName("Source").getX() && z==graaf.getKnoopByName("Source").getZ()) {
             if(bestemming.equals("")){
                 return false;
             }
@@ -91,7 +94,7 @@ class Robot implements Object3D, Updatable {
             System.out.println("Arrived" + "Trip: " + tripCounter);
             Collections.reverse(knopen);
             if(tripCounter == 2) {
-                currentStorage.setAttached(true);
+                //currentStorage.setAttached(true);
             }
             nodeGetter = 0;
             return false;
