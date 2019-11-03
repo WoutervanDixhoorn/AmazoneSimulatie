@@ -35,10 +35,9 @@
                 camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 1, 1000);
                 cameraControls = new THREE.OrbitControls(camera);
                 gltfLoader = new THREE.GLTFLoader();
-                objLoader = new THREE.OBJLoader();
-                camera.position.z = 50;
-                camera.position.y = 25;
-                camera.position.x = 50;
+                camera.position.z = 27;
+                camera.position.y = 4;
+                camera.position.x = 29;
                 cameraControls.update();
 
                 scene = new THREE.Scene();
@@ -59,7 +58,7 @@
 
                 // warehouse floor
                 var geometry = new THREE.PlaneGeometry(30, 30);
-                var material = new THREE.MeshLambertMaterial({ map: new THREE.TextureLoader().load("textures/floor.jpg"), side: THREE.DoubleSide });
+                var material = new THREE.MeshPhongMaterial({ map: new THREE.TextureLoader().load("textures/floor.jpg"), side: THREE.DoubleSide });
                 var plane = new THREE.Mesh(geometry, material);
                 plane.rotation.x = Math.PI / 2.0;
                 plane.position.x = 15;
@@ -73,7 +72,7 @@
                 
                 //plane outside
                 var geometry = new THREE.PlaneGeometry(5, 5);
-                var material = new THREE.MeshLambertMaterial({ map: new THREE.TextureLoader().load("textures/grass.jpg"), side: THREE.DoubleSide });
+                var material = new THREE.MeshStandardMaterial({ map: new THREE.TextureLoader().load("textures/grass.jpg"), side: THREE.DoubleSide });
                 
                 for ( var j = 0; j < 25; j ++ ) {
 
@@ -87,34 +86,34 @@
                         scene.add(planeOutside);
                     }
                 }
-                //lights
-                var light = new THREE.SpotLight( 0xffffff);
+
+                //ware house lights
+
+                var color = 0xffffff;
+                var intensity = 0.125;
+
+                var light = new THREE.SpotLight( color,intensity);
                 light.position.set(10 , 10 , 10);
                 light.target.position.x = 10;
                 light.target.position.y = 0;
                 light.target.position.z = 10;
                 light.castShadow = true;
-
-
-
-                var light2 = new THREE.SpotLight( 0xffffff);
+                
+                var light2 = new THREE.SpotLight( color,intensity);
                 light2.position.set(20 , 10 , 10);
                 light2.target.position.x = 20;
                 light2.target.position.y = 0;
                 light2.target.position.z = 10;
                 light2.castShadow = true;
 
-
-
-                var light3 = new THREE.SpotLight( 0xffffff);
+                var light3 = new THREE.SpotLight( color,intensity);
                 light3.position.set(10 , 10 , 20);
                 light3.target.position.x = 10;
                 light3.target.position.y = 0;
                 light3.target.position.z = 20;
                 light3.castShadow = true;
 
-
-                var light4 = new THREE.SpotLight( 0xffffff);
+                var light4 = new THREE.SpotLight( color,intensity);
                 light4.position.set(20 , 10 , 20);
                 light4.target.position.x = 20;
                 light4.target.position.y = 0;
@@ -122,70 +121,96 @@
                 light4.castShadow = true;
 
 
-
                 //making the shadows lighter.
-                var ambLight = new THREE.AmbientLight( 0xffffff, 0.3);
+                var ambLight = new THREE.AmbientLight( 0xffffff, 0.1);
                 scene.add(ambLight);
 
-                scene.add (light, light2, light3, light4);
-                scene.add (light.target, light2.target, light3.target, light4.target);
+
+
+                //add all lights + housing
+                var housingGeo = new THREE.BoxGeometry( 1,1,1);
+                var housingMaterial = new THREE.MeshPhongMaterial({color:0x000000})
+                var lightHousing = new THREE.Mesh(housingGeo, housingMaterial);
+                lightHousing.position.set(10 , 10 , 10)
+
+                var geometry = new THREE.CircleGeometry( 0.5, 32 );
+                var material = new THREE.MeshBasicMaterial( { color: 0xffffff } );
+                var circle = new THREE.Mesh( geometry, material );
+                circle.rotation.x = Math.PI / 2.0;
+                circle.position.set(10,9.45,10);
+
+                var completeLight = new THREE.Group();
+                completeLight.add(circle);
+                completeLight.add(lightHousing);
+                
+
+                for ( var p2 = 0; p2 < 2; p2 ++ ) {
+
+                    for( var p1 = 0; p1 < 2; p1 ++ ){
+                        var instance = completeLight.clone()
+                        instance.position.x += p1*10;
+                        instance.position.z += p2*10;
+                        scene.add(instance);
+                    }
+                }
+
+                scene.add ( light, light2, light3, light4);
+                scene.add ( light.target, light2.target, light3.target, light4.target);
                 
 
                 // sun light
-                var dLight = new THREE.DirectionalLight( 0xffffff, 1);
-                dLight.position.set(40,40,0);
-                dLight.target = plane;
+                
+                var dLight = new THREE.DirectionalLight( 0xffffff, 0.8);
+                dLight.position.set(1, 25 ,0 );
+                dLight.target = planeOutside;
                 dLight.castShadow = true;
-
+                                
                 //proper shadow area
 				var d = 50;
 				dLight.shadow.camera.left = - d;
 				dLight.shadow.camera.right = d;
 				dLight.shadow.camera.top = d;
 				dLight.shadow.camera.bottom = - d;
-
-
                 scene.add(dLight);
 
 
 
                 // helpers
-                /*
-                var shadowHelper = new THREE.CameraHelper ( light.shadow.camera);
-                scene.add(shadowHelper);
-                var shadowHelper2 = new THREE.CameraHelper ( light2.shadow.camera);
-                scene.add(shadowHelper2);
+                // var shadowHelper = new THREE.CameraHelper ( light.shadow.camera);
+                // scene.add(shadowHelper);
+                // var shadowHelper2 = new THREE.CameraHelper ( light2.shadow.camera);
+                // scene.add(shadowHelper2);
 
-                var shadowHelper3 = new THREE.CameraHelper ( light3.shadow.camera);
-                scene.add(shadowHelper3);
+                // var shadowHelper3 = new THREE.CameraHelper ( light3.shadow.camera);
+                // scene.add(shadowHelper3);
 
-                var shadowHelper4 = new THREE.CameraHelper ( light4.shadow.camera);
-                scene.add(shadowHelper4);
-                */
+                // var shadowHelper4 = new THREE.CameraHelper ( light4.shadow.camera);
+                // scene.add(shadowHelper4);
 
-                var dHelper = new THREE.DirectionalLightHelper( dLight, 5 );
-                scene.add(dHelper);
+                // var dHelper = new THREE.DirectionalLightHelper( dLight, 5 );
+                // scene.add(dHelper);
+
 
 
                 //warehouse
                 var geometry = new THREE.BoxGeometry(31, 5, 1);
-                var material = new THREE.MeshLambertMaterial({ map: new THREE.TextureLoader().load("textures/material_wood.jpeg"), side: THREE.DoubleSide });
+                var material = new THREE.MeshPhongMaterial({ map: new THREE.TextureLoader().load("textures/material_wood.jpeg"), side: THREE.DoubleSide });
                 
                 //wall left
                 var wall1 = new THREE.Mesh(geometry, material);
                 wall1.position.x = 15;
                 wall1.position.y = 2.5;
                 wall1.position.z = 0;
-                // wall1.castShadow = true;
-                // wall1.receiveShadow = true;
+                wall1.castShadow = true;
+                wall1.receiveShadow = true;
 
                 //wall right
                 var wall2 = new THREE.Mesh(geometry, material);
                 wall2.position.x = 15;
                 wall2.position.y = 2.5;
                 wall2.position.z = 30;
-                // wall2.castShadow = true;
-                // wall2.receiveShadow = true;
+                wall2.castShadow = true;
+                wall2.receiveShadow = true;
 
                 //wall back
                 var wall3 = new THREE.Mesh(geometry, material);
@@ -193,8 +218,8 @@
                 wall3.position.x = 30;
                 wall3.position.y = 2.5;
                 wall3.position.z = 15;
-                // wall3.castShadow = true;
-                // wall3.receiveShadow = true;
+                wall3.castShadow = true;
+                wall3.receiveShadow = true;
 
                 //front left
                 var geometry2 = new THREE.BoxGeometry(10, 5, 1);
@@ -203,8 +228,8 @@
                 wall4.position.x = 0;
                 wall4.position.y = 2.5;
                 wall4.position.z = 5;
-                // wall4.castShadow = true;
-                // wall4.receiveShadow = true;
+                wall4.castShadow = true;
+                wall4.receiveShadow = true;
 
                 var geometry2 = new THREE.BoxGeometry(10, 5, 1);
                 var wall5 = new THREE.Mesh(geometry2, material);
@@ -212,8 +237,8 @@
                 wall5.position.x = 0;
                 wall5.position.y = 2.5;
                 wall5.position.z = 25;
-                // wall5.castShadow = true;
-                // wall5.receiveShadow = true;
+                wall5.castShadow = true;
+                wall5.receiveShadow = true;
 
                 //add walls
                 var warehouseWall = new THREE.Group();
@@ -226,14 +251,14 @@
 
                 //roof left
                 var geometryL = new THREE.BoxGeometry(32, 20,1);
-                var material = new THREE.MeshLambertMaterial({  map: new THREE.TextureLoader().load("textures/material_roof.jpg"), side: THREE.DoubleSide });
+                var material = new THREE.MeshPhongMaterial({  map: new THREE.TextureLoader().load("textures/material_roof.jpg"), side: THREE.DoubleSide });
                 var roofLeft = new THREE.Mesh(geometryL, material);
                 roofLeft.rotation.x = Math.PI / 3;
                 roofLeft.position.x = 15;
                 roofLeft.position.y = 8;
                 roofLeft.position.z = 5;
-                // roofLeft.receiveShadow = true;
-                // roofLeft.castShadow = true;
+                roofLeft.receiveShadow = true;
+                roofLeft.castShadow = true;
 
                 //roof right
                 var geometryR = new THREE.BoxGeometry(32, 1,20);
@@ -242,8 +267,8 @@
                 roofRight.position.x = 15;
                 roofRight.position.y = 8;
                 roofRight.position.z = 25;
-                // roofRight.receiveShadow = true;
-                // roofRight.castShadow = true;
+                roofRight.receiveShadow = true;
+                roofRight.castShadow = true;
 
                 //roof center top
                 var geometryRoofT = new THREE.BoxGeometry(32.5, 1,5);
@@ -251,11 +276,11 @@
                 roofTop.position.x = 15;
                 roofTop.position.y = 13;
                 roofTop.position.z = 15;
-                // roofTop.castShadow = true;
-                // roofTop.receiveShadow = true;
+                roofTop.castShadow = true;
+                roofTop.receiveShadow = true;
 
                 //wall roof area front and back
-                var material = new THREE.MeshLambertMaterial({  map: new THREE.TextureLoader().load("textures/material_wood.jpeg"), side: THREE.DoubleSide });
+                var material = new THREE.MeshStandardMaterial({  map: new THREE.TextureLoader().load("textures/material_wood.jpeg"), side: THREE.DoubleSide });
 
                 for( var i = 0; i < 9; i ++ ){
                     //front wall roof area
@@ -264,8 +289,8 @@
                     roofF.position.x = 0 ;
                     roofF.position.y = 12 - (i*0.9);
                     roofF.position.z = 15 ;
-                    // roofF.receiveShadow = true;
-                    // roofF.castShadow = true;
+                    roofF.receiveShadow = true;
+                    roofF.castShadow = true;
                     scene.add(roofF);
 
                     // //back wall roof area
@@ -274,8 +299,8 @@
                     roofB.position.x = 30;
                     roofB.position.y = 12 - (i*0.9);
                     roofB.position.z = 15 ;
-                    // roofB.receiveShadow = true;
-                    // roofB.castShadow = true;
+                    roofB.receiveShadow = true;
+                    roofB.castShadow = true;
                     scene.add(roofB);
                 }
       
@@ -285,7 +310,7 @@
                 warehouseRoof.add(roofTop);
                 scene.add(warehouseRoof);
 
-
+                //end of warehouse
 
 
             }
@@ -321,12 +346,12 @@
                         if (command.parameters.type == "robot") {
                             var geometry = new THREE.BoxGeometry(0.9, 0.3, 0.9);
                             var cubeMaterials = [
-                                new THREE.MeshStandardMaterial({ map: new THREE.TextureLoader().load("textures/robot_side.png"), side: THREE.DoubleSide }), //LEFT
-                                new THREE.MeshStandardMaterial({ map: new THREE.TextureLoader().load("textures/robot_side.png"), side: THREE.DoubleSide }), //RIGHT
-                                new THREE.MeshStandardMaterial({ map: new THREE.TextureLoader().load("textures/robot_top.png"), side: THREE.DoubleSide }), //TOP
-                                new THREE.MeshStandardMaterial({ map: new THREE.TextureLoader().load("textures/robot_bottom.png"), side: THREE.DoubleSide }), //BOTTOM
-                                new THREE.MeshStandardMaterial({ map: new THREE.TextureLoader().load("textures/robot_front.png"), side: THREE.DoubleSide }), //FRONT
-                                new THREE.MeshStandardMaterial({ map: new THREE.TextureLoader().load("textures/robot_front.png"), side: THREE.DoubleSide }), //BACK
+                                new THREE.MeshPhongMaterial({ map: new THREE.TextureLoader().load("textures/robot_side.png"), side: THREE.DoubleSide }), //LEFT
+                                new THREE.MeshPhongMaterial({ map: new THREE.TextureLoader().load("textures/robot_side.png"), side: THREE.DoubleSide }), //RIGHT
+                                new THREE.MeshPhongMaterial({ map: new THREE.TextureLoader().load("textures/robot_top.png"), side: THREE.DoubleSide }), //TOP
+                                new THREE.MeshPhongMaterial({ map: new THREE.TextureLoader().load("textures/robot_bottom.png"), side: THREE.DoubleSide }), //BOTTOM
+                                new THREE.MeshPhongMaterial({ map: new THREE.TextureLoader().load("textures/robot_front.png"), side: THREE.DoubleSide }), //FRONT
+                                new THREE.MeshPhongMaterial({ map: new THREE.TextureLoader().load("textures/robot_front.png"), side: THREE.DoubleSide }), //BACK
                             ];
                             var material = new THREE.MeshFaceMaterial(cubeMaterials);
                             var robot = new THREE.Mesh(geometry, material);
@@ -362,37 +387,60 @@
                             */
                             /*
                         if(command.parameters.type == "truck"){
-                            var truckGeo = new THREE.BoxGeometry(2, 2, 2);
-                            var truckMat = new THREE.MeshBasicMaterial({
-                                color: 0x3d3d3d
-                            });
+                            var truckColor = 0xffffff;
+                            var truckGeoBack = new THREE.BoxGeometry(2, 2, 2);
+                            var truckMat = new THREE.MeshPhongMaterial({ color: truckColor });
 
+                            var truckB = new THREE.Mesh(truckGeoBack, truckMat);
+                            truckB.position.y = 1.5;
+                            truckB.castShadow = true;
 
-                            var truck = new THREE.Mesh(truckGeo, truckMat);
-                            truck.position.y = 2.15;
-                            truck.castShadow = true;
-
+                            var truckGeoFront = new THREE.BoxGeometry(1.25,1.5,2);
+                            var truckF = new THREE.Mesh(truckGeoFront,truckMat);
+                            truckF.position.x = -1.95;
+                            truckF.position.y = 1.25;
                             var group = new THREE.Group();
 
+                            var truckGeoConnector = new THREE.BoxGeometry(3.4, 0.25, 0.25);
+                            var truckConnector = new THREE.Mesh(truckGeoConnector,truckMat);
+                            truckConnector.position.x = -0.7;
+                            truckConnector.position.y = 0.5;
 
-                            group.add(truck);
+                            var truckTires = new THREE.CylinderGeometry(0.25,0.25,0.2,20)
+                            var tireMaterial = new THREE.MeshStandardMaterial({color:0x000000})
+                            var tire = new THREE.Mesh(truckTires,tireMaterial);
+                            tire.rotation.x = Math.PI / 2.0;
+                            tire.position.set(-2, 0, 0.95);
 
-                            scene.add(group);
-                            worldObjects[command.parameters.uuid] = group;
-                        }
-*/
-                        if(command.parameters.type == "truck"){
-                            var group = new THREE.Group();
-                            objLoader.load('truck.obj', function(object){
-                                object.position.y = 0.15;
-                                object.scale.set(0.02,0.02,0.02);
-                                object.castShadow = true;
+                            var tire2 = new THREE.Mesh(truckTires,tireMaterial);
+                            tire2.rotation.x = Math.PI / 2.0;
+                            tire2.position.set(0, 0, 0.95);
+
+                            var tire3 = new THREE.Mesh(truckTires,tireMaterial);
+                            tire3.rotation.x = Math.PI / 2.0;
+                            tire3.position.set(-2, 0, -0.95);
+
+                            var tire4 = new THREE.Mesh(truckTires,tireMaterial);
+                            tire4.rotation.x = Math.PI / 2.0;
+                            tire4.position.set(0, 0, -0.95);
+
+                            var tires = new THREE.Group();
+                            tires.add(tire);
+                            tires.add(tire2);
+                            tires.add(tire3);
+                            tires.add(tire4);
+                            tires.position.y += 0.5;
+
+                            var truck = new THREE.Group();
 
 
-                                group.add(object);
-                            });
-                            scene.add(group);
-                            worldObjects[command.parameters.uuid] = group;
+                            truck.add(truckF);
+                            truck.add(truckB);
+                            truck.add(truckConnector);
+                            truck.add(tires);
+                            
+                            scene.add(truck);
+                            worldObjects[command.parameters.uuid] = truck;
                         }
                             
                         if(command.parameters.type == "storagerack"){
