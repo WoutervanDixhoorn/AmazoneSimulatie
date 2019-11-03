@@ -424,12 +424,12 @@
                             tire4.rotation.x = Math.PI / 2.0;
                             tire4.position.set(0, 0, -0.95);
 
-                            // var tires = new THREE.Group();
-                            // tires.add(tire);
-                            // tires.add(tire2);
-                            // tires.add(tire3);
-                            // tires.add(tire4);
-                            // tires.position.y += 0.5;
+                            var tires = new THREE.Group();
+                            tires.add(tire);
+                            tires.add(tire2);
+                            tires.add(tire3);
+                            tires.add(tire4);
+                            tires.position.y += 0.5;
 
                             var truck = new THREE.Group();
 
@@ -437,11 +437,7 @@
                             truck.add(truckF);
                             truck.add(truckB);
                             truck.add(truckConnector);
-                            truck.add(tire);
-                            truck.add(tire2);
-                            truck.add(tire3);
-                            truck.add(tire4);
-                            truck.rotation.x += 90;
+                            truck.add(tires);
                             
                             scene.add(truck);
                             worldObjects[command.parameters.uuid] = truck;
