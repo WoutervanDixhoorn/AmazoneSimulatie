@@ -12,12 +12,15 @@
         Deze pagina is de standaardpagina van de client. Hierin wordt de 3D wereld opgezet en wordt geluisterd
         naar updates vanaf de server over de websocket communicatie.
     -->
-    
+
     <script>
-        
 
         function parseCommand(input = "") {
             return JSON.parse(input);
+        }
+
+        function buildWarehouse(){
+            
         }
 
         var socket;
@@ -176,7 +179,7 @@
                 scene.add(dLight);
 
 
-                
+
                 // helpers
                 // var shadowHelper = new THREE.CameraHelper ( light.shadow.camera);
                 // scene.add(shadowHelper);
@@ -194,123 +197,122 @@
 
 
 
-                // //warehouse
+                //warehouse
+                var geometry = new THREE.BoxGeometry(31, 5, 1);
+                var material = new THREE.MeshPhongMaterial({ map: new THREE.TextureLoader().load("textures/material_wood.jpeg"), side: THREE.DoubleSide });
                 
-                // var geometry = new THREE.BoxGeometry(31, 5, 1);
-                // var material = new THREE.MeshPhongMaterial({ map: new THREE.TextureLoader().load("textures/material_wood.jpeg"), side: THREE.DoubleSide });
-                
-                // //wall left
-                // var wall1 = new THREE.Mesh(geometry, material);
-                // wall1.position.x = 15;
-                // wall1.position.y = 2.5;
-                // wall1.position.z = 0;
-                // wall1.castShadow = true;
-                // wall1.receiveShadow = true;
+                //wall left
+                var wall1 = new THREE.Mesh(geometry, material);
+                wall1.position.x = 15;
+                wall1.position.y = 2.5;
+                wall1.position.z = 0;
+                wall1.castShadow = true;
+                wall1.receiveShadow = true;
 
-                // //wall right
-                // var wall2 = new THREE.Mesh(geometry, material);
-                // wall2.position.x = 15;
-                // wall2.position.y = 2.5;
-                // wall2.position.z = 30;
-                // wall2.castShadow = true;
-                // wall2.receiveShadow = true;
+                //wall right
+                var wall2 = new THREE.Mesh(geometry, material);
+                wall2.position.x = 15;
+                wall2.position.y = 2.5;
+                wall2.position.z = 30;
+                wall2.castShadow = true;
+                wall2.receiveShadow = true;
 
-                // //wall back
-                // var wall3 = new THREE.Mesh(geometry, material);
-                // wall3.rotation.y = Math.PI / 2.0;
-                // wall3.position.x = 30;
-                // wall3.position.y = 2.5;
-                // wall3.position.z = 15;
-                // wall3.castShadow = true;
-                // wall3.receiveShadow = true;
+                //wall back
+                var wall3 = new THREE.Mesh(geometry, material);
+                wall3.rotation.y = Math.PI / 2.0;
+                wall3.position.x = 30;
+                wall3.position.y = 2.5;
+                wall3.position.z = 15;
+                wall3.castShadow = true;
+                wall3.receiveShadow = true;
 
-                // //front left
-                // var geometry2 = new THREE.BoxGeometry(10, 5, 1);
-                // var wall4 = new THREE.Mesh(geometry2, material);
-                // wall4.rotation.y = Math.PI / 2.0;
-                // wall4.position.x = 0;
-                // wall4.position.y = 2.5;
-                // wall4.position.z = 5;
-                // wall4.castShadow = true;
-                // wall4.receiveShadow = true;
+                //front left
+                var geometry2 = new THREE.BoxGeometry(10, 5, 1);
+                var wall4 = new THREE.Mesh(geometry2, material);
+                wall4.rotation.y = Math.PI / 2.0;
+                wall4.position.x = 0;
+                wall4.position.y = 2.5;
+                wall4.position.z = 5;
+                wall4.castShadow = true;
+                wall4.receiveShadow = true;
 
-                // var geometry2 = new THREE.BoxGeometry(10, 5, 1);
-                // var wall5 = new THREE.Mesh(geometry2, material);
-                // wall5.rotation.y = Math.PI / 2.0;
-                // wall5.position.x = 0;
-                // wall5.position.y = 2.5;
-                // wall5.position.z = 25;
-                // wall5.castShadow = true;
-                // wall5.receiveShadow = true;
+                var geometry2 = new THREE.BoxGeometry(10, 5, 1);
+                var wall5 = new THREE.Mesh(geometry2, material);
+                wall5.rotation.y = Math.PI / 2.0;
+                wall5.position.x = 0;
+                wall5.position.y = 2.5;
+                wall5.position.z = 25;
+                wall5.castShadow = true;
+                wall5.receiveShadow = true;
 
-                // //add walls
-                // var warehouseWall = new THREE.Group();
-                // warehouseWall.add(wall1);
-                // warehouseWall.add(wall2);
-                // warehouseWall.add(wall3);
-                // warehouseWall.add(wall4);
-                // warehouseWall.add(wall5);
-                // scene.add(warehouseWall);
+                //add walls
+                var warehouseWall = new THREE.Group();
+                warehouseWall.add(wall1);
+                warehouseWall.add(wall2);
+                warehouseWall.add(wall3);
+                warehouseWall.add(wall4);
+                warehouseWall.add(wall5);
+                scene.add(warehouseWall);
 
-                // //roof left
-                // var geometryL = new THREE.BoxGeometry(32, 20,1);
-                // var material = new THREE.MeshPhongMaterial({  map: new THREE.TextureLoader().load("textures/material_roof.jpg"), side: THREE.DoubleSide });
-                // var roofLeft = new THREE.Mesh(geometryL, material);
-                // roofLeft.rotation.x = Math.PI / 3;
-                // roofLeft.position.x = 15;
-                // roofLeft.position.y = 8;
-                // roofLeft.position.z = 5;
-                // roofLeft.receiveShadow = true;
-                // roofLeft.castShadow = true;
+                //roof left
+                var geometryL = new THREE.BoxGeometry(32, 20,1);
+                var material = new THREE.MeshPhongMaterial({  map: new THREE.TextureLoader().load("textures/material_roof.jpg"), side: THREE.DoubleSide });
+                var roofLeft = new THREE.Mesh(geometryL, material);
+                roofLeft.rotation.x = Math.PI / 3;
+                roofLeft.position.x = 15;
+                roofLeft.position.y = 8;
+                roofLeft.position.z = 5;
+                roofLeft.receiveShadow = true;
+                roofLeft.castShadow = true;
 
-                // //roof right
-                // var geometryR = new THREE.BoxGeometry(32, 1,20);
-                // var roofRight = new THREE.Mesh(geometryR, material);
-                // roofRight.rotation.x = Math.PI / 6;
-                // roofRight.position.x = 15;
-                // roofRight.position.y = 8;
-                // roofRight.position.z = 25;
-                // roofRight.receiveShadow = true;
-                // roofRight.castShadow = true;
+                //roof right
+                var geometryR = new THREE.BoxGeometry(32, 1,20);
+                var roofRight = new THREE.Mesh(geometryR, material);
+                roofRight.rotation.x = Math.PI / 6;
+                roofRight.position.x = 15;
+                roofRight.position.y = 8;
+                roofRight.position.z = 25;
+                roofRight.receiveShadow = true;
+                roofRight.castShadow = true;
 
-                // //roof center top
-                // var geometryRoofT = new THREE.BoxGeometry(32.5, 1,5);
-                // var roofTop = new THREE.Mesh(geometryRoofT, material);
-                // roofTop.position.x = 15;
-                // roofTop.position.y = 13;
-                // roofTop.position.z = 15;
-                // roofTop.castShadow = true;
-                // roofTop.receiveShadow = true;
+                //roof center top
+                var geometryRoofT = new THREE.BoxGeometry(32.5, 1,5);
+                var roofTop = new THREE.Mesh(geometryRoofT, material);
+                roofTop.position.x = 15;
+                roofTop.position.y = 13;
+                roofTop.position.z = 15;
+                roofTop.castShadow = true;
+                roofTop.receiveShadow = true;
 
-                // //wall roof area front and back
-                // var material = new THREE.MeshStandardMaterial({  map: new THREE.TextureLoader().load("textures/material_wood.jpeg"), side: THREE.DoubleSide });
+                //wall roof area front and back
+                var material = new THREE.MeshStandardMaterial({  map: new THREE.TextureLoader().load("textures/material_wood.jpeg"), side: THREE.DoubleSide });
 
-                // for( var i = 0; i < 9; i ++ ){
-                //     //front wall roof area
-                //     var geoRoofFront = new THREE.BoxGeometry(0.9, 0.9, 5 + (3*i));
-                //     var roofF = new THREE.Mesh(geoRoofFront, material);
-                //     roofF.position.x = 0 ;
-                //     roofF.position.y = 12 - (i*0.9);
-                //     roofF.position.z = 15 ;
-                //     roofF.receiveShadow = true;
-                //     roofF.castShadow = true;
-                //     scene.add(roofF);
+                for( var i = 0; i < 9; i ++ ){
+                    //front wall roof area
+                    var geoRoofFront = new THREE.BoxGeometry(0.9, 0.9, 5 + (3*i));
+                    var roofF = new THREE.Mesh(geoRoofFront, material);
+                    roofF.position.x = 0 ;
+                    roofF.position.y = 12 - (i*0.9);
+                    roofF.position.z = 15 ;
+                    roofF.receiveShadow = true;
+                    roofF.castShadow = true;
+                    scene.add(roofF);
 
-                //     // //back wall roof area
-                //     var geoRoofBack = new THREE.BoxGeometry(0.9, 0.9, 5 + (3*i));
-                //     var roofB = new THREE.Mesh(geoRoofBack, material);
-                //     roofB.position.x = 30;
-                //     roofB.position.y = 12 - (i*0.9);
-                //     roofB.position.z = 15 ;
-                //     roofB.receiveShadow = true;
-                //     roofB.castShadow = true;
-                //     scene.add(roofB);
-                // }
+                    // //back wall roof area
+                    var geoRoofBack = new THREE.BoxGeometry(0.9, 0.9, 5 + (3*i));
+                    var roofB = new THREE.Mesh(geoRoofBack, material);
+                    roofB.position.x = 30;
+                    roofB.position.y = 12 - (i*0.9);
+                    roofB.position.z = 15 ;
+                    roofB.receiveShadow = true;
+                    roofB.castShadow = true;
+                    scene.add(roofB);
+                }
       
-                // var warehouseRoof = new THREE.Group();
-                // warehouseRoof.add(roofLeft);
-                // warehouseRoof.add(roofRight);
-                // warehouseRoof.add(roofTop);
+                var warehouseRoof = new THREE.Group();
+                warehouseRoof.add(roofLeft);
+                warehouseRoof.add(roofRight);
+                warehouseRoof.add(roofTop);
                 scene.add(warehouseRoof);
 
                 //end of warehouse
@@ -437,8 +439,10 @@
                             var group = new THREE.Group();
                             objLoader.load('truck.obj', function(object){
                                 object.position.y = 0.15;
-                                object.scale.set(0.017,0.017,0.017);
+                                object.scale.set(0.02,0.02,0.02);
                                 object.castShadow = true;
+
+
                                 group.add(object);
                             });
                             scene.add(group);
@@ -490,7 +494,6 @@
     <script src="OrbitControls.js"></script>
     <script src="GLTFLoader.js"></script>
     <script src ="OBJLoader.js"></script>
-    <script src="Warehouse.js"></script>
 </body>
 
 </html>

@@ -56,19 +56,10 @@ public class World implements Model {
         verzadigProducten("Sokken", "Lego", "Gitaar", "Water", "Tas", "Eenhoorn in blik", "Stoel", 
         "Laptop", "Schoenen", "TV", "Kamer plant", "Waterfles");
         buildWarehouse();
-        //
        
 
         robot1 = new Robot(graaf);
         robot2 = new Robot(graaf);
-
-        //robot1.setBestemming("Stellage1-0");
-        //robot2.setBestemming("Stellage4-0");
-
-        //robot1.setCurrentStorage(findStorageRack("Stellage1-0"));
-        //robot2.setCurrentStorage(findStorageRack("Stellage4-0"));
-        //decideStorageRack(robot1, "Stellage1-0");
-        //decideStorageRack(robot2, "Stellage4-0");
 
         //Adding robots to world
         this.worldObjects.add(robot1);
@@ -109,8 +100,6 @@ public class World implements Model {
         //Graaf graaf = new Graaf();
         List<Knoop> knopen = new ArrayList<>();
 
-
-        //Solution?
         int productCounter = 0;
         //SIZE needs to my uneven
         int SIZE = 5;
@@ -125,24 +114,20 @@ public class World implements Model {
                         knopen.add(new Knoop("Empty", i*spacing + offset,j*spacing + offset));
                         continue;
                     }
-                    if(j == SIZE/2){
-                        //nodeModels.add(new NodeModel("source",i*spacing + offset,j*spacing + offset));
+                    if(j == SIZE/2){  
                         knopen.add(new Knoop("Source", i*spacing + offset,j*spacing + offset));
                         continue;
-                    }
-                    //nodeModels.add(new NodeModel(i*spacing + offset,j*spacing + offset));
+                    }   
                     knopen.add(new Knoop("Knoop" + i + "-" + j, i*spacing + offset,j*spacing + offset));
                     continue;
                 }
-                if(j%2 == 0){
-                    //nodeModels.add(new NodeModel("stellage",i*spacing + offset,j*spacing + offset));
+                if(j%2 == 0){                    
                     storageRacks.add(new StorageRack(i*spacing + offset,j*spacing + offset, "Stellage" + i + "-" + j, producten.get(productCounter)));
                     knopen.add(new Knoop("Stellage" + i + "-" + j, i*spacing + offset,j*spacing + offset));
                     productCounter++;
                     System.out.println(productCounter);
                     continue;
-                }
-               //nodeModels.add(new NodeModel(i*spacing + offset,j*spacing + offset));
+                } 
                 knopen.add(new Knoop("Knoop" + i + "-" + j, i*spacing + offset,j*spacing + offset));            
             }
         }
