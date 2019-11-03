@@ -75,7 +75,7 @@ public class World implements Model {
         this.worldObjects.add(robot2);
 
         //Adding/Starting truck
-        this.truck = new Truck(-50,15,3,15, producten, this);
+        this.truck = new Truck(-50,15,-8,15, producten, this);
         this.worldObjects.add(truck);
     }
 
