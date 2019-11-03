@@ -394,6 +394,20 @@
                             scene.add(group);
                             worldObjects[command.parameters.uuid] = group;
                         }
+*/
+                        if(command.parameters.type == "truck"){
+                            var group = new THREE.Group();
+                            objLoader.load('truck.obj', function(object){
+                                object.position.y = 0.15;
+                                object.scale.set(0.02,0.02,0.02);
+                                object.castShadow = true;
+
+
+                                group.add(object);
+                            });
+                            scene.add(group);
+                            worldObjects[command.parameters.uuid] = group;
+                        }
                             
                         if(command.parameters.type == "storagerack"){
                             var group = new THREE.Group();
