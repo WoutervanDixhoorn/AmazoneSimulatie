@@ -35,6 +35,7 @@
                 camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 1, 1000);
                 cameraControls = new THREE.OrbitControls(camera);
                 gltfLoader = new THREE.GLTFLoader();
+                objLoader = new THREE.OBJLoader();
                 camera.position.z = 27;
                 camera.position.y = 4;
                 camera.position.x = 29;
@@ -437,31 +438,11 @@
                                 object.scale.set(0.02,0.02,0.02);
                                 object.castShadow = true;
 
-                            var tire3 = new THREE.Mesh(truckTires,tireMaterial);
-                            tire3.rotation.x = Math.PI / 2.0;
-                            tire3.position.set(-2, 0, -0.95);
 
-                            var tire4 = new THREE.Mesh(truckTires,tireMaterial);
-                            tire4.rotation.x = Math.PI / 2.0;
-                            tire4.position.set(0, 0, -0.95);
-
-                            var tires = new THREE.Group();
-                            tires.add(tire);
-                            tires.add(tire2);
-                            tires.add(tire3);
-                            tires.add(tire4);
-                            tires.position.y += 0.5;
-
-                            var truck = new THREE.Group();
-
-
-                            truck.add(truckF);
-                            truck.add(truckB);
-                            truck.add(truckConnector);
-                            truck.add(tires);
-                            
-                            scene.add(truck);
-                            worldObjects[command.parameters.uuid] = truck;
+                                group.add(object);
+                            });
+                            scene.add(group);
+                            worldObjects[command.parameters.uuid] = group;
                         }
                             
                         if(command.parameters.type == "storagerack"){
@@ -483,23 +464,6 @@
                             scene.add(group);
                             worldObjects[command.parameters.uuid] = group;
                         }
-                                /*
-
-                        if(command.parameters.type == "source"){
-                            var nodeGeo = new THREE.BoxGeometry(0.5, 0.5, 0.5);
-                            var nodeMat = new THREE.MeshBasicMaterial({
-                                color: 0xFF0000
-                            });
-
-
-                            var node = new THREE.Mesh(nodeGeo, nodeMat);
-                            node.position.y = 0.15;
-                            node.position.x = command.parameters.x;
-                            node.position.z = command.parameters.z;
-
-                            scene.add(node);
-                        }
-                        */
                     }
 
                     /*
