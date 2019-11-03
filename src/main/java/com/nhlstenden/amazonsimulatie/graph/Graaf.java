@@ -4,7 +4,7 @@ import java.util.*;
 
 public class Graaf {
 
-    private Set<Knoop> knopen = new HashSet<>();
+    Set<Knoop> knopen = new HashSet<>();
 
     public void addNode(Knoop n){
         knopen.add(n);
@@ -17,7 +17,7 @@ public class Graaf {
     public Knoop getKnoopByName(String naam){
         Knoop temp = null;
         for(Knoop k : knopen){
-            if(k.getNaam().equals(naam)){
+            if(k.naam.equals(naam)){
                 temp = k;
                 break;
             }
