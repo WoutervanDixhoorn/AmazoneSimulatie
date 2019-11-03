@@ -35,7 +35,7 @@ public class Truck implements Object3D, Updatable{
 
     private boolean hasOrder = false;
    
-    private World world;
+    World world;
 
     public Truck(int x, int z, int laadDockX, int laadDockZ, List<String> producten, World world){
         this.uuid = UUID.randomUUID();
