@@ -35,8 +35,11 @@
             function init() {
                 camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 1, 1000);
                 cameraControls = new THREE.OrbitControls(camera);
+                //Init loaders
                 gltfLoader = new THREE.GLTFLoader();
                 objLoader = new THREE.OBJLoader();
+                gltfLoader.setPath();
+
                 camera.position.z = 27;
                 camera.position.y = 4;
                 camera.position.x = 29;
@@ -58,263 +61,9 @@
 
                 window.addEventListener('resize', onWindowResize, false);
 
-                // warehouse floor
-                var geometry = new THREE.PlaneGeometry(30, 30);
-                var material = new THREE.MeshPhongMaterial({ map: new THREE.TextureLoader().load("textures/floor.jpg"), side: THREE.DoubleSide });
-                var plane = new THREE.Mesh(geometry, material);
-                plane.rotation.x = Math.PI / 2.0;
-                plane.position.x = 15;
-                plane.position.z = 15;
-                plane.receiveShadow = true;
-                scene.add(plane);
-
-
-
-
-                
-                //plane outside
-                var geometry = new THREE.PlaneGeometry(5, 5);
-                var material = new THREE.MeshStandardMaterial({ map: new THREE.TextureLoader().load("textures/grass.jpg"), side: THREE.DoubleSide });
-                
-                for ( var j = 0; j < 25; j ++ ) {
-
-                    for( var i = 0; i < 25; i ++ ){
-                        var planeOutside = new THREE.Mesh(geometry, material);    
-                        planeOutside.rotation.x = Math.PI / 2.0;
-                        planeOutside.position.x = -45 + (i*5);
-                        planeOutside.position.y = -0.001;
-                        planeOutside.position.z = -45 + (j*5); 
-                        planeOutside.receiveShadow = true;
-                        scene.add(planeOutside);
-                    }
-                }
-
-                //ware house lights
-
-                var color = 0xffffff;
-                var intensity = 0.125;
-
-                var light = new THREE.SpotLight( color,intensity);
-                light.position.set(10 , 10 , 10);
-                light.target.position.x = 10;
-                light.target.position.y = 0;
-                light.target.position.z = 10;
-                light.castShadow = true;
-                
-                var light2 = new THREE.SpotLight( color,intensity);
-                light2.position.set(20 , 10 , 10);
-                light2.target.position.x = 20;
-                light2.target.position.y = 0;
-                light2.target.position.z = 10;
-                light2.castShadow = true;
-
-                var light3 = new THREE.SpotLight( color,intensity);
-                light3.position.set(10 , 10 , 20);
-                light3.target.position.x = 10;
-                light3.target.position.y = 0;
-                light3.target.position.z = 20;
-                light3.castShadow = true;
-
-                var light4 = new THREE.SpotLight( color,intensity);
-                light4.position.set(20 , 10 , 20);
-                light4.target.position.x = 20;
-                light4.target.position.y = 0;
-                light4.target.position.z = 20;
-                light4.castShadow = true;
-
-
-                //making the shadows lighter.
-                var ambLight = new THREE.AmbientLight( 0xffffff, 0.1);
-                scene.add(ambLight);
-
-
-
-                //add all lights + housing
-                var housingGeo = new THREE.BoxGeometry( 1,1,1);
-                var housingMaterial = new THREE.MeshPhongMaterial({color:0x000000})
-                var lightHousing = new THREE.Mesh(housingGeo, housingMaterial);
-                lightHousing.position.set(10 , 10 , 10)
-
-                var geometry = new THREE.CircleGeometry( 0.5, 32 );
-                var material = new THREE.MeshBasicMaterial( { color: 0xffffff } );
-                var circle = new THREE.Mesh( geometry, material );
-                circle.rotation.x = Math.PI / 2.0;
-                circle.position.set(10,9.45,10);
-
-                var completeLight = new THREE.Group();
-                completeLight.add(circle);
-                completeLight.add(lightHousing);
-                
-
-                for ( var p2 = 0; p2 < 2; p2 ++ ) {
-
-                    for( var p1 = 0; p1 < 2; p1 ++ ){
-                        var instance = completeLight.clone()
-                        instance.position.x += p1*10;
-                        instance.position.z += p2*10;
-                        scene.add(instance);
-                    }
-                }
-
-                scene.add ( light, light2, light3, light4);
-                scene.add ( light.target, light2.target, light3.target, light4.target);
-                
-
-                // sun light
-                
-                var dLight = new THREE.DirectionalLight( 0xffffff, 0.8);
-                dLight.position.set(1, 25 ,0 );
-                dLight.target = planeOutside;
-                dLight.castShadow = true;
-                                
-                //proper shadow area
-				var d = 50;
-				dLight.shadow.camera.left = - d;
-				dLight.shadow.camera.right = d;
-				dLight.shadow.camera.top = d;
-				dLight.shadow.camera.bottom = - d;
-                scene.add(dLight);
-
-
-                
-                // helpers
-                // var shadowHelper = new THREE.CameraHelper ( light.shadow.camera);
-                // scene.add(shadowHelper);
-                // var shadowHelper2 = new THREE.CameraHelper ( light2.shadow.camera);
-                // scene.add(shadowHelper2);
-
-                // var shadowHelper3 = new THREE.CameraHelper ( light3.shadow.camera);
-                // scene.add(shadowHelper3);
-
-                // var shadowHelper4 = new THREE.CameraHelper ( light4.shadow.camera);
-                // scene.add(shadowHelper4);
-
-                // var dHelper = new THREE.DirectionalLightHelper( dLight, 5 );
-                // scene.add(dHelper);
-
-
-
-                // //warehouse
-                
-                // var geometry = new THREE.BoxGeometry(31, 5, 1);
-                // var material = new THREE.MeshPhongMaterial({ map: new THREE.TextureLoader().load("textures/material_wood.jpeg"), side: THREE.DoubleSide });
-                
-                // //wall left
-                // var wall1 = new THREE.Mesh(geometry, material);
-                // wall1.position.x = 15;
-                // wall1.position.y = 2.5;
-                // wall1.position.z = 0;
-                // wall1.castShadow = true;
-                // wall1.receiveShadow = true;
-
-                // //wall right
-                // var wall2 = new THREE.Mesh(geometry, material);
-                // wall2.position.x = 15;
-                // wall2.position.y = 2.5;
-                // wall2.position.z = 30;
-                // wall2.castShadow = true;
-                // wall2.receiveShadow = true;
-
-                // //wall back
-                // var wall3 = new THREE.Mesh(geometry, material);
-                // wall3.rotation.y = Math.PI / 2.0;
-                // wall3.position.x = 30;
-                // wall3.position.y = 2.5;
-                // wall3.position.z = 15;
-                // wall3.castShadow = true;
-                // wall3.receiveShadow = true;
-
-                // //front left
-                // var geometry2 = new THREE.BoxGeometry(10, 5, 1);
-                // var wall4 = new THREE.Mesh(geometry2, material);
-                // wall4.rotation.y = Math.PI / 2.0;
-                // wall4.position.x = 0;
-                // wall4.position.y = 2.5;
-                // wall4.position.z = 5;
-                // wall4.castShadow = true;
-                // wall4.receiveShadow = true;
-
-                // var geometry2 = new THREE.BoxGeometry(10, 5, 1);
-                // var wall5 = new THREE.Mesh(geometry2, material);
-                // wall5.rotation.y = Math.PI / 2.0;
-                // wall5.position.x = 0;
-                // wall5.position.y = 2.5;
-                // wall5.position.z = 25;
-                // wall5.castShadow = true;
-                // wall5.receiveShadow = true;
-
-                // //add walls
-                // var warehouseWall = new THREE.Group();
-                // warehouseWall.add(wall1);
-                // warehouseWall.add(wall2);
-                // warehouseWall.add(wall3);
-                // warehouseWall.add(wall4);
-                // warehouseWall.add(wall5);
-                // scene.add(warehouseWall);
-
-                // //roof left
-                // var geometryL = new THREE.BoxGeometry(32, 20,1);
-                // var material = new THREE.MeshPhongMaterial({  map: new THREE.TextureLoader().load("textures/material_roof.jpg"), side: THREE.DoubleSide });
-                // var roofLeft = new THREE.Mesh(geometryL, material);
-                // roofLeft.rotation.x = Math.PI / 3;
-                // roofLeft.position.x = 15;
-                // roofLeft.position.y = 8;
-                // roofLeft.position.z = 5;
-                // roofLeft.receiveShadow = true;
-                // roofLeft.castShadow = true;
-
-                // //roof right
-                // var geometryR = new THREE.BoxGeometry(32, 1,20);
-                // var roofRight = new THREE.Mesh(geometryR, material);
-                // roofRight.rotation.x = Math.PI / 6;
-                // roofRight.position.x = 15;
-                // roofRight.position.y = 8;
-                // roofRight.position.z = 25;
-                // roofRight.receiveShadow = true;
-                // roofRight.castShadow = true;
-
-                // //roof center top
-                // var geometryRoofT = new THREE.BoxGeometry(32.5, 1,5);
-                // var roofTop = new THREE.Mesh(geometryRoofT, material);
-                // roofTop.position.x = 15;
-                // roofTop.position.y = 13;
-                // roofTop.position.z = 15;
-                // roofTop.castShadow = true;
-                // roofTop.receiveShadow = true;
-
-                // //wall roof area front and back
-                // var material = new THREE.MeshStandardMaterial({  map: new THREE.TextureLoader().load("textures/material_wood.jpeg"), side: THREE.DoubleSide });
-
-                // for( var i = 0; i < 9; i ++ ){
-                //     //front wall roof area
-                //     var geoRoofFront = new THREE.BoxGeometry(0.9, 0.9, 5 + (3*i));
-                //     var roofF = new THREE.Mesh(geoRoofFront, material);
-                //     roofF.position.x = 0 ;
-                //     roofF.position.y = 12 - (i*0.9);
-                //     roofF.position.z = 15 ;
-                //     roofF.receiveShadow = true;
-                //     roofF.castShadow = true;
-                //     scene.add(roofF);
-
-                //     // //back wall roof area
-                //     var geoRoofBack = new THREE.BoxGeometry(0.9, 0.9, 5 + (3*i));
-                //     var roofB = new THREE.Mesh(geoRoofBack, material);
-                //     roofB.position.x = 30;
-                //     roofB.position.y = 12 - (i*0.9);
-                //     roofB.position.z = 15 ;
-                //     roofB.receiveShadow = true;
-                //     roofB.castShadow = true;
-                //     scene.add(roofB);
-                // }
-      
-                // var warehouseRoof = new THREE.Group();
-                // warehouseRoof.add(roofLeft);
-                // warehouseRoof.add(roofRight);
-                // warehouseRoof.add(roofTop);
-                scene.add(warehouseRoof);
-
-                //end of warehouse
-
+                //Add warehouse and lighting/shading
+                buildWarehouse(scene);
+                buildLighting(scene);
 
             }
 
@@ -369,73 +118,9 @@
                             scene.add(group);
                             worldObjects[command.parameters.uuid] = group;
                         }
-                        /*
-                        if (command.parameters.type == "storagerack") {
-                            var geometry = new THREE.BoxGeometry(1, 2, 1);
-                            var material = new THREE.MeshBasicMaterial({
-                                color: 0xFFFFFF
-                            });
-                            var rack = new THREE.Mesh(geometry, material);
-                            rack.position.y = 1.35;
-                            rack.castShadow = true;
-
-                            var group = new THREE.Group();
-
-
-                            group.add(rack);
-
-                            scene.add(group);
-                            worldObjects[command.parameters.uuid] = group;
-                        }
-                            */
-                            /*
-                        if(command.parameters.type == "truck"){
-                            var truckColor = 0xffffff;
-                            var truckGeoBack = new THREE.BoxGeometry(2, 2, 2);
-                            var truckMat = new THREE.MeshPhongMaterial({ color: truckColor });
-
-                            var truckB = new THREE.Mesh(truckGeoBack, truckMat);
-                            truckB.position.y = 1.5;
-                            truckB.castShadow = true;
-
-                            var truckGeoFront = new THREE.BoxGeometry(1.25,1.5,2);
-                            var truckF = new THREE.Mesh(truckGeoFront,truckMat);
-                            truckF.position.x = -1.95;
-                            truckF.position.y = 1.25;
-                            var group = new THREE.Group();
-
-                            var truckGeoConnector = new THREE.BoxGeometry(3.4, 0.25, 0.25);
-                            var truckConnector = new THREE.Mesh(truckGeoConnector,truckMat);
-                            truckConnector.position.x = -0.7;
-                            truckConnector.position.y = 0.5;
-
-                            var truckTires = new THREE.CylinderGeometry(0.25,0.25,0.2,20)
-                            var tireMaterial = new THREE.MeshStandardMaterial({color:0x000000})
-                            var tire = new THREE.Mesh(truckTires,tireMaterial);
-                            tire.rotation.x = Math.PI / 2.0;
-                            tire.position.set(-2, 0, 0.95);
-
-                            scene.add(group);
-                            worldObjects[command.parameters.uuid] = group;
-                        }
-
                         if(command.parameters.type == "truck"){
                             var group = new THREE.Group();
-                            objLoader.load('truck.obj', function(object){
-                                object.position.y = 0.15;
-                                object.scale.set(0.02,0.02,0.02);
-                                object.castShadow = true;
-
-
-                                group.add(object);
-                            });
-                            scene.add(group);
-                            worldObjects[command.parameters.uuid] = group;
-                        }
-*/
-                        if(command.parameters.type == "truck"){
-                            var group = new THREE.Group();
-                            objLoader.load('truck.obj', function(object){
+                            objLoader.load('models/truck.obj', function(object){
                                 object.position.y = 0.15;
                                 object.scale.set(0.017,0.017,0.017);
                                 object.castShadow = true;
@@ -443,11 +128,10 @@
                             });
                             scene.add(group);
                             worldObjects[command.parameters.uuid] = group;
-                        }
-                            
+                        }       
                         if(command.parameters.type == "storagerack"){
                             var group = new THREE.Group();
-                            gltfLoader.load('model.gltf', (gltf) => {
+                            gltfLoader.load('models/model.gltf', (gltf) => {
                                 const root = gltf.scene;
                                 root.position.y = -0.9;
 
@@ -486,11 +170,13 @@
         }
     </script>
 
-    <script src="three.min.js"></script>
-    <script src="OrbitControls.js"></script>
-    <script src="GLTFLoader.js"></script>
-    <script src ="OBJLoader.js"></script>
-    <script src="Warehouse.js"></script>
+    <!---Importing scripts--->
+    <script src="Js/three.min.js"></script>
+    <script src="Js/OrbitControls.js"></script>
+    <script src="Js/GLTFLoader.js"></script>
+    <script src ="Js/OBJLoader.js"></script>
+    <script src="Js/World.js"></script>
+    <script src="Js/lighting.js"></script>
 </body>
 
 </html>

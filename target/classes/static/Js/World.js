@@ -1,3 +1,14 @@
+function buildWarehouse (scene){
+
+	// warehouse floor
+	var geometry = new THREE.PlaneGeometry(30, 30);
+	var material = new THREE.MeshPhongMaterial({ map: new THREE.TextureLoader().load("textures/floor.jpg"), side: THREE.DoubleSide });
+	var plane = new THREE.Mesh(geometry, material);
+	plane.rotation.x = Math.PI / 2.0;
+	plane.position.x = 15;
+	plane.position.z = 15;
+	plane.receiveShadow = true;
+	scene.add(plane);
 
 //warehouse
 	var geometry = new THREE.BoxGeometry(31, 5, 1);
@@ -117,3 +128,28 @@
 	warehouseRoof.add(roofTop);
 	scene.add(warehouseRoof);
 
+	buildWorld(scene);
+	buildWarehouseLighting(scene);
+
+}
+
+function buildWorld(scene){
+	//plane outside
+	var geometry = new THREE.PlaneGeometry(5, 5);
+	var material = new THREE.MeshStandardMaterial({ map: new THREE.TextureLoader().load("textures/grass.jpg"), side: THREE.DoubleSide });
+
+	for ( var j = 0; j < 25; j ++ ) {
+
+		for( var i = 0; i < 25; i ++ ){
+			var planeOutside = new THREE.Mesh(geometry, material);    
+			planeOutside.rotation.x = Math.PI / 2.0;
+			planeOutside.position.x = -45 + (i*5);
+			planeOutside.position.y = -0.001;
+			planeOutside.position.z = -45 + (j*5); 
+			planeOutside.receiveShadow = true;
+			scene.add(planeOutside);
+		}
+	}
+
+	buildSunLight(scene, planeOutside);
+}
