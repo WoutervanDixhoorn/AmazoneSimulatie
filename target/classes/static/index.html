@@ -28,12 +28,14 @@
             var worldObjects = {};
 
             var gltfLoader;
+            var objLoader;
 
 
             function init() {
                 camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 1, 1000);
                 cameraControls = new THREE.OrbitControls(camera);
                 gltfLoader = new THREE.GLTFLoader();
+                objLoader = new THREE.OBJLoader();
                 camera.position.z = 50;
                 camera.position.y = 25;
                 camera.position.x = 50;
@@ -358,7 +360,7 @@
                             worldObjects[command.parameters.uuid] = group;
                         }
                             */
-
+                            /*
                         if(command.parameters.type == "truck"){
                             var truckGeo = new THREE.BoxGeometry(2, 2, 2);
                             var truckMat = new THREE.MeshBasicMaterial({
@@ -375,6 +377,20 @@
 
                             group.add(truck);
 
+                            scene.add(group);
+                            worldObjects[command.parameters.uuid] = group;
+                        }
+*/
+                        if(command.parameters.type == "truck"){
+                            var group = new THREE.Group();
+                            objLoader.load('truck.obj', function(object){
+                                object.position.y = 0.15;
+                                object.scale.set(0.02,0.02,0.02);
+                                object.castShadow = true;
+
+
+                                group.add(object);
+                            });
                             scene.add(group);
                             worldObjects[command.parameters.uuid] = group;
                         }
@@ -440,6 +456,7 @@
     <script src="three.min.js"></script>
     <script src="OrbitControls.js"></script>
     <script src="GLTFLoader.js"></script>
+    <script src ="OBJLoader.js"></script>
 </body>
 
 </html>

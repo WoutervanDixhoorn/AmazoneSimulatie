@@ -22,7 +22,7 @@ public class Truck implements Object3D, Updatable{
     private double laadDockZ = 0;
 
     private double rotationX = 0;
-    private double rotationY = 0;
+    private double rotationY = -Math.PI/2;
     private double rotationZ = 0;
 
     private double movementSpeed = 0.5;
