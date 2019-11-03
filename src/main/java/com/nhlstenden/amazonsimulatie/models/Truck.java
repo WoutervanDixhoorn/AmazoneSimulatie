@@ -1,7 +1,6 @@
 package com.nhlstenden.amazonsimulatie.models;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
@@ -36,7 +35,7 @@ public class Truck implements Object3D, Updatable{
 
     private boolean hasOrder = false;
    
-    World world;
+    private World world;
 
     public Truck(int x, int z, int laadDockX, int laadDockZ, List<String> producten, World world){
         this.uuid = UUID.randomUUID();
