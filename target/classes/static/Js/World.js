@@ -14,88 +14,55 @@ function buildWarehouse (scene){
 	var geometry = new THREE.BoxGeometry(31, 5, 1);
 	var material = new THREE.MeshPhongMaterial({ map: new THREE.TextureLoader().load("textures/material_wood.jpeg"), side: THREE.DoubleSide });
 
-	//wall left
-	var wall1 = new THREE.Mesh(geometry, material);
-	wall1.position.x = 15;
-	wall1.position.y = 2.5;
-	wall1.position.z = 0;
-	wall1.castShadow = true;
-	wall1.receiveShadow = true;
-
-	//wall right
-	var wall2 = new THREE.Mesh(geometry, material);
-	wall2.position.x = 15;
-	wall2.position.y = 2.5;
-	wall2.position.z = 30;
-	wall2.castShadow = true;
-	wall2.receiveShadow = true;
-
-	//wall back
-	var wall3 = new THREE.Mesh(geometry, material);
-	wall3.rotation.y = Math.PI / 2.0;
-	wall3.position.x = 30;
-	wall3.position.y = 2.5;
-	wall3.position.z = 15;
-	wall3.castShadow = true;
-	wall3.receiveShadow = true;
-
-	//front left
-	var geometry2 = new THREE.BoxGeometry(10, 5, 1);
-	var wall4 = new THREE.Mesh(geometry2, material);
-	wall4.rotation.y = Math.PI / 2.0;
-	wall4.position.x = 0;
-	wall4.position.y = 2.5;
-	wall4.position.z = 5;
-	wall4.castShadow = true;
-	wall4.receiveShadow = true;
-
-	var geometry2 = new THREE.BoxGeometry(10, 5, 1);
-	var wall5 = new THREE.Mesh(geometry2, material);
-	wall5.rotation.y = Math.PI / 2.0;
-	wall5.position.x = 0;
-	wall5.position.y = 2.5;
-	wall5.position.z = 25;
-	wall5.castShadow = true;
-	wall5.receiveShadow = true;
-
-	//add walls
 	var warehouseWall = new THREE.Group();
-	warehouseWall.add(wall1);
-	warehouseWall.add(wall2);
-	warehouseWall.add(wall3);
-	warehouseWall.add(wall4);
-	warehouseWall.add(wall5);
+
+	buildWallType(15,2.5,0, "wallLeft");
+	buildWallType(15,2.5,30, "wallRight");
+	buildWallType(30,2.5,15, "wallBack");
+	buildWallType(0, 2.5, 5, "frontLeft");
+	buildWallType(0, 2.5, 25, "frontRight");
+
 	scene.add(warehouseWall);
 
-	//roof left
-	var geometryL = new THREE.BoxGeometry(32, 20,1);
-	var material = new THREE.MeshPhongMaterial({  map: new THREE.TextureLoader().load("textures/material_roof.jpg"), side: THREE.DoubleSide });
-	var roofLeft = new THREE.Mesh(geometryL, material);
-	roofLeft.rotation.x = Math.PI / 3;
-	roofLeft.position.x = 15;
-	roofLeft.position.y = 8;
-	roofLeft.position.z = 5;
-	roofLeft.receiveShadow = true;
-	roofLeft.castShadow = true;
+	function buildWallType(x, y, z, type) {
+		if(type === "frontLeft" || type === "frontRight") {
+			geometry = new THREE.BoxGeometry(10, 5, 1);
+		}
+		var wall = new THREE.Mesh(geometry, material);
+		if(type !== "wallLeft" && type !== "wallRight") {
+			wall.rotation.y = Math.PI / 2.0;
+		}
+		wall.position.x = x;
+		wall.position.y = y;
+		wall.position.z = z;
+		wall.castShadow = true;
+		wall.receiveShadow = true;
 
-	//roof right
-	var geometryR = new THREE.BoxGeometry(32, 1,20);
-	var roofRight = new THREE.Mesh(geometryR, material);
-	roofRight.rotation.x = Math.PI / 6;
-	roofRight.position.x = 15;
-	roofRight.position.y = 8;
-	roofRight.position.z = 25;
-	roofRight.receiveShadow = true;
-	roofRight.castShadow = true;
+		warehouseWall.add(wall);
+	}
 
-	//roof center top
-	var geometryRoofT = new THREE.BoxGeometry(32.5, 1,5);
-	var roofTop = new THREE.Mesh(geometryRoofT, material);
-	roofTop.position.x = 15;
-	roofTop.position.y = 13;
-	roofTop.position.z = 15;
-	roofTop.castShadow = true;
-	roofTop.receiveShadow = true;
+
+	var warehouseRoof = new THREE.Group();
+	var roofMaterial = new THREE.MeshPhongMaterial({  map: new THREE.TextureLoader().load("textures/material_roof.jpg"), side: THREE.DoubleSide });
+	buildRoof(32,20,1,3,15,8,5, "left");
+	buildRoof(32,1,20,6,15,8,25, "right");
+	buildRoof(32.5,1,5,0,15,13,15, "center");
+	scene.add(warehouseRoof);
+
+
+	function buildRoof(geometryx, geometryy, geometryz, rotDeler, x, y, z, type) {
+		var geometry = new THREE.BoxGeometry(geometryx, geometryy,geometryz);
+		var roof = new THREE.Mesh(geometry, roofMaterial);
+		if(type === "left" || type === "right") {
+			roof.rotation.x = Math.PI / rotDeler;
+		}
+		roof.position.x = x;
+		roof.position.y = y;
+		roof.position.z = z;
+		roof.receiveShadow = true;
+		roof.castShadow = true;
+		warehouseRoof.add(roof);
+	}
 
 	//wall roof area front and back
 	var material = new THREE.MeshStandardMaterial({  map: new THREE.TextureLoader().load("textures/material_wood.jpeg"), side: THREE.DoubleSide });
@@ -121,12 +88,6 @@ function buildWarehouse (scene){
 		roofB.castShadow = true;
 		scene.add(roofB);
 	}
-
-	var warehouseRoof = new THREE.Group();
-	warehouseRoof.add(roofLeft);
-	warehouseRoof.add(roofRight);
-	warehouseRoof.add(roofTop);
-	scene.add(warehouseRoof);
 
 	buildWorld(scene);
 	buildWarehouseLighting(scene);
