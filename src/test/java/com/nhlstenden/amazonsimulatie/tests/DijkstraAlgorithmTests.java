@@ -1,39 +1,31 @@
 package com.nhlstenden.amazonsimulatie.tests;
 
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.nhlstenden.amazonsimulatie.graph.Dijkstra;
 import com.nhlstenden.amazonsimulatie.graph.Graaf;
 import com.nhlstenden.amazonsimulatie.graph.Knoop;
-import com.nhlstenden.amazonsimulatie.models.World;
-import org.hamcrest.Matcher;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.springframework.web.socket.WebSocketSession;
-
-import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 
 public class DijkstraAlgorithmTests {
-    Graaf graaf = new Graaf();
+    private Graaf graaf = new Graaf();
 
-    List<Knoop> knopen = new ArrayList<>();
+    private List<Knoop> knopen = new ArrayList<>();
 
     // 6 punten/knopen/vertices/nodes in de graaf
-    Knoop knoop1 = new Knoop("Punt A", 0, 5);
-    Knoop knoop2 = new Knoop("Punt B", 5, 5);
-    Knoop knoop3 = new Knoop("Punt C", 10, 5);
-    Knoop knoop4 = new Knoop("Punt D", 10, 10);
-    Knoop knoop5 = new Knoop("Punt E", 15, 10);
-    Knoop knoop6 = new Knoop("Punt F", 15, 15);
+    private Knoop knoop1 = new Knoop("Punt A", 0, 5);
+    private Knoop knoop2 = new Knoop("Punt B", 5, 5);
+    private Knoop knoop3 = new Knoop("Punt C", 10, 5);
+    private Knoop knoop4 = new Knoop("Punt D", 10, 10);
+    private Knoop knoop5 = new Knoop("Punt E", 15, 10);
+    private Knoop knoop6 = new Knoop("Punt F", 15, 15);
 
     @Before
     public void setUp() {
+
         knoop1.addBestemming(knoop2, 1);
         knoop1.addBestemming(knoop4, 1);
         knoop4.addBestemming(knoop5, 1);
