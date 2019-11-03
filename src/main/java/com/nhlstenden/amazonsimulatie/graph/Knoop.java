@@ -7,15 +7,14 @@ import java.util.Map;
 
 public class Knoop{
     
-    String naam;
-    List<Knoop> kortsePad = new LinkedList<>();
-    Integer afstand = Integer.MAX_VALUE;
-    Map<Knoop, Integer> aangrenzendeKnopen = new HashMap<>();
+    private String naam;
+    private List<Knoop> kortsePad = new LinkedList<>();
+    private Integer afstand = Integer.MAX_VALUE;
+    private Map<Knoop, Integer> aangrenzendeKnopen = new HashMap<>();
 
     private int x;
     private int z;
 
-     
     public void addBestemming(Knoop bestemming, int afstand){
         aangrenzendeKnopen.put(bestemming, afstand);
     }
